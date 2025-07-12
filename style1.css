@@ -1,0 +1,83 @@
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-accent: #e9ecef;
+    --text-primary: #212529;
+    --text-secondary: #495057;
+    --text-muted: #6c757d;
+    --accent-blue: #0056b3;
+    --accent-green: #198754;
+    --accent-orange: #fd7e14;
+    --border-color: #dee2e6;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+    --bg-primary: #1a1d23;
+    --bg-secondary: #242933;
+    --bg-accent: #2d3748;
+    --text-primary: #f7fafc;
+    --text-secondary: #e2e8f0;
+    --text-muted: #a0aec0;
+    --accent-blue: #4299e1;
+    --accent-green: #48bb78;
+    --accent-orange: #ed8936;
+    --border-color: #4a5568;
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    transition: all 0.3s ease;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--accent-blue);
+    border-bottom: 2px solid var(--accent-blue);
+    padding-bottom: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: linear-gradient(to right, var(--accent-blue), var(--accent-green));
+    animation: underlineGrow 2s ease-out;
+}
+
+@keyframes underlineGrow {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+.btn, .contact-link {
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
+    background-size: 200% 200%;
+    color: white;
+    animation: gradientShift 4s ease infinite;
+    transition: all 0.3s ease;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 8px 35px rgba(0, 123, 255, 0.3);
+}
