@@ -81,3 +81,19 @@ h2::after {
     transform: translateX(5px);
     box-shadow: 0 8px 35px rgba(0, 123, 255, 0.3);
 }
+
+.profile-photo {
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    margin-right: 2rem;
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    cursor: pointer;
+}
