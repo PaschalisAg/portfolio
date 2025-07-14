@@ -26,15 +26,19 @@
         }
 
         [data-theme="light"] {
-            --primary-bg: #ffffff;
-            --secondary-bg: #f8f9fa;
-            --accent-bg: #e9ecef;
-            --text-primary: #212529;
-            --text-secondary: #495057;
-            --text-muted: #6c757d;
-            --border-color: #dee2e6;
-            --shadow-glow: 0 0 20px rgba(103, 126, 234, 0.3);
-            --shadow-dark: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --primary-bg: #fafafa;
+            --secondary-bg: #ffffff;
+            --accent-bg: #f5f5f5;
+            --text-primary: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --text-muted: #6a6a6a;
+            --accent-blue: #2563eb;
+            --border-color: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            --gradient-secondary: linear-gradient(135deg, #ec4899 0%, #ef4444 100%);
+            --gradient-accent: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+            --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.3);
+            --shadow-dark: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
 
         * {
@@ -92,7 +96,7 @@
         }
 
         [data-theme="light"] header {
-            background: rgba(248, 249, 250, 0.95);
+            background: rgba(255, 255, 255, 0.95);
         }
 
         nav {
@@ -261,6 +265,10 @@
             background: var(--gradient-accent);
             border-radius: 50%;
             z-index: 1;
+            opacity: 0.7;
+        }
+
+        .hero-image:hover::before {
             animation: pulse 3s ease-in-out infinite;
         }
 
@@ -472,6 +480,7 @@
         .skill-icon {
             font-size: 2rem;
             margin-bottom: 1rem;
+            color: var(--accent-blue);
         }
 
         .skill-name {
@@ -606,10 +615,10 @@
                             combining NLP and network data science to solve problems in the field of humanities.
                         </p>
                         <div class="contact-links">
-                            <a href="mailto:paschalis.agapitos@dipc.org" class="contact-link">📧 Email</a>
-                            <a href="https://github.com/PaschalisAg" class="contact-link">🔗 GitHub</a>
-                            <a href="https://www.linkedin.com/in/paschalis-agapitos-1b5284217/" class="contact-link">💼 LinkedIn</a>
-                            <a href="https://scholar.google.com/citations?user=hcYwIDcAAAAJ&hl=en" class="contact-link">🎓 Scholar</a>
+                            <a href="mailto:paschalis.agapitos@dipc.org" class="contact-link">Email</a>
+                            <a href="https://github.com/PaschalisAg" class="contact-link">GitHub</a>
+                            <a href="https://www.linkedin.com/in/paschalis-agapitos-1b5284217/" class="contact-link">LinkedIn</a>
+                            <a href="https://scholar.google.com/citations?user=hcYwIDcAAAAJ&hl=en" class="contact-link">Scholar</a>
                         </div>
                     </div>
                     <div class="hero-image">
@@ -624,7 +633,7 @@
                 <h2 class="section-title">Research Focus</h2>
                 <div class="cards-grid">
                     <div class="card">
-                        <h3>🎭 Computational Humanities</h3>
+                        <h3>Computational Humanities</h3>
                         <p>Applying computational methods to analyze cultural phenomena and humanities data, bridging the gap between technology and human culture.</p>
                         <div class="tags">
                             <span class="tag">Cultural Analytics</span>
@@ -632,7 +641,7 @@
                         </div>
                     </div>
                     <div class="card">
-                        <h3>✍️ Computational Stylometry</h3>
+                        <h3>Computational Stylometry</h3>
                         <p>Analyzing writing styles using computational techniques to solve authorship attribution problems and understand literary patterns.</p>
                         <div class="tags">
                             <span class="tag">Authorship Attribution</span>
@@ -640,7 +649,7 @@
                         </div>
                     </div>
                     <div class="card">
-                        <h3>🕸️ Network Science</h3>
+                        <h3>Network Science</h3>
                         <p>Exploring complex networks in cultural and linguistic contexts, revealing hidden patterns in human communication and cultural transmission.</p>
                         <div class="tags">
                             <span class="tag">Complex Networks</span>
@@ -660,7 +669,7 @@
                         <p class="card-meta">Humanities & Social Sciences Communications (Nature), 2025</p>
                         <p>Authors: Luis A Miccio, Paschalis Agapitos, Carlos Gamez-Perez, Francisco González, Juan Luis Suarez, Gustavo A Schwartz</p>
                         <div class="btn-group">
-                            <a href="https://www.nature.com/articles/s41599-025-04772-5" class="btn">📄 Paper</a>
+                            <a href="https://www.nature.com/articles/s41599-025-04772-5" class="btn">Paper</a>
                         </div>
                         <div class="tags">
                             <span class="tag">Cultural Networks</span>
@@ -673,8 +682,8 @@
                         <p class="card-meta">Journal of Computational Literary Studies (JCLS), 2024</p>
                         <p>Authorship Verification of Octavia and Hercules Oetaeus using computational stylometry techniques.</p>
                         <div class="btn-group">
-                            <a href="https://jcls.io/article/id/3919/" class="btn">📄 Paper</a>
-                            <a href="https://github.com/PaschalisAg/seneca_stylometry" class="btn">💻 Code</a>
+                            <a href="https://jcls.io/article/id/3919/" class="btn">Paper</a>
+                            <a href="https://github.com/PaschalisAg/seneca_stylometry" class="btn">Code</a>
                         </div>
                         <div class="tags">
                             <span class="tag">Stylometry</span>
@@ -691,11 +700,11 @@
                 <h2 class="section-title">Featured Projects</h2>
                 <div class="cards-grid">
                     <div class="card">
-                        <h3>🫁 CNN for Pneumonia Detection</h3>
+                        <h3>CNN for Pneumonia Detection</h3>
                         <p class="card-meta">2024 • Python, TensorFlow</p>
                         <p>A Convolutional Neural Network to help doctors detect pneumonia or Covid-19 type pneumonia from X-rays of patients.</p>
                         <div class="btn-group">
-                            <a href="https://github.com/PaschalisAg/classification_NN" class="btn">💻 Code</a>
+                            <a href="https://github.com/PaschalisAg/classification_NN" class="btn">Code</a>
                         </div>
                         <div class="tags">
                             <span class="tag">Deep Learning</span>
@@ -704,11 +713,11 @@
                         </div>
                     </div>
                     <div class="card">
-                        <h3>📚 Cultural Analytics Guide</h3>
+                        <h3>Cultural Analytics Guide</h3>
                         <p class="card-meta">2022–Present • Python, Data Science</p>
                         <p>A comprehensive textbook teaching computational analysis of cultural phenomena following Open Science principles.</p>
                         <div class="btn-group">
-                            <a href="https://groningendh.github.io/Cultural-Analytics-Open-Science-Guide/" class="btn">🌐 Website</a>
+                            <a href="https://groningendh.github.io/Cultural-Analytics-Open-Science-Guide/" class="btn">Website</a>
                         </div>
                         <div class="tags">
                             <span class="tag">Education</span>
@@ -717,11 +726,11 @@
                         </div>
                     </div>
                     <div class="card">
-                        <h3>🎤 British Political Speeches Analysis</h3>
+                        <h3>British Political Speeches Analysis</h3>
                         <p class="card-meta">2021 • Python, NLP</p>
                         <p>Computational stylometric analysis of British political speeches. Exploring Churchill's rhetorical patterns.</p>
                         <div class="btn-group">
-                            <a href="https://paschalisag.github.io/SAPS/intro.html" class="btn">🌐 Website</a>
+                            <a href="https://paschalisag.github.io/SAPS/intro.html" class="btn">Website</a>
                         </div>
                         <div class="tags">
                             <span class="tag">Political Analysis</span>
@@ -738,32 +747,32 @@
                 <h2 class="section-title">Technical Skills</h2>
                 <div class="skills-grid">
                     <div class="skill-item">
-                        <div class="skill-icon">🐍</div>
+                        <div class="skill-icon">Python</div>
                         <div class="skill-name">Python</div>
                         <div class="skill-level">Advanced</div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-icon">🤖</div>
+                        <div class="skill-icon">ML</div>
                         <div class="skill-name">Machine Learning</div>
                         <div class="skill-level">Advanced</div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-icon">🕸️</div>
+                        <div class="skill-icon">Network</div>
                         <div class="skill-name">Network Science</div>
                         <div class="skill-level">Advanced</div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-icon">📊</div>
+                        <div class="skill-icon">Data</div>
                         <div class="skill-name">Data Science</div>
                         <div class="skill-level">Advanced</div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-icon">💬</div>
+                        <div class="skill-icon">NLP</div>
                         <div class="skill-name">NLP</div>
                         <div class="skill-level">Expert</div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-icon">📈</div>
+                        <div class="skill-icon">Stats</div>
                         <div class="skill-name">Statistical Analysis</div>
                         <div class="skill-level">Advanced</div>
                     </div>
