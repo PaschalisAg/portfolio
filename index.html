@@ -58,49 +58,20 @@
             transition: all 0.3s ease;
         }
 
-        /* Animated background */
-        .bg-animation {
+        /* Animated Network Background */
+        #networkCanvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.15;
-            background-image: url("./pictures/background.png");
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-            background-position: center;
-            animation: slowRotate 60s linear infinite;
+            opacity: 0.6;
+            pointer-events: none;
         }
 
-        .bg-animation::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, 
-                transparent 30%, 
-                rgba(100, 255, 218, 0.05) 50%, 
-                rgba(187, 134, 252, 0.05) 70%, 
-                transparent 100%);
-            animation: pulse 8s ease-in-out infinite;
-        }
-
-        @keyframes slowRotate {
-            0% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.1); }
-            100% { transform: rotate(360deg) scale(1); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.7; }
-        }
-
-        @keyframes drift {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-50px, -50px); }
+        [data-theme="light"] #networkCanvas {
+            opacity: 0.3;
         }
 
         /* Header */
@@ -847,7 +818,7 @@
     </style>
 </head>
 <body data-theme="dark">
-    <div class="bg-animation"></div>
+    <canvas id="networkCanvas"></canvas>
     <div class="scroll-indicator">
         <div class="scroll-progress" id="scrollProgress"></div>
     </div>
@@ -961,12 +932,12 @@
                             combining NLP and network data science to solve problems in the field of humanities.
                         </p>
                         <div class="contact-links">
-    <a href="mailto:paschalis.agapitos@dipc.org" class="contact-link">Email</a>
-    <a href="https://github.com/PaschalisAg" class="contact-link">GitHub</a>
-    <a href="https://www.linkedin.com/in/paschalis-agapitos-1b5284217/" class="contact-link">LinkedIn</a>
-    <a href="https://scholar.google.com/citations?user=hcYwIDcAAAAJ&hl=en" class="contact-link">Google Scholar</a>
-    <a href="https://github.com/PaschalisAg/portfolio/blob/main/files/paschalis_agapitos_CV.pdf?raw=true" class="contact-link" download>Download CV</a>
-</div>
+                            <a href="mailto:paschalis.agapitos@dipc.org" class="contact-link">Email</a>
+                            <a href="https://github.com/PaschalisAg" class="contact-link">GitHub</a>
+                            <a href="https://www.linkedin.com/in/paschalis-agapitos-1b5284217/" class="contact-link">LinkedIn</a>
+                            <a href="https://scholar.google.com/citations?user=hcYwIDcAAAAJ&hl=en" class="contact-link">Google Scholar</a>
+                            <a href="https://github.com/PaschalisAg/portfolio/blob/main/files/paschalis_agapitos_CV.pdf?raw=true" class="contact-link" download>Download CV</a>
+                        </div>
                     </div>
                     <div class="hero-image">
                         <img src="pictures/paschalis_agapitos-3.jpg" alt="Paschalis Agapitos" class="profile-photo" loading="lazy">
@@ -1145,6 +1116,181 @@
     </footer>
 
     <script>
+        // Network Animation Class
+        class NetworkAnimation {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.nodes = [];
+                this.connections = [];
+                this.mouse = { x: 0, y: 0 };
+                this.isDarkTheme = true;
+                
+                this.resize();
+                this.initNodes();
+                this.bindEvents();
+                this.animate();
+            }
+
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+
+            initNodes() {
+                this.nodes = [];
+                const nodeCount = Math.floor((this.canvas.width * this.canvas.height) / 15000);
+                
+                for (let i = 0; i < nodeCount; i++) {
+                    this.nodes.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5,
+                        radius: Math.random() * 3 + 1,
+                        originalRadius: Math.random() * 3 + 1,
+                        pulseOffset: Math.random() * Math.PI * 2,
+                        connections: []
+                    });
+                }
+            }
+
+            updateTheme(isDark) {
+                this.isDarkTheme = isDark;
+            }
+
+            bindEvents() {
+                window.addEventListener('resize', () => this.resize());
+                window.addEventListener('mousemove', (e) => {
+                    this.mouse.x = e.clientX;
+                    this.mouse.y = e.clientY;
+                });
+            }
+
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Update and draw nodes
+                this.nodes.forEach(node => {
+                    // Update position
+                    node.x += node.vx;
+                    node.y += node.vy;
+                    
+                    // Bounce off edges
+                    if (node.x < 0 || node.x > this.canvas.width) node.vx *= -1;
+                    if (node.y < 0 || node.y > this.canvas.height) node.vy *= -1;
+                    
+                    // Keep nodes within bounds
+                    node.x = Math.max(0, Math.min(this.canvas.width, node.x));
+                    node.y = Math.max(0, Math.min(this.canvas.height, node.y));
+                    
+                    // Mouse interaction
+                    const mouseDistance = Math.sqrt(
+                        Math.pow(node.x - this.mouse.x, 2) + 
+                        Math.pow(node.y - this.mouse.y, 2)
+                    );
+                    
+                    if (mouseDistance < 150) {
+                        const force = (150 - mouseDistance) / 150;
+                        const angle = Math.atan2(node.y - this.mouse.y, node.x - this.mouse.x);
+                        node.vx += Math.cos(angle) * force * 0.02;
+                        node.vy += Math.sin(angle) * force * 0.02;
+                        node.radius = node.originalRadius + force * 3;
+                    } else {
+                        node.radius = node.originalRadius;
+                    }
+                    
+                    // Pulse effect
+                    const pulse = Math.sin(Date.now() * 0.003 + node.pulseOffset) * 0.5 + 0.5;
+                    const alpha = 0.3 + pulse * 0.4;
+                    
+                    // Draw node
+                    this.ctx.beginPath();
+                    this.ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+                    
+                    if (this.isDarkTheme) {
+                        this.ctx.fillStyle = `rgba(100, 255, 218, ${alpha})`;
+                        this.ctx.shadowColor = 'rgba(100, 255, 218, 0.5)';
+                    } else {
+                        this.ctx.fillStyle = `rgba(37, 99, 235, ${alpha})`;
+                        this.ctx.shadowColor = 'rgba(37, 99, 235, 0.5)';
+                    }
+                    
+                    this.ctx.shadowBlur = 10;
+                    this.ctx.fill();
+                    this.ctx.shadowBlur = 0;
+                });
+                
+                // Draw connections
+                for (let i = 0; i < this.nodes.length; i++) {
+                    for (let j = i + 1; j < this.nodes.length; j++) {
+                        const nodeA = this.nodes[i];
+                        const nodeB = this.nodes[j];
+                        const distance = Math.sqrt(
+                            Math.pow(nodeA.x - nodeB.x, 2) + 
+                            Math.pow(nodeA.y - nodeB.y, 2)
+                        );
+                        
+                        if (distance < 120) {
+                            const opacity = (120 - distance) / 120;
+                            
+                            // Check if mouse is near this connection
+                            const mouseDistanceToConnection = this.distanceToLine(
+                                this.mouse.x, this.mouse.y,
+                                nodeA.x, nodeA.y,
+                                nodeB.x, nodeB.y
+                            );
+                            
+                            let lineWidth = 1;
+                            let glowIntensity = opacity * 0.3;
+                            
+                            if (mouseDistanceToConnection < 50) {
+                                const mouseEffect = (50 - mouseDistanceToConnection) / 50;
+                                lineWidth += mouseEffect * 2;
+                                glowIntensity += mouseEffect * 0.5;
+                            }
+                            
+                            this.ctx.beginPath();
+                            this.ctx.moveTo(nodeA.x, nodeA.y);
+                            this.ctx.lineTo(nodeB.x, nodeB.y);
+                            
+                            if (this.isDarkTheme) {
+                                this.ctx.strokeStyle = `rgba(100, 255, 218, ${glowIntensity})`;
+                                this.ctx.shadowColor = 'rgba(100, 255, 218, 0.3)';
+                            } else {
+                                this.ctx.strokeStyle = `rgba(37, 99, 235, ${glowIntensity})`;
+                                this.ctx.shadowColor = 'rgba(37, 99, 235, 0.3)';
+                            }
+                            
+                            this.ctx.lineWidth = lineWidth;
+                            this.ctx.shadowBlur = 5;
+                            this.ctx.stroke();
+                            this.ctx.shadowBlur = 0;
+                        }
+                    }
+                }
+                
+                requestAnimationFrame(() => this.animate());
+            }
+            
+            distanceToLine(px, py, x1, y1, x2, y2) {
+                const dx = x2 - x1;
+                const dy = y2 - y1;
+                const length = Math.sqrt(dx * dx + dy * dy);
+                
+                if (length === 0) return Math.sqrt((px - x1) ** 2 + (py - y1) ** 2);
+                
+                const t = Math.max(0, Math.min(1, ((px - x1) * dx + (py - y1) * dy) / (length * length)));
+                const projection = { x: x1 + t * dx, y: y1 + t * dy };
+                
+                return Math.sqrt((px - projection.x) ** 2 + (py - projection.y) ** 2);
+            }
+        }
+
+        // Initialize network animation
+        const canvas = document.getElementById('networkCanvas');
+        const network = new NetworkAnimation(canvas);
+
         // Theme toggle
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
@@ -1153,6 +1299,7 @@
             const currentTheme = body.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             body.setAttribute('data-theme', newTheme);
+            network.updateTheme(newTheme === 'dark');
         });
 
         // Smooth scrolling
@@ -1218,6 +1365,7 @@
             };
             setTimeout(typeWriter, 1000);
         }
+
         const profileContainer = document.getElementById('profileContainer');
         if (profileContainer) {
             profileContainer.addEventListener('click', () => {
