@@ -149,21 +149,144 @@
             color: var(--accent-blue);
         }
 
-        .theme-toggle {
-            background: none;
-            border: 2px solid var(--border-color);
-            color: var(--text-primary);
-            padding: 0.5rem;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.2rem;
+        /* Enhanced Animated Theme Toggle */
+        .theme-toggle-container {
+            position: relative;
+            width: 60px;
+            height: 30px;
         }
 
+        .theme-toggle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #1e3a8a, #3b82f6);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            box-shadow: 
+                inset 2px 2px 4px rgba(0, 0, 0, 0.2),
+                inset -2px -2px 4px rgba(255, 255, 255, 0.1),
+                0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 26px;
+            height: 26px;
+            background: linear-gradient(145deg, #ffffff, #e0e0e0);
+            border-radius: 50%;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            z-index: 2;
+        }
+
+        /* Dark theme state */
+        [data-theme="dark"] .theme-toggle {
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+        }
+
+        [data-theme="dark"] .theme-toggle::before {
+            background: linear-gradient(145deg, #f4f4f4, #e8e8e8);
+            box-shadow: 
+                0 2px 6px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Light theme state */
+        [data-theme="light"] .theme-toggle {
+            background: linear-gradient(45deg, #fbbf24, #f59e0b);
+        }
+
+        [data-theme="light"] .theme-toggle::before {
+            transform: translateX(30px);
+            background: linear-gradient(145deg, #fef3c7, #fcd34d);
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(251, 191, 36, 0.3);
+        }
+
+        /* Sun and Moon icons */
+        .theme-toggle::after {
+            content: '🌙';
+            position: absolute;
+            top: 50%;
+            left: 8px;
+            transform: translateY(-50%);
+            font-size: 14px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 1;
+            z-index: 1;
+        }
+
+        [data-theme="light"] .theme-toggle::after {
+            content: '☀️';
+            left: auto;
+            right: 8px;
+            transform: translateY(-50%) scale(0.9);
+        }
+
+        /* Hover effects */
         .theme-toggle:hover {
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
-            transform: rotate(180deg);
+            transform: scale(1.05);
+            box-shadow: 
+                inset 2px 2px 4px rgba(0, 0, 0, 0.3),
+                inset -2px -2px 4px rgba(255, 255, 255, 0.15),
+                0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .theme-toggle:hover::before {
+            box-shadow: 
+                0 3px 6px rgba(0, 0, 0, 0.3),
+                0 0 0 2px rgba(100, 255, 218, 0.3);
+        }
+
+        [data-theme="light"] .theme-toggle:hover::before {
+            box-shadow: 
+                0 3px 6px rgba(0, 0, 0, 0.2),
+                0 0 0 2px rgba(251, 191, 36, 0.4);
+        }
+
+        /* Active state */
+        .theme-toggle:active {
+            transform: scale(0.98);
+        }
+
+        .theme-toggle:active::before {
+            transform: scale(0.95);
+        }
+
+        [data-theme="light"] .theme-toggle:active::before {
+            transform: translateX(30px) scale(0.95);
+        }
+
+        /* Ripple effect */
+        .theme-toggle-container::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(100, 255, 218, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.6s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .theme-toggle-container.ripple::after {
+            width: 100px;
+            height: 100px;
+            opacity: 0;
         }
 
         /* Main content */
@@ -796,6 +919,20 @@
                 flex-direction: column;
                 gap: 0.5rem;
             }
+
+            .theme-toggle-container {
+                width: 50px;
+                height: 25px;
+            }
+
+            .theme-toggle::before {
+                width: 21px;
+                height: 21px;
+            }
+
+            [data-theme="light"] .theme-toggle::before {
+                transform: translateX(25px);
+            }
         }
 
         /* Scroll indicator */
@@ -832,7 +969,11 @@
                 <li><a href="#publications">Publications</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#skills">Skills</a></li>
-                <li><button class="theme-toggle" id="themeToggle">🌓</button></li>
+                <li>
+                    <div class="theme-toggle-container" id="themeToggleContainer">
+                        <button class="theme-toggle" id="themeToggle"></button>
+                    </div>
+                </li>
             </ul>
         </nav>
     </header>
@@ -940,7 +1081,28 @@
                         </div>
                     </div>
                     <div class="hero-image">
-                        <img src="pictures/profile_pic.jpeg" alt="Paschalis Agapitos" class="profile-photo" loading="lazy">
+                        <div class="profile-container" id="profileContainer">
+                            <div class="profile-flip">
+                                <div class="profile-front">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face" alt="Paschalis Agapitos" class="profile-photo" loading="lazy">
+                                </div>
+                                <div class="profile-back">
+                                    <div class="cv-preview">
+                                        <h3>Quick CV Overview</h3>
+                                        <div class="cv-preview-content">
+                                            <strong>Education:</strong><br>
+                                            • PhD in Physics (2022-Present)<br>
+                                            • MSc in Language Technologies<br>
+                                            • BA in English Literature<br><br>
+                                            <strong>Research Focus:</strong><br>
+                                            Computational Humanities, NLP, Network Science
+                                        </div>
+                                        <button class="cv-download-btn" onclick="document.getElementById('cvModal').classList.add('show')">View Full CV</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flip-instruction">Click to flip</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1065,43 +1227,43 @@
                 <h2 class="section-title">Technical Skills</h2>
                 <div class="skills-grid">
                     <div class="skill-item">
-                        <div class="skill-icon">Python</div>
+                        <div class="skill-icon">🐍</div>
                         <div class="skill-name">Python</div>
                         <div class="skill-level">EXP: 4 years</div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-icon">ML-DL</div>
+                        <div class="skill-icon">🤖</div>
                         <div class="skill-name">Machine Learning</div>
                         <div class="skill-level">EXP: 3 years</div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-icon">Network</div>
+                        <div class="skill-icon">🕸️</div>
                         <div class="skill-name">Network Science</div>
                         <div class="skill-level">EXP: 2 years</div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-icon">Data</div>
+                        <div class="skill-icon">📊</div>
                         <div class="skill-name">Data Science</div>
                         <div class="skill-level">EXP: 4 years</div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-icon">NLP</div>
+                        <div class="skill-icon">💬</div>
                         <div class="skill-name">Natural Language Processing</div>
                         <div class="skill-level">EXP: 4 years</div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-icon">Statistics</div>
+                        <div class="skill-icon">📈</div>
                         <div class="skill-name">Statistical Analysis</div>
                         <div class="skill-level">EXP: 4 years</div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-icon">C++</div>
+                        <div class="skill-icon">⚡</div>
                         <div class="skill-name">C++</div>
                         <div class="skill-level">EXP: 1 year</div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-icon">HTML</div>
-                        <div class="skill-name">HTML</div>
+                        <div class="skill-icon">🌐</div>
+                        <div class="skill-name">HTML/CSS</div>
                         <div class="skill-level">EXP: 1 year</div>
                     </div>
                 </div>
@@ -1291,16 +1453,64 @@
         const canvas = document.getElementById('networkCanvas');
         const network = new NetworkAnimation(canvas);
 
-        // Theme toggle
+        // Enhanced Theme toggle with animations
         const themeToggle = document.getElementById('themeToggle');
+        const themeToggleContainer = document.getElementById('themeToggleContainer');
         const body = document.body;
 
         themeToggle.addEventListener('click', () => {
+            // Add ripple effect
+            themeToggleContainer.classList.add('ripple');
+            setTimeout(() => {
+                themeToggleContainer.classList.remove('ripple');
+            }, 600);
+
             const currentTheme = body.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             body.setAttribute('data-theme', newTheme);
             network.updateTheme(newTheme === 'dark');
         });
+
+        // CV Modal functionality
+        const cvModal = document.getElementById('cvModal');
+        const cvClose = document.getElementById('cvClose');
+        const cvDownloadBtn = document.getElementById('cvDownloadBtn');
+
+        cvClose.addEventListener('click', () => {
+            cvModal.classList.remove('show');
+        });
+
+        cvModal.addEventListener('click', (e) => {
+            if (e.target === cvModal) {
+                cvModal.classList.remove('show');
+            }
+        });
+
+        cvDownloadBtn.addEventListener('click', () => {
+            // Simulate CV download
+            const link = document.createElement('a');
+            link.href = 'https://github.com/PaschalisAg/portfolio/blob/main/files/paschalis_agapitos_CV.pdf?raw=true';
+            link.download = 'paschalis_agapitos_CV.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+
+        // Profile flip functionality
+        const profileContainer = document.getElementById('profileContainer');
+        if (profileContainer) {
+            profileContainer.addEventListener('click', () => {
+                profileContainer.classList.toggle('flipped');
+            });
+
+            profileContainer.setAttribute('tabindex', '0');
+            profileContainer.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    profileContainer.classList.toggle('flipped');
+                }
+            });
+        }
 
         // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1364,21 +1574,6 @@
                 }
             };
             setTimeout(typeWriter, 1000);
-        }
-
-        const profileContainer = document.getElementById('profileContainer');
-        if (profileContainer) {
-            profileContainer.addEventListener('click', () => {
-                profileContainer.classList.toggle('flipped');
-            });
-
-            profileContainer.setAttribute('tabindex', '0');
-            profileContainer.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    profileContainer.classList.toggle('flipped');
-                }
-            });
         }
     </script>
 </body>
