@@ -1092,20 +1092,7 @@
                                 <div class="profile-front">
                                     <img src="pictures/profile_pic.jpeg" alt="Paschalis Agapitos" class="profile-photo" loading="lazy">
                                 </div>
-                                <div class="profile-back">
-                                    <div class="cv-preview">
-                                        <h3>CV Preview</h3>
-                                        <div class="cv-preview-content">
-                                            PhD in Physics (2022-Present) at DIPC<br>
-                                            Master in Language Technologies<br>
-                                            Research in Computational Humanities<br>
-                                            NLP & Network Science Expert
-                                        </div>
-                                        <button class="cv-download-btn" onclick="document.getElementById('cvModal').classList.add('show')">View Full CV</button>
-                                    </div>
-                                </div>
                             </div>
-                            <div class="flip-instruction">Click to flip!</div>
                         </div>
                     </div>
                 </div>
@@ -1231,42 +1218,34 @@
                 <h2 class="section-title">Technical Skills</h2>
                 <div class="skills-grid">
                     <div class="skill-item">
-                        <div class="skill-icon">🐍</div>
                         <div class="skill-name">Python</div>
                         <div class="skill-level">4 years</div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-icon">🤖</div>
                         <div class="skill-name">Machine Learning</div>
                         <div class="skill-level">3 years</div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-icon">🌐</div>
                         <div class="skill-name">Network Science</div>
                         <div class="skill-level">2 years</div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-icon">📊</div>
                         <div class="skill-name">Data Science</div>
                         <div class="skill-level">4 years</div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-icon">💬</div>
                         <div class="skill-name">Natural Language Processing</div>
                         <div class="skill-level">4 years</div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-icon">📈</div>
                         <div class="skill-name">Statistical Analysis</div>
                         <div class="skill-level">4 years</div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-icon">⚡</div>
                         <div class="skill-name">C++</div>
                         <div class="skill-level">1 year</div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-icon">🌍</div>
                         <div class="skill-name">HTML/CSS</div>
                         <div class="skill-level">1 year</div>
                     </div>
@@ -1511,22 +1490,6 @@
         cvDownloadBtn.addEventListener('click', () => {
             window.open('https://github.com/PaschalisAg/portfolio/blob/main/files/paschalis_agapitos_CV.pdf?raw=true', '_blank');
         });
-
-        // Profile flip functionality
-        const profileContainer = document.getElementById('profileContainer');
-        if (profileContainer) {
-            profileContainer.addEventListener('click', () => {
-                profileContainer.classList.toggle('flipped');
-            });
-
-            profileContainer.setAttribute('tabindex', '0');
-            profileContainer.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    profileContainer.classList.toggle('flipped');
-                }
-            });
-        }
 
         // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
