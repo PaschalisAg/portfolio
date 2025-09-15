@@ -66,6 +66,24 @@
             transition: all 0.3s ease;
         }
 
+        /* General link styles for content links */
+        a {
+            color: var(--accent-blue);
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--accent-purple);
+        }
+
+        /* Exclusions: keep nav, buttons, and contact links styled as before */
+        .nav-links a,
+        .btn,
+        .contact-link {
+            text-decoration: none;
+        }
+
         /* Animated Network Background */
         #networkCanvas {
             position: fixed;
