@@ -45,7 +45,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-bg: #0a0a0a;
@@ -129,6 +129,30 @@
 
         [data-theme="light"] #networkCanvas {
             opacity: 0.3;
+        }
+
+        /* Skip link for accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            z-index: 1000;
+            transition: top 0.3s ease;
+            border-radius: 0 0 4px 0;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Focus indicators for keyboard navigation */
+        a:focus, button:focus, .card:focus {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
         }
 
         /* Header */
@@ -260,6 +284,19 @@
             margin: 0 auto;
         }
 
+        /* Breadcrumb Navigation */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb .separator {
+            margin: 0 0.5rem;
+        }
+
         /* Hero section */
         .hero {
             min-height: calc(100vh - 80px);
@@ -375,6 +412,26 @@
         .profile-container:hover .profile-photo {
             transform: scale(1.05);
             box-shadow: 0 0 40px rgba(100, 255, 218, 0.5);
+        }
+
+        /* Profile overlay */
+        .profile-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            border-bottom-left-radius: 50%;
+            border-bottom-right-radius: 50%;
+        }
+
+        .profile-container:hover .profile-overlay {
+            transform: translateY(0);
         }
 
         /* CV Preview on back */
@@ -534,6 +591,33 @@
             border-radius: 2px;
         }
 
+        /* Filter Container */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: transparent;
+        }
+
         /* Cards */
         .cards-grid {
             display: grid;
@@ -687,6 +771,24 @@
             font-size: clamp(0.7rem, 1.8vw, 0.9rem);
         }
 
+        /* Skill bar container */
+        .skill-bar-container {
+            width: 100%;
+            height: 8px;
+            background: var(--accent-bg);
+            border-radius: 4px;
+            margin: 0.5rem 0;
+            overflow: hidden;
+        }
+
+        .skill-bar {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 4px;
+            width: 0;
+            transition: width 1.5s ease;
+        }
+
         /* Enhanced CV Modal */
         .cv-modal {
             display: none;
@@ -808,6 +910,46 @@
             font-size: clamp(0.8rem, 1.8vw, 0.95rem);
         }
 
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Particle effect */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            border-radius: 50%;
+            z-index: 9999;
+            transition: transform 1s ease-out, opacity 1s ease-out;
+        }
+
         /* Footer */
         footer {
             background: var(--secondary-bg);
@@ -865,6 +1007,19 @@
             background: var(--gradient-primary);
             width: 0%;
             transition: width 0.1s ease;
+        }
+
+        /* Reduced motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            #networkCanvas {
+                display: none;
+            }
         }
 
         /* Mobile-specific styles */
@@ -1009,15 +1164,16 @@
     </style>
 </head>
 <body data-theme="dark">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <canvas id="networkCanvas"></canvas>
     <div class="scroll-indicator">
         <div class="scroll-progress" id="scrollProgress"></div>
     </div>
     
-    <header>
-        <nav>
+    <header role="banner">
+        <nav role="navigation" aria-label="Main navigation">
             <div class="logo">Paschalis Agapitos</div>
-            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu">
                 <div class="hamburger"></div>
                 <div class="hamburger"></div>
                 <div class="hamburger"></div>
@@ -1028,7 +1184,10 @@
                 <li><a href="#publications">Publications</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#skills">Skills</a></li>
-                <li><button class="theme-toggle" id="themeToggle">🌓</button></li>
+                <li><button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span class="sr-only">Toggle between light and dark theme</span>
+                    🌓
+                </button></li>
             </ul>
         </nav>
     </header>
@@ -1040,7 +1199,7 @@
                 <h2 class="cv-title">Curriculum Vitae</h2>
                 <div class="cv-actions">
                     <button class="cv-download-btn" id="cvDownloadBtn">Download CV</button>
-                    <button class="cv-close" id="cvClose">&times;</button>
+                    <button class="cv-close" id="cvClose" aria-label="Close CV modal">&times;</button>
                 </div>
             </div>
             
@@ -1116,7 +1275,7 @@
         </div>
     </div>
 
-    <main>
+    <main id="main-content">
         <section class="hero" id="about">
             <div class="container">
                 <div class="hero-content">
@@ -1141,9 +1300,23 @@
                             <div class="profile-flip">
                                 <div class="profile-front">
                                     <img src="pictures/profile_pic.jpeg" alt="Paschalis Agapitos" class="profile-photo" loading="lazy">
+                                    <div class="profile-overlay">
+                                        <p>Click to view CV</p>
+                                    </div>
+                                </div>
+                                <div class="profile-back">
+                                    <div class="cv-preview">
+                                        <h3>Quick CV Preview</h3>
+                                        <div class="cv-preview-content">
+                                            <p>PhD in Computational Humanities at DIPC</p>
+                                            <p>Expertise in NLP, Network Science, Cultural Analytics</p>
+                                        </div>
+                                        <button class="cv-download-btn">Download Full CV</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="flip-instruction">Click to flip</div>
                     </div>
                 </div>
             </div>
@@ -1184,8 +1357,13 @@
         <section class="section fade-in" id="publications">
             <div class="container">
                 <h2 class="section-title">Publications</h2>
-                <div class="cards-grid">
-                    <div class="card">
+                <div class="filter-container">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="journal">Journal Articles</button>
+                    <button class="filter-btn" data-filter="software">Software</button>
+                </div>
+                <div class="cards-grid" id="publicationsGrid">
+                    <div class="card" data-category="software">
                         <h3>WikiTextGraph: A Python Tool for Parsing Multilingual Wikipedia Text and Graph Extraction</h3>
                         <p class="card-meta">Journal of Open Research Software, 2025</p>
                         <p>Authors: Paschalis Agapitos, <a href="https://cultureplex.ca/" target="_blank" rel="noopener">Juan Luis Suárez</a> , <a href="https://cfm.ehu.es/schwartz/" target="_blank" rel="noopener">Gustavo Ariel Schwartz</a></p>
@@ -1200,7 +1378,7 @@
                             <span class="tag">Data Mining</span>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card" data-category="journal">
                         <h3>Wikipedia as a cultural lens: a quantitative approach for exploring cultural networks</h3>
                         <p class="card-meta">Humanities & Social Sciences Communications (Nature), 2025</p>
                         <p>Authors: Luis A Miccio, Paschalis Agapitos, Carlos Gamez-Perez, Francisco González, <a href="https://cultureplex.ca/" target="_blank" rel="noopener">Juan Luis Suárez</a> , <a href="https://cfm.ehu.es/schwartz/" target="_blank" rel="noopener">Gustavo Ariel Schwartz</a></p>
@@ -1213,7 +1391,7 @@
                             <span class="tag">Complex Networks</span>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card" data-category="journal">
                         <h3>A Stylometric Analysis of Seneca's disputed plays</h3>
                         <p class="card-meta">Journal of Computational Literary Studies (JCLS), 2024</p>
                         <p>Authors: Paschalis Agapitos, <a href="https://andreasvc.github.io/" target="_blank" rel="noopener">Andreas van Cranenburgh</a></p>
@@ -1284,34 +1462,58 @@
                 <div class="skills-grid">
                     <div class="skill-item">
                         <div class="skill-name">Python</div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" data-skill="90"></div>
+                        </div>
                         <div class="skill-level">4 years</div>
                     </div>
                     <div class="skill-item">
                         <div class="skill-name">Machine Learning</div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" data-skill="75"></div>
+                        </div>
                         <div class="skill-level">3 years</div>
                     </div>
                     <div class="skill-item">
                         <div class="skill-name">Network Data Science</div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" data-skill="70"></div>
+                        </div>
                         <div class="skill-level">2 years</div>
                     </div>
                     <div class="skill-item">
                         <div class="skill-name">Data Science</div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" data-skill="85"></div>
+                        </div>
                         <div class="skill-level">4 years</div>
                     </div>
                     <div class="skill-item">
                         <div class="skill-name">Natural Language Processing</div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" data-skill="80"></div>
+                        </div>
                         <div class="skill-level">4 years</div>
                     </div>
                     <div class="skill-item">
                         <div class="skill-name">Statistical Analysis</div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" data-skill="85"></div>
+                        </div>
                         <div class="skill-level">4 years</div>
                     </div>
                     <div class="skill-item">
                         <div class="skill-name">C++</div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" data-skill="40"></div>
+                        </div>
                         <div class="skill-level">1 year</div>
                     </div>
                     <div class="skill-item">
                         <div class="skill-name">HTML/CSS</div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" data-skill="60"></div>
+                        </div>
                         <div class="skill-level">1 year</div>
                     </div>
                 </div>
@@ -1325,6 +1527,13 @@
         </div>
     </footer>
 
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
+
     <script>
         // Network Animation Class
         class NetworkAnimation {
@@ -1335,6 +1544,10 @@
                 this.connections = [];
                 this.mouse = { x: 0, y: 0 };
                 this.isDarkTheme = true;
+                this.animationFrameId = null;
+                this.lastTime = 0;
+                this.fps = 30;
+                this.interval = 1000 / this.fps;
                 
                 this.resize();
                 this.initNodes();
@@ -1375,103 +1588,116 @@
                     this.mouse.x = e.clientX;
                     this.mouse.y = e.clientY;
                 });
+                
+                // Pause animation when tab is not visible
+                document.addEventListener('visibilitychange', () => {
+                    if (document.hidden) {
+                        cancelAnimationFrame(this.animationFrameId);
+                    } else {
+                        this.animationFrameId = requestAnimationFrame((time) => this.animate(time));
+                    }
+                });
             }
 
-            animate() {
-                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                
-                this.nodes.forEach(node => {
-                    node.x += node.vx;
-                    node.y += node.vy;
+            animate(currentTime) {
+                if (currentTime - this.lastTime >= this.interval) {
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
                     
-                    if (node.x < 0 || node.x > this.canvas.width) node.vx *= -1;
-                    if (node.y < 0 || node.y > this.canvas.height) node.vy *= -1;
-                    
-                    node.x = Math.max(0, Math.min(this.canvas.width, node.x));
-                    node.y = Math.max(0, Math.min(this.canvas.height, node.y));
-                    
-                    const mouseDistance = Math.sqrt(
-                        Math.pow(node.x - this.mouse.x, 2) + 
-                        Math.pow(node.y - this.mouse.y, 2)
-                    );
-                    
-                    if (mouseDistance < 150) {
-                        const force = (150 - mouseDistance) / 150;
-                        const angle = Math.atan2(node.y - this.mouse.y, node.x - this.mouse.x);
-                        node.vx += Math.cos(angle) * force * 0.02;
-                        node.vy += Math.sin(angle) * force * 0.02;
-                        node.radius = node.originalRadius + force * 3;
-                    } else {
-                        node.radius = node.originalRadius;
-                    }
-                    
-                    const pulse = Math.sin(Date.now() * 0.003 + node.pulseOffset) * 0.5 + 0.5;
-                    const alpha = 0.3 + pulse * 0.4;
-                    
-                    this.ctx.beginPath();
-                    this.ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-                    
-                    if (this.isDarkTheme) {
-                        this.ctx.fillStyle = `rgba(100, 255, 218, ${alpha})`;
-                        this.ctx.shadowColor = 'rgba(100, 255, 218, 0.5)';
-                    } else {
-                        this.ctx.fillStyle = `rgba(37, 99, 235, ${alpha})`;
-                        this.ctx.shadowColor = 'rgba(37, 99, 235, 0.5)';
-                    }
-                    
-                    this.ctx.shadowBlur = 10;
-                    this.ctx.fill();
-                    this.ctx.shadowBlur = 0;
-                });
-                
-                for (let i = 0; i < this.nodes.length; i++) {
-                    for (let j = i + 1; j < this.nodes.length; j++) {
-                        const nodeA = this.nodes[i];
-                        const nodeB = this.nodes[j];
-                        const distance = Math.sqrt(
-                            Math.pow(nodeA.x - nodeB.x, 2) + 
-                            Math.pow(nodeA.y - nodeB.y, 2)
+                    this.nodes.forEach(node => {
+                        node.x += node.vx;
+                        node.y += node.vy;
+                        
+                        if (node.x < 0 || node.x > this.canvas.width) node.vx *= -1;
+                        if (node.y < 0 || node.y > this.canvas.height) node.vy *= -1;
+                        
+                        node.x = Math.max(0, Math.min(this.canvas.width, node.x));
+                        node.y = Math.max(0, Math.min(this.canvas.height, node.y));
+                        
+                        const mouseDistance = Math.sqrt(
+                            Math.pow(node.x - this.mouse.x, 2) + 
+                            Math.pow(node.y - this.mouse.y, 2)
                         );
                         
-                        if (distance < 120) {
-                            const opacity = (120 - distance) / 120;
-                            
-                            const mouseDistanceToConnection = this.distanceToLine(
-                                this.mouse.x, this.mouse.y,
-                                nodeA.x, nodeA.y,
-                                nodeB.x, nodeB.y
+                        if (mouseDistance < 150) {
+                            const force = (150 - mouseDistance) / 150;
+                            const angle = Math.atan2(node.y - this.mouse.y, node.x - this.mouse.x);
+                            node.vx += Math.cos(angle) * force * 0.02;
+                            node.vy += Math.sin(angle) * force * 0.02;
+                            node.radius = node.originalRadius + force * 3;
+                        } else {
+                            node.radius = node.originalRadius;
+                        }
+                        
+                        const pulse = Math.sin(Date.now() * 0.003 + node.pulseOffset) * 0.5 + 0.5;
+                        const alpha = 0.3 + pulse * 0.4;
+                        
+                        this.ctx.beginPath();
+                        this.ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+                        
+                        if (this.isDarkTheme) {
+                            this.ctx.fillStyle = `rgba(100, 255, 218, ${alpha})`;
+                            this.ctx.shadowColor = 'rgba(100, 255, 218, 0.5)';
+                        } else {
+                            this.ctx.fillStyle = `rgba(37, 99, 235, ${alpha})`;
+                            this.ctx.shadowColor = 'rgba(37, 99, 235, 0.5)';
+                        }
+                        
+                        this.ctx.shadowBlur = 10;
+                        this.ctx.fill();
+                        this.ctx.shadowBlur = 0;
+                    });
+                    
+                    for (let i = 0; i < this.nodes.length; i++) {
+                        for (let j = i + 1; j < this.nodes.length; j++) {
+                            const nodeA = this.nodes[i];
+                            const nodeB = this.nodes[j];
+                            const distance = Math.sqrt(
+                                Math.pow(nodeA.x - nodeB.x, 2) + 
+                                Math.pow(nodeA.y - nodeB.y, 2)
                             );
                             
-                            let lineWidth = 1;
-                            let glowIntensity = opacity * 0.3;
-                            
-                            if (mouseDistanceToConnection < 50) {
-                                const mouseEffect = (50 - mouseDistanceToConnection) / 50;
-                                lineWidth += mouseEffect * 2;
-                                glowIntensity += mouseEffect * 0.5;
+                            if (distance < 120) {
+                                const opacity = (120 - distance) / 120;
+                                
+                                const mouseDistanceToConnection = this.distanceToLine(
+                                    this.mouse.x, this.mouse.y,
+                                    nodeA.x, nodeA.y,
+                                    nodeB.x, nodeB.y
+                                );
+                                
+                                let lineWidth = 1;
+                                let glowIntensity = opacity * 0.3;
+                                
+                                if (mouseDistanceToConnection < 50) {
+                                    const mouseEffect = (50 - mouseDistanceToConnection) / 50;
+                                    lineWidth += mouseEffect * 2;
+                                    glowIntensity += mouseEffect * 0.5;
+                                }
+                                
+                                this.ctx.beginPath();
+                                this.ctx.moveTo(nodeA.x, nodeA.y);
+                                this.ctx.lineTo(nodeB.x, nodeB.y);
+                                
+                                if (this.isDarkTheme) {
+                                    this.ctx.strokeStyle = `rgba(100, 255, 218, ${glowIntensity})`;
+                                    this.ctx.shadowColor = 'rgba(100, 255, 218, 0.3)';
+                                } else {
+                                    this.ctx.strokeStyle = `rgba(37, 99, 235, ${glowIntensity})`;
+                                    this.ctx.shadowColor = 'rgba(37, 99, 235, 0.3)';
+                                }
+                                
+                                this.ctx.lineWidth = lineWidth;
+                                this.ctx.shadowBlur = 5;
+                                this.ctx.stroke();
+                                this.ctx.shadowBlur = 0;
                             }
-                            
-                            this.ctx.beginPath();
-                            this.ctx.moveTo(nodeA.x, nodeA.y);
-                            this.ctx.lineTo(nodeB.x, nodeB.y);
-                            
-                            if (this.isDarkTheme) {
-                                this.ctx.strokeStyle = `rgba(100, 255, 218, ${glowIntensity})`;
-                                this.ctx.shadowColor = 'rgba(100, 255, 218, 0.3)';
-                            } else {
-                                this.ctx.strokeStyle = `rgba(37, 99, 235, ${glowIntensity})`;
-                                this.ctx.shadowColor = 'rgba(37, 99, 235, 0.3)';
-                            }
-                            
-                            this.ctx.lineWidth = lineWidth;
-                            this.ctx.shadowBlur = 5;
-                            this.ctx.stroke();
-                            this.ctx.shadowBlur = 0;
                         }
                     }
+                    
+                    this.lastTime = currentTime;
                 }
                 
-                requestAnimationFrame(() => this.animate());
+                this.animationFrameId = requestAnimationFrame((time) => this.animate(time));
             }
             
             distanceToLine(px, py, x1, y1, x2, y2) {
@@ -1537,6 +1763,12 @@
             themeToggle.textContent = newTheme === 'dark' ? '🌓' : '🌞';
         });
 
+        // Profile flip functionality
+        const profileContainer = document.getElementById('profileContainer');
+        profileContainer.addEventListener('click', () => {
+            profileContainer.classList.toggle('flipped');
+        });
+
         // CV Modal functionality
         const cvModal = document.getElementById('cvModal');
         const cvClose = document.getElementById('cvClose');
@@ -1595,6 +1827,121 @@
             observer.observe(el);
         });
 
+        // Back to top button
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Filter functionality for publications
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const publicationCards = document.querySelectorAll('#publicationsGrid .card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active button
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Filter cards
+                const filter = btn.getAttribute('data-filter');
+                publicationCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'scale(1)';
+                        }, 10);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Animate skill bars when visible
+        const animateSkillBars = () => {
+            const skillBars = document.querySelectorAll('.skill-bar');
+            
+            skillBars.forEach(bar => {
+                const skillLevel = bar.getAttribute('data-skill');
+                bar.style.width = skillLevel + '%';
+            });
+        };
+
+        // Trigger animation when skills section is visible
+        const skillsSection = document.getElementById('skills');
+        const skillsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateSkillBars();
+                    skillsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        skillsObserver.observe(skillsSection);
+
+        // Particle effect on click
+        document.addEventListener('click', (e) => {
+            // Don't create particles on button clicks
+            if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                return;
+            }
+            createParticles(e.clientX, e.clientY);
+        });
+
+        function createParticles(x, y) {
+            const colors = ['#64ffda', '#bb86fc', '#ff9800', '#4caf50'];
+            const particleCount = 10;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 8 + 4;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const destinationX = x + (Math.random() - 0.5) * 100;
+                const destinationY = y + (Math.random() - 0.5) * 100;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.backgroundColor = color;
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                particle.style.opacity = 1;
+                
+                document.body.appendChild(particle);
+                
+                // Animate particle
+                setTimeout(() => {
+                    particle.style.transform = `translate(${destinationX - x}px, ${destinationY - y}px) scale(0)`;
+                    particle.style.opacity = 0;
+                }, 10);
+                
+                // Remove particle after animation
+                setTimeout(() => {
+                    document.body.removeChild(particle);
+                }, 1000);
+            }
+        }
+
         // Touch gesture support for mobile
         let touchStartX = 0;
         let touchEndX = 0;
@@ -1635,11 +1982,6 @@
                 ticking = true;
             }
         });
-
-        // Reduce motion for users who prefer it
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            document.documentElement.style.setProperty('--animation-duration', '0.01ms');
-        }
     </script>
 </body>
 </html>
