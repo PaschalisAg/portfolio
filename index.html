@@ -41,7 +41,6 @@
     <meta property="og:url" content="https://paschalisag.github.io/portfolio/">
     <meta property="og:image" content="https://paschalisag.github.io/portfolio/pictures/profile_pic.jpeg">
 
-
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -129,6 +128,22 @@
 
         [data-theme="light"] #networkCanvas {
             opacity: 0.3;
+        }
+
+        /* Reduce canvas opacity further on mobile to minimize visual load */
+        @media (max-width: 768px) {
+            #networkCanvas {
+                opacity: 0.4;
+            }
+
+            [data-theme="light"] #networkCanvas {
+                opacity: 0.2;
+            }
+        }
+
+        /* Disable transitions during scroll to reduce jank */
+        body.scrolling * {
+            transition: none !important;
         }
 
         /* Header */
@@ -1033,7 +1048,6 @@
         </nav>
     </header>
 
-    Enhanced CV Modal
     <div class="cv-modal" id="cvModal">
         <div class="cv-content">
             <div class="cv-header">
@@ -1297,9 +1311,11 @@
                 this.canvas = canvas;
                 this.ctx = canvas.getContext('2d');
                 this.nodes = [];
-                this.connections = [];
                 this.mouse = { x: 0, y: 0 };
                 this.isDarkTheme = true;
+                this.isScrolling = false;
+                this.lastFrameTime = 0;
+                this.frameInterval = 1000 / 30; // Target 30 FPS
                 
                 this.resize();
                 this.initNodes();
@@ -1310,22 +1326,23 @@
             resize() {
                 this.canvas.width = window.innerWidth;
                 this.canvas.height = window.innerHeight;
+                this.initNodes(); // Reinitialize nodes on resize
             }
 
             initNodes() {
                 this.nodes = [];
-                const nodeCount = Math.floor((this.canvas.width * this.canvas.height) / 15000);
+                // Reduce node count on smaller screens
+                const nodeCount = Math.floor((this.canvas.width * this.canvas.height) / (window.innerWidth <= 768 ? 30000 : 15000));
                 
                 for (let i = 0; i < nodeCount; i++) {
                     this.nodes.push({
                         x: Math.random() * this.canvas.width,
                         y: Math.random() * this.canvas.height,
-                        vx: (Math.random() - 0.5) * 0.5,
-                        vy: (Math.random() - 0.5) * 0.5,
-                        radius: Math.random() * 3 + 1,
-                        originalRadius: Math.random() * 3 + 1,
+                        vx: (Math.random() - 0.5) * 0.3, // Reduced velocity
+                        vy: (Math.random() - 0.5) * 0.3,
+                        radius: Math.random() * 2 + 1, // Smaller nodes
+                        originalRadius: Math.random() * 2 + 1,
                         pulseOffset: Math.random() * Math.PI * 2,
-                        connections: []
                     });
                 }
             }
@@ -1340,9 +1357,33 @@
                     this.mouse.x = e.clientX;
                     this.mouse.y = e.clientY;
                 });
+
+                // Detect scrolling to pause animation
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    this.isScrolling = true;
+                    document.body.classList.add('scrolling');
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(() => {
+                        this.isScrolling = false;
+                        document.body.classList.remove('scrolling');
+                    }, 150); // Resume animation 150ms after scrolling stops
+                }, { passive: true });
             }
 
-            animate() {
+            animate(currentTime) {
+                if (this.isScrolling) {
+                    requestAnimationFrame((time) => this.animate(time));
+                    return;
+                }
+
+                // Throttle frame rate
+                if (currentTime - this.lastFrameTime < this.frameInterval) {
+                    requestAnimationFrame((time) => this.animate(time));
+                    return;
+                }
+                this.lastFrameTime = currentTime;
+
                 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
                 
                 this.nodes.forEach(node => {
@@ -1356,50 +1397,52 @@
                     node.y = Math.max(0, Math.min(this.canvas.height, node.y));
                     
                     const mouseDistance = Math.sqrt(
-                        Math.pow(node.x - this.mouse.x, 2) + 
-                        Math.pow(node.y - this.mouse.y, 2)
+                        (node.x - this.mouse.x) ** 2 + (node.y - this.mouse.y) ** 2
                     );
                     
-                    if (mouseDistance < 150) {
-                        const force = (150 - mouseDistance) / 150;
+                    if (mouseDistance < 100) { // Reduced interaction radius
+                        const force = (100 - mouseDistance) / 100;
                         const angle = Math.atan2(node.y - this.mouse.y, node.x - this.mouse.x);
-                        node.vx += Math.cos(angle) * force * 0.02;
-                        node.vy += Math.sin(angle) * force * 0.02;
-                        node.radius = node.originalRadius + force * 3;
+                        node.vx += Math.cos(angle) * force * 0.015; // Reduced force
+                        node.vy += Math.sin(angle) * force * 0.015;
+                        node.radius = node.originalRadius + force * 2;
                     } else {
                         node.radius = node.originalRadius;
                     }
                     
-                    const pulse = Math.sin(Date.now() * 0.003 + node.pulseOffset) * 0.5 + 0.5;
-                    const alpha = 0.3 + pulse * 0.4;
+                    const pulse = Math.sin(currentTime * 0.002 + node.pulseOffset) * 0.5 + 0.5;
+                    const alpha = 0.2 + pulse * 0.3; // Reduced alpha range
                     
                     this.ctx.beginPath();
                     this.ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
                     
                     if (this.isDarkTheme) {
                         this.ctx.fillStyle = `rgba(100, 255, 218, ${alpha})`;
-                        this.ctx.shadowColor = 'rgba(100, 255, 218, 0.5)';
+                        this.ctx.shadowColor = 'rgba(100, 255, 218, 0.3)';
                     } else {
                         this.ctx.fillStyle = `rgba(37, 99, 235, ${alpha})`;
-                        this.ctx.shadowColor = 'rgba(37, 99, 235, 0.5)';
+                        this.ctx.shadowColor = 'rgba(37, 99, 235, 0.3)';
                     }
                     
-                    this.ctx.shadowBlur = 10;
+                    this.ctx.shadowBlur = 8; // Reduced shadow blur
                     this.ctx.fill();
                     this.ctx.shadowBlur = 0;
                 });
                 
-                for (let i = 0; i < this.nodes.length; i++) {
-                    for (let j = i + 1; j < this.nodes.length; j++) {
+                // Optimize connection drawing
+                const maxConnections = 50; // Limit total connections
+                let connectionCount = 0;
+                
+                for (let i = 0; i < this.nodes.length && connectionCount < maxConnections; i++) {
+                    for (let j = i + 1; j < this.nodes.length && connectionCount < maxConnections; j++) {
                         const nodeA = this.nodes[i];
                         const nodeB = this.nodes[j];
                         const distance = Math.sqrt(
-                            Math.pow(nodeA.x - nodeB.x, 2) + 
-                            Math.pow(nodeA.y - nodeB.y, 2)
+                            (nodeA.x - nodeB.x) ** 2 + (nodeB.y - nodeA.y) ** 2
                         );
                         
-                        if (distance < 120) {
-                            const opacity = (120 - distance) / 120;
+                        if (distance < 100) { // Reduced connection distance
+                            const opacity = (100 - distance) / 100;
                             
                             const mouseDistanceToConnection = this.distanceToLine(
                                 this.mouse.x, this.mouse.y,
@@ -1407,13 +1450,13 @@
                                 nodeB.x, nodeB.y
                             );
                             
-                            let lineWidth = 1;
-                            let glowIntensity = opacity * 0.3;
+                            let lineWidth = 0.8; // Reduced line width
+                            let glowIntensity = opacity * 0.2;
                             
-                            if (mouseDistanceToConnection < 50) {
-                                const mouseEffect = (50 - mouseDistanceToConnection) / 50;
-                                lineWidth += mouseEffect * 2;
-                                glowIntensity += mouseEffect * 0.5;
+                            if (mouseDistanceToConnection < 40) {
+                                const mouseEffect = (40 - mouseDistanceToConnection) / 40;
+                                lineWidth += mouseEffect * 1.5;
+                                glowIntensity += mouseEffect * 0.4;
                             }
                             
                             this.ctx.beginPath();
@@ -1422,21 +1465,23 @@
                             
                             if (this.isDarkTheme) {
                                 this.ctx.strokeStyle = `rgba(100, 255, 218, ${glowIntensity})`;
-                                this.ctx.shadowColor = 'rgba(100, 255, 218, 0.3)';
+                                this.ctx.shadowColor = 'rgba(100, 255, 218, 0.2)';
                             } else {
                                 this.ctx.strokeStyle = `rgba(37, 99, 235, ${glowIntensity})`;
-                                this.ctx.shadowColor = 'rgba(37, 99, 235, 0.3)';
+                                this.ctx.shadowColor = 'rgba(37, 99, 235, 0.2)';
                             }
                             
                             this.ctx.lineWidth = lineWidth;
-                            this.ctx.shadowBlur = 5;
+                            this.ctx.shadowBlur = 4; // Reduced shadow blur
                             this.ctx.stroke();
                             this.ctx.shadowBlur = 0;
+                            
+                            connectionCount++;
                         }
                     }
                 }
                 
-                requestAnimationFrame(() => this.animate());
+                requestAnimationFrame((time) => this.animate(time));
             }
             
             distanceToLine(px, py, x1, y1, x2, y2) {
@@ -1464,7 +1509,6 @@
         mobileMenuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('mobile-open');
             
-            // Animate hamburger
             const hamburgers = mobileMenuToggle.querySelectorAll('.hamburger');
             if (navLinks.classList.contains('mobile-open')) {
                 hamburgers[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
@@ -1477,7 +1521,6 @@
             }
         });
 
-        // Close mobile menu when clicking on a link
         navLinks.addEventListener('click', (e) => {
             if (e.target.tagName === 'A') {
                 navLinks.classList.remove('mobile-open');
@@ -1498,7 +1541,6 @@
             body.setAttribute('data-theme', newTheme);
             network.updateTheme(newTheme === 'dark');
             
-            // Update theme toggle icon
             themeToggle.textContent = newTheme === 'dark' ? '🌑' : '🔆';
         });
 
@@ -1535,12 +1577,26 @@
             });
         });
 
-        // Scroll progress indicator
-        window.addEventListener('scroll', () => {
+        // Debounced scroll progress indicator
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        const updateScrollProgress = debounce(() => {
             const scrollProgress = document.getElementById('scrollProgress');
             const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
             scrollProgress.style.width = scrollPercent + '%';
-        });
+        }, 100);
+
+        window.addEventListener('scroll', updateScrollProgress, { passive: true });
 
         // Fade in animation on scroll
         const observerOptions = {
@@ -1552,6 +1608,7 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Unobserve after animation to improve performance
                 }
             });
         }, observerOptions);
@@ -1575,33 +1632,25 @@
 
         function handleSwipe() {
             if (touchEndX < touchStartX - 50) {
-                // Swipe left - could add functionality here
+                // Swipe left
             }
             if (touchEndX > touchStartX + 50) {
-                // Swipe right - could add functionality here
+                // Swipe right
             }
         }
 
-        // Performance optimization for mobile
-        let ticking = false;
-
-        function updateOnScroll() {
-            const scrolled = window.pageYOffset;
-            const parallax = document.querySelector('.hero');
-            if (parallax && window.innerWidth > 768) {
-                parallax.style.transform = `translateY(${scrolled * 0.3}px)`;
-            }
-            ticking = false;
-        }
-
+        // Remove parallax effect on mobile
         window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(updateOnScroll);
-                ticking = true;
+            if (window.innerWidth > 768) {
+                const scrolled = window.pageYOffset;
+                const parallax = document.querySelector('.hero');
+                if (parallax) {
+                    parallax.style.transform = `translateY(${scrolled * 0.3}px)`;
+                }
             }
-        });
+        }, { passive: true });
 
-        // Reduce motion for users who prefer it
+        // Enhance prefers-reduced-motion
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             document.documentElement.style.setProperty('--animation-duration', '0.01ms');
         }
