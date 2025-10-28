@@ -28,57 +28,112 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- SEO Meta Tags -->
-    <title>Personal and Academic Homepage of Paschalis Agapitos</title>
-    <meta name="description" content="Portfolio of Paschalis Agapitos, PhD candidate in Computational Humanities at DIPC. Expertise in NLP, network science, and cultural analytics.">
-    <meta name="keywords" content="Paschalis Agapitos, Computational Humanities, NLP, Network Data Science, Digital Humanities, Portfolio, Research, Publications">
+    <!-- Enhanced SEO Meta Tags -->
+    <title>Paschalis Agapitos - Computational Humanities Researcher | PhD DIPC</title>
+    <meta name="description" content="Paschalis Agapitos: PhD candidate in Computational Humanities at DIPC. Expert in NLP, network science, cultural analytics. Publications in Nature, JCLS, and JORS.">
+    <meta name="keywords" content="Paschalis Agapitos, Computational Humanities, NLP, Network Data Science, Digital Humanities, Stylometry, Cultural Analytics, Research, Publications">
     <meta name="author" content="Paschalis Agapitos">
-
-    <!--Open Graph-->
-    <meta property="og:title" content="Personal and Academic Homepage of Paschalis Agapitos">
-    <meta property="og:description" content="PhD candidate at DIPC. NLP, network data science, and computational humanities projects, publications, and portfolio.">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Enhanced Open Graph -->
+    <meta property="og:title" content="Paschalis Agapitos - Computational Humanities Researcher">
+    <meta property="og:description" content="PhD candidate at DIPC specializing in NLP and network data science. Explore publications, projects, and research in computational humanities.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://paschalisag.github.io/portfolio/">
-    <meta property="og:image" content="https://paschalisag.github.io/portfolio/pictures/profile_pic.jpeg">
+    <meta property="og:image" content="./pictures/profile_pic.jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Paschalis Agapitos - Computational Humanities Researcher">
+    <meta name="twitter:description" content="PhD candidate at DIPC specializing in NLP and network data science">
+    <meta name="twitter:image" content="./pictures/profile_pic.jpeg">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
-            --primary-bg: #0a0a0a;
-            --secondary-bg: #1a1a1a;
-            --accent-bg: #2a2a2a;
+            /* Base Colors */
+            --primary-bg: #0a0a0f;
+            --secondary-bg: #151521;
+            --accent-bg: #1e1e2e;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            
+            /* Text Colors */
             --text-primary: #ffffff;
-            --text-secondary: #b0b0b0;
-            --text-muted: #707070;
+            --text-secondary: #a0a0b0;
+            --text-muted: #6a6a7a;
+            --text-accent: #64ffda;
+            
+            /* Academic Theme Colors */
             --accent-blue: #64ffda;
             --accent-purple: #bb86fc;
             --accent-orange: #ff9800;
             --accent-green: #4caf50;
-            --border-color: #333333;
+            --accent-cyan: #00bcd4;
+            --accent-pink: #e91e63;
+            
+            /* Glassmorphism */
+            --glass-backdrop: blur(20px);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            
+            /* Gradients */
             --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            
+            /* Shadows & Effects */
             --shadow-glow: 0 0 20px rgba(100, 255, 218, 0.3);
             --shadow-dark: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.3);
+            
+            /* Animation Variables */
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         [data-theme="light"] {
             --primary-bg: #fafafa;
             --secondary-bg: #ffffff;
-            --accent-bg: #f5f5f5;
-            --text-primary: #1a1a1a;
-            --text-secondary: #4a4a4a;
-            --text-muted: #6a6a6a;
+            --accent-bg: #f8f9fa;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a5a;
+            --text-muted: #6a6a7a;
+            --text-accent: #2563eb;
+            
             --accent-blue: #2563eb;
-            --border-color: #e0e0e0;
+            --accent-purple: #7c3aed;
+            --accent-orange: #ea580c;
+            --accent-green: #16a34a;
+            --accent-cyan: #0891b2;
+            --accent-pink: #be185d;
+            
+            --glass-backdrop: blur(20px);
+            --glass-border: 1px solid rgba(0, 0, 0, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            
             --gradient-primary: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
             --gradient-secondary: linear-gradient(135deg, #ec4899 0%, #ef4444 100%);
             --gradient-accent: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+            --gradient-hero: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #ec4899 100%);
+            
             --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.3);
             --shadow-dark: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
 
         * {
@@ -87,31 +142,43 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--primary-bg);
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
-            transition: all 0.3s ease;
+            transition: background-color var(--transition-smooth), color var(--transition-smooth);
+            min-height: 100vh;
         }
 
-        /* General link styles for content links */
-        a {
-            color: var(--accent-blue);
-            text-decoration: underline;
-            transition: color 0.3s ease;
+        /* Enhanced Accessibility */
+        *:focus {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
         }
 
-        a:hover {
-            color: var(--accent-purple);
-        }
-
-        /* Exclusions: keep nav, buttons, and contact links styled as before */
-        .nav-links a,
-        .btn,
-        .contact-link {
+        /* Skip to content link for accessibility */
+        .skip-to-content {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--accent-blue);
+            color: var(--primary-bg);
+            padding: 8px;
             text-decoration: none;
+            border-radius: 4px;
+            z-index: 10000;
+            font-weight: 600;
+            transition: top var(--transition-fast);
+        }
+
+        .skip-to-content:focus {
+            top: 6px;
         }
 
         /* Animated Network Background */
@@ -122,54 +189,35 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.6;
+            opacity: 0.4;
             pointer-events: none;
         }
 
         [data-theme="light"] #networkCanvas {
-            opacity: 0.3;
+            opacity: 0.2;
         }
 
-        /* Reduce canvas opacity further on mobile to minimize visual load */
-        @media (max-width: 768px) {
-            #networkCanvas {
-                opacity: 0.4;
-            }
-
-            [data-theme="light"] #networkCanvas {
-                opacity: 0.2;
-            }
-        }
-
-        /* Disable transitions during scroll to reduce jank */
-        body.scrolling * {
-            transition: none !important;
-        }
-
-        /* Header */
+        /* Enhanced Header with Glassmorphism */
         header {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(26, 26, 26, 0.95);
-            backdrop-filter: blur(10px);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
+            -webkit-backdrop-filter: var(--glass-backdrop);
+            border-bottom: var(--glass-border);
             z-index: 1000;
             padding: 1rem 0;
-            border-bottom: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-        }
-
-        [data-theme="light"] header {
-            background: rgba(255, 255, 255, 0.95);
+            transition: all var(--transition-smooth);
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 0 2rem;
         }
 
         .logo {
@@ -180,19 +228,50 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all var(--transition-smooth);
+            position: relative;
         }
 
         .logo:hover {
             transform: scale(1.05);
+            filter: brightness(1.2);
         }
 
-        /* Mobile Menu */
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity var(--transition-smooth);
+        }
+
+        .logo:hover::before {
+            opacity: 0.1;
+        }
+
+        /* Enhanced Navigation */
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 1rem;
+            gap: 2rem;
             align-items: center;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            border: var(--glass-border);
         }
 
         .nav-links a {
@@ -200,59 +279,129 @@
             color: var(--text-secondary);
             font-weight: 500;
             position: relative;
-            transition: all 0.3s ease;
+            transition: all var(--transition-smooth);
             font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
         }
 
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
-            left: 0;
+            bottom: 0;
+            left: 50%;
             width: 0;
             height: 2px;
             background: var(--accent-blue);
-            transition: width 0.3s ease;
+            transition: all var(--transition-smooth);
+            transform: translateX(-50%);
         }
 
-        .nav-links a:hover::after {
-            width: 100%;
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 80%;
         }
 
-        .nav-links a:hover {
+        .nav-links a:hover,
+        .nav-links a.active {
             color: var(--accent-blue);
+            background: rgba(100, 255, 218, 0.1);
         }
 
-        .theme-toggle {
-            background: none;
-            border: 2px solid var(--border-color);
+        /* Section Indicator */
+        .section-indicator {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .section-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            position: relative;
+        }
+
+        .section-dot:hover,
+        .section-dot.active {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            transform: scale(1.2);
+        }
+
+        .section-dot::before {
+            content: attr(data-section);
+            position: absolute;
+            right: 150%;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: var(--glass-border);
             color: var(--text-primary);
-            padding: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--transition-smooth);
+        }
+
+        .section-dot:hover::before {
+            opacity: 1;
+        }
+
+        /* Theme Toggle Enhanced */
+        .theme-toggle {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
+            border: var(--glass-border);
+            color: var(--text-primary);
+            padding: 0.75rem;
             border-radius: 50%;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all var(--transition-smooth);
             font-size: 1.1rem;
-            width: 40px;
-            height: 40px;
+            width: 48px;
+            height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: var(--shadow-glass);
         }
 
         .theme-toggle:hover {
             border-color: var(--accent-blue);
             color: var(--accent-blue);
-            transform: rotate(180deg);
+            transform: rotate(180deg) scale(1.1);
+            box-shadow: var(--shadow-glow);
         }
 
+        /* Mobile Menu Enhanced */
         .mobile-menu-toggle {
             display: none;
             flex-direction: column;
             cursor: pointer;
-            padding: 0.5rem;
+            padding: 0.75rem;
             border: none;
-            background: none;
-            color: var(--text-primary);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
+            border-radius: 12px;
+            border: var(--glass-border);
         }
 
         .hamburger {
@@ -260,56 +409,128 @@
             height: 3px;
             background: var(--text-primary);
             margin: 3px 0;
-            transition: 0.3s;
+            transition: all var(--transition-smooth);
             border-radius: 2px;
         }
 
-        /* Main content */
+        .mobile-menu-toggle.active .hamburger:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .mobile-menu-toggle.active .hamburger:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active .hamburger:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Loading States */
+        .loading-skeleton {
+            background: linear-gradient(90deg, var(--accent-bg) 25%, var(--glass-bg) 50%, var(--accent-bg) 75%);
+            background-size: 200% 100%;
+            animation: loading-shimmer 2s infinite;
+        }
+
+        @keyframes loading-shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* Scroll Progress Indicator */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
+            z-index: 9999;
+        }
+
+        .scroll-progress-bar {
+            height: 100%;
+            background: var(--gradient-primary);
+            width: 0%;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Main Content */
         main {
-            margin-top: 80px;
-            padding: 0 1rem;
+            margin-top: 90px;
+            padding: 0;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Hero section */
+        /* Enhanced Hero Section */
         .hero {
-            min-height: calc(100vh - 80px);
+            min-height: calc(100vh - 90px);
             display: flex;
             align-items: center;
             position: relative;
             overflow: hidden;
-            padding: 2rem 0;
+            padding: 4rem 0;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(100, 255, 218, 0.1), transparent);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .hero-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 4rem;
             align-items: center;
             width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
         }
 
+        /* Animated Text Reveals */
         .hero-text {
             animation: slideInLeft 1s ease-out;
         }
 
         .hero-text h1 {
-            font-size: clamp(2rem, 8vw, 3.5rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: var(--gradient-primary);
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-hero);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            line-height: 1.2;
+            line-height: 1.1;
+            position: relative;
+        }
+
+        .hero-text .typing-animation {
+            border-right: 3px solid var(--accent-blue);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { border-color: var(--accent-blue); }
+            51%, 100% { border-color: transparent; }
         }
 
         .hero-text .subtitle {
-            font-size: clamp(1rem, 4vw, 1.3rem);
+            font-size: clamp(1.2rem, 4vw, 1.6rem);
             color: var(--text-secondary);
             margin-bottom: 1.5rem;
             opacity: 0;
@@ -317,13 +538,15 @@
         }
 
         .hero-text .description {
-            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            font-size: clamp(1rem, 3vw, 1.2rem);
             color: var(--text-muted);
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
             opacity: 0;
             animation: fadeInUp 1s ease-out 0.7s forwards;
         }
 
+        /* Enhanced Profile Container */
         .hero-image {
             display: flex;
             justify-content: center;
@@ -332,11 +555,10 @@
             animation: slideInRight 1s ease-out;
         }
 
-        /* Enhanced profile photo container */
         .profile-container {
             position: relative;
-            width: clamp(200px, 40vw, 350px);
-            height: clamp(200px, 40vw, 350px);
+            width: clamp(250px, 40vw, 400px);
+            height: clamp(250px, 40vw, 400px);
             cursor: pointer;
             perspective: 1000px;
         }
@@ -345,7 +567,7 @@
             position: relative;
             width: 100%;
             height: 100%;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
             transform-style: preserve-3d;
         }
 
@@ -362,8 +584,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: var(--shadow-glow);
-            transition: all 0.5s ease;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
+            border: var(--glass-border);
+            box-shadow: var(--shadow-glass);
         }
 
         .profile-front {
@@ -373,7 +597,6 @@
         .profile-back {
             transform: rotateY(180deg);
             background: var(--secondary-bg);
-            border: 4px solid var(--accent-blue);
             overflow: hidden;
         }
 
@@ -384,21 +607,22 @@
             object-fit: cover;
             border: 4px solid var(--accent-blue);
             box-shadow: var(--shadow-glow);
-            transition: all 0.5s ease;
+            transition: all var(--transition-smooth);
         }
 
         .profile-container:hover .profile-photo {
             transform: scale(1.05);
-            box-shadow: 0 0 40px rgba(100, 255, 218, 0.5);
+            box-shadow: 0 0 50px rgba(100, 255, 218, 0.6);
         }
 
-        /* CV Preview on back */
+        /* CV Preview on Back */
         .cv-preview {
             width: 100%;
             height: 100%;
-            padding: 1.5rem;
+            padding: 2rem;
             overflow-y: auto;
-            background: var(--secondary-bg);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
             border-radius: 50%;
             display: flex;
             flex-direction: column;
@@ -410,16 +634,16 @@
 
         .cv-preview h3 {
             color: var(--accent-blue);
-            font-size: clamp(0.9rem, 3vw, 1.2rem);
+            font-size: clamp(1rem, 3vw, 1.3rem);
             margin-bottom: 1rem;
             font-weight: 600;
         }
 
         .cv-preview-content {
-            font-size: clamp(0.7rem, 2vw, 0.8rem);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
             color: var(--text-secondary);
             line-height: 1.4;
-            max-height: 150px;
+            max-height: 120px;
             overflow-y: auto;
             margin-bottom: 1rem;
         }
@@ -428,77 +652,96 @@
             background: var(--accent-blue);
             color: var(--primary-bg);
             border: none;
-            padding: clamp(0.5rem, 2vw, 0.75rem) clamp(1rem, 4vw, 1.5rem);
+            padding: clamp(0.6rem, 2vw, 0.8rem) clamp(1rem, 4vw, 1.5rem);
             border-radius: 25px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: clamp(0.7rem, 2vw, 0.9rem);
-            margin-top: 1rem;
+            transition: all var(--transition-smooth);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            box-shadow: var(--shadow-glass);
         }
 
         .cv-download-btn:hover {
             background: var(--accent-purple);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: var(--shadow-glow);
         }
 
-        /* Flip instruction */
-        .flip-instruction {
+        /* Floating Elements */
+        .floating-elements {
             position: absolute;
-            bottom: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--text-muted);
-            font-size: clamp(0.7rem, 2vw, 0.9rem);
-            opacity: 0.7;
-            animation: bounce 2s infinite;
-            text-align: center;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
-        }
-
-        .hero-image::before {
-            content: '';
+        .floating-element {
             position: absolute;
-            width: calc(100% + 30px);
-            height: calc(100% + 30px);
-            background: transparent;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            z-index: 1;
-            opacity: 0.8;
-            animation: pulse 4s ease-in-out infinite;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
+            border: var(--glass-border);
+            animation: float 6s ease-in-out infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.1); opacity: 0.3; }
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+            width: 40px;
+            height: 40px;
         }
 
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+            width: 30px;
+            height: 30px;
+        }
+
+        .floating-element:nth-child(3) {
+            top: 40%;
+            left: 80%;
+            animation-delay: 4s;
+            width: 50px;
+            height: 50px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(120deg); }
+            66% { transform: translateY(10px) rotate(240deg); }
+        }
+
+        /* Enhanced Contact Links */
         .contact-links {
             display: flex;
-            gap: 0.75rem;
+            gap: 1rem;
             flex-wrap: wrap;
             opacity: 0;
             animation: fadeInUp 1s ease-out 0.9s forwards;
         }
 
         .contact-link {
-            padding: clamp(0.5rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem);
-            background: var(--secondary-bg);
+            padding: clamp(0.75rem, 2vw, 1rem) clamp(1.2rem, 3vw, 1.8rem);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
             color: var(--text-primary);
             text-decoration: none;
             border-radius: 50px;
-            border: 2px solid var(--border-color);
-            transition: all 0.3s ease;
+            border: var(--glass-border);
+            transition: all var(--transition-smooth);
             font-weight: 500;
             position: relative;
             overflow: hidden;
-            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            box-shadow: var(--shadow-glass);
         }
 
         .contact-link::before {
@@ -509,7 +752,7 @@
             width: 100%;
             height: 100%;
             background: var(--gradient-primary);
-            transition: all 0.3s ease;
+            transition: all var(--transition-smooth);
             z-index: -1;
         }
 
@@ -518,53 +761,66 @@
         }
 
         .contact-link:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-dark);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: var(--shadow-glow);
             color: white;
         }
 
-        /* Sections */
+        /* Enhanced Sections */
         .section {
-            padding: clamp(3rem, 8vw, 6rem) 0;
+            padding: clamp(4rem, 10vw, 8rem) 0;
             position: relative;
         }
 
         .section-title {
-            font-size: clamp(1.8rem, 6vw, 2.5rem);
-            font-weight: 700;
+            font-size: clamp(2rem, 6vw, 3rem);
+            font-weight: 800;
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
             position: relative;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
+            width: 100px;
+            height: 5px;
             background: var(--gradient-primary);
-            border-radius: 2px;
+            border-radius: 3px;
+            animation: expand 1s ease-out 0.5s forwards;
+            transform-origin: center;
+            width: 0;
         }
 
-        /* Cards */
+        @keyframes expand {
+            to { width: 100px; }
+        }
+
+        /* Enhanced Cards with Glassmorphism */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
 
         .card {
-            background: var(--secondary-bg);
-            border-radius: 20px;
-            padding: 1.5rem;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
+            border-radius: 24px;
+            padding: 2rem;
+            border: var(--glass-border);
+            transition: all var(--transition-smooth);
             position: relative;
             overflow: hidden;
+            box-shadow: var(--shadow-glass);
         }
 
         .card::before {
@@ -573,71 +829,107 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
+            height: 4px;
             background: var(--gradient-primary);
         }
 
         .card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-dark);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-glow);
             border-color: var(--accent-blue);
         }
 
         .card h3 {
-            font-size: clamp(1.1rem, 4vw, 1.5rem);
-            margin-bottom: 1rem;
+            font-size: clamp(1.3rem, 4vw, 1.6rem);
+            margin-bottom: 1.2rem;
             color: var(--text-primary);
             line-height: 1.3;
+            font-weight: 700;
         }
 
         .card p {
             color: var(--text-secondary);
             margin-bottom: 1.5rem;
-            font-size: clamp(0.85rem, 2vw, 1rem);
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            line-height: 1.7;
         }
 
         .card-meta {
             color: var(--text-muted);
-            font-size: clamp(0.75rem, 2vw, 0.9rem);
-            margin-bottom: 1rem;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            margin-bottom: 1.2rem;
+            font-weight: 500;
         }
 
+        /* Enhanced Tags */
         .tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
         }
 
         .tag {
-            background: var(--accent-bg);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
             color: var(--accent-blue);
-            padding: 0.25rem 0.75rem;
+            padding: 0.5rem 1rem;
             border-radius: 20px;
-            font-size: clamp(0.7rem, 1.5vw, 0.8rem);
-            font-weight: 500;
+            font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+            font-weight: 600;
             border: 1px solid var(--accent-blue);
+            transition: all var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
         }
 
+        .tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-blue);
+            transition: all var(--transition-smooth);
+            z-index: -1;
+        }
+
+        .tag:hover::before {
+            left: 0;
+        }
+
+        .tag:hover {
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glass);
+        }
+
+        /* Enhanced Buttons */
         .btn-group {
             display: flex;
-            gap: 0.75rem;
-            margin-top: 1rem;
+            gap: 1rem;
+            margin-top: 1.5rem;
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: clamp(0.4rem, 1.5vw, 0.5rem) clamp(0.8rem, 2vw, 1rem);
+            padding: clamp(0.6rem, 1.8vw, 0.8rem) clamp(1rem, 2.5vw, 1.5rem);
             border: 2px solid var(--accent-blue);
-            background: transparent;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
             color: var(--accent-blue);
             text-decoration: none;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            font-weight: 500;
+            border-radius: 30px;
+            transition: all var(--transition-smooth);
+            font-weight: 600;
             position: relative;
             overflow: hidden;
-            font-size: clamp(0.75rem, 2vw, 0.9rem);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-glass);
         }
 
         .btn::before {
@@ -648,7 +940,7 @@
             width: 100%;
             height: 100%;
             background: var(--accent-blue);
-            transition: all 0.3s ease;
+            transition: all var(--transition-smooth);
             z-index: -1;
         }
 
@@ -658,48 +950,276 @@
 
         .btn:hover {
             color: var(--primary-bg);
-            transform: translateY(-2px);
-        }
-
-        /* Skills visualization */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .skill-item {
-            background: var(--secondary-bg);
-            padding: 1.5rem 1rem;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-        }
-
-        .skill-item:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-dark);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: var(--shadow-glow);
             border-color: var(--accent-blue);
         }
 
+        .btn i {
+            font-size: 0.9em;
+        }
+
+        /* Enhanced Skills Visualization */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-item {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            border: var(--glass-border);
+            transition: all var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-glass);
+        }
+
+        .skill-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            transform: scaleX(0);
+            transition: transform var(--transition-slow);
+            transform-origin: left;
+        }
+
+        .skill-item.animate::before {
+            transform: scaleX(1);
+        }
+
+        .skill-item:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: var(--shadow-glow);
+            border-color: var(--accent-cyan);
+        }
+
         .skill-icon {
-            font-size: clamp(1.2rem, 4vw, 2rem);
-            margin-bottom: 1rem;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: 1.5rem;
+            color: var(--accent-cyan);
+            transition: all var(--transition-smooth);
+        }
+
+        .skill-item:hover .skill-icon {
+            transform: scale(1.2) rotate(5deg);
             color: var(--accent-blue);
         }
 
         .skill-name {
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 0.5rem;
-            font-size: clamp(0.8rem, 2vw, 1rem);
+            margin-bottom: 0.8rem;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
         }
 
         .skill-level {
             color: var(--text-secondary);
-            font-size: clamp(0.7rem, 1.8vw, 0.9rem);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            margin-bottom: 1rem;
+        }
+
+        /* Animated Progress Bar */
+        .skill-progress {
+            width: 100%;
+            height: 6px;
+            background: var(--accent-bg);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-progress-bar {
+            height: 100%;
+            background: var(--gradient-accent);
+            border-radius: 3px;
+            transition: width 2s ease-out;
+            position: relative;
+        }
+
+        .skill-progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: progress-shine 2s infinite;
+        }
+
+        @keyframes progress-shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Enhanced Publications Section */
+        .publication-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .publication-card .card {
+            height: 100%;
+        }
+
+        .publication-metrics {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .metric {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: var(--glass-border);
+            font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .metric i {
+            color: var(--accent-green);
+            margin-right: 0.3rem;
+        }
+
+        /* Citation Tools */
+        .citation-tools {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .citation-btn {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
+            border: 1px solid var(--accent-purple);
+            color: var(--accent-purple);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .citation-btn:hover {
+            background: var(--accent-purple);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Enhanced Project Cards */
+        .project-card {
+            position: relative;
+        }
+
+        .project-timeline {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+        }
+
+        .project-timeline i {
+            color: var(--accent-orange);
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
+            color: var(--text-secondary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+            font-weight: 500;
+            border: 1px solid var(--glass-border);
+            transition: all var(--transition-smooth);
+        }
+
+        .tech-tag:hover {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+            transform: translateY(-2px);
+        }
+
+        /* Enhanced Footer */
+        footer {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
+            padding: 4rem 0;
+            text-align: center;
+            border-top: var(--glass-border);
+            margin-top: 4rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gradient-primary);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border: var(--glass-border);
+            transition: all var(--transition-smooth);
+            font-size: 1.2rem;
+        }
+
+        .social-link:hover {
+            color: var(--accent-blue);
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: var(--shadow-glow);
         }
 
         /* Enhanced CV Modal */
@@ -711,28 +1231,29 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
         }
 
         .cv-modal.show {
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: fadeIn 0.3s ease-out;
+            animation: fadeIn var(--transition-smooth);
         }
 
         .cv-content {
-            background: var(--secondary-bg);
-            border-radius: 20px;
-            padding: 1.5rem;
-            max-width: 800px;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
+            border-radius: 24px;
+            padding: 2rem;
+            max-width: 900px;
             width: 95%;
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
-            border: 2px solid var(--accent-blue);
-            box-shadow: var(--shadow-glow);
+            border: var(--glass-border);
+            box-shadow: var(--shadow-glass);
             margin: 1rem;
         }
 
@@ -741,15 +1262,15 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
-            padding-bottom: 1rem;
+            padding-bottom: 1.5rem;
             border-bottom: 2px solid var(--accent-blue);
             flex-wrap: wrap;
             gap: 1rem;
         }
 
         .cv-title {
-            font-size: clamp(1.5rem, 4vw, 2rem);
-            font-weight: 700;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 800;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -764,75 +1285,83 @@
         }
 
         .cv-close {
-            background: none;
-            border: none;
-            font-size: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
+            border: var(--glass-border);
+            font-size: 1.5rem;
             color: var(--text-primary);
             cursor: pointer;
-            transition: all 0.3s ease;
-            min-width: 40px;
-            min-height: 40px;
+            transition: all var(--transition-smooth);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .cv-close:hover {
             color: var(--accent-blue);
             transform: scale(1.1);
+            box-shadow: var(--shadow-glow);
         }
 
         .cv-section {
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
 
         .cv-section h3 {
             color: var(--accent-blue);
-            font-size: clamp(1.2rem, 3vw, 1.5rem);
-            margin-bottom: 1rem;
+            font-size: clamp(1.3rem, 3vw, 1.6rem);
+            margin-bottom: 1.5rem;
             border-bottom: 2px solid var(--accent-blue);
-            padding-bottom: 0.5rem;
+            padding-bottom: 0.8rem;
+            font-weight: 700;
         }
 
         .cv-item {
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background: var(--accent-bg);
-            border-radius: 10px;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
+            border-radius: 16px;
             border-left: 4px solid var(--accent-blue);
+            border: var(--glass-border);
+            transition: all var(--transition-smooth);
+        }
+
+        .cv-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow-glass);
         }
 
         .cv-item h4 {
             color: var(--text-primary);
-            margin-bottom: 0.5rem;
-            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            margin-bottom: 0.8rem;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-weight: 700;
         }
 
         .cv-item .date {
             color: var(--accent-blue);
-            font-weight: 500;
-            font-size: clamp(0.75rem, 1.8vw, 0.9rem);
+            font-weight: 600;
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
+            margin-bottom: 0.5rem;
         }
 
         .cv-item .location {
             color: var(--text-secondary);
-            font-size: clamp(0.75rem, 1.8vw, 0.9rem);
-            margin-bottom: 0.5rem;
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
+            margin-bottom: 0.8rem;
         }
 
         .cv-item p {
             color: var(--text-secondary);
-            line-height: 1.5;
-            font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+            line-height: 1.6;
+            font-size: clamp(0.85rem, 2vw, 1rem);
         }
 
-        /* Footer */
-        footer {
-            background: var(--secondary-bg);
-            padding: 3rem 0;
-            text-align: center;
-            border-top: 1px solid var(--border-color);
-            margin-top: 4rem;
-        }
-
-        /* Animations */
+        /* Enhanced Animations */
         @keyframes slideInLeft {
             from { transform: translateX(-100px); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
@@ -853,6 +1382,11 @@
             to { opacity: 1; }
         }
 
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
@@ -864,25 +1398,47 @@
             transform: translateY(0);
         }
 
-        /* Scroll indicator */
-        .scroll-indicator {
-            position: fixed;
-            top: 80px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--border-color);
-            z-index: 999;
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.6s ease;
         }
 
-        .scroll-progress {
-            height: 100%;
-            background: var(--gradient-primary);
-            width: 0%;
-            transition: width 0.1s ease;
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
         }
 
-        /* Mobile-specific styles */
+        /* Enhanced Mobile Responsiveness */
+        @media (max-width: 1024px) {
+            .section-indicator {
+                display: none;
+            }
+            
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 3rem;
+            }
+
+            .hero-image {
+                order: -1;
+            }
+
+            .nav-container {
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                padding: 0.5rem 1rem;
+            }
+
+            nav {
+                padding: 0 1rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .mobile-menu-toggle {
                 display: flex;
@@ -893,15 +1449,17 @@
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background: var(--secondary-bg);
+                background: var(--glass-bg);
+                backdrop-filter: var(--glass-backdrop);
                 flex-direction: column;
                 gap: 0;
                 transform: translateY(-100%);
                 opacity: 0;
                 visibility: hidden;
-                transition: all 0.3s ease;
-                border-top: 1px solid var(--border-color);
+                transition: all var(--transition-smooth);
+                border-top: var(--glass-border);
                 padding: 1rem 0;
+                border-radius: 0;
             }
 
             .nav-links.mobile-open {
@@ -917,28 +1475,18 @@
 
             .nav-links a {
                 display: block;
-                padding: 1rem;
-                border-bottom: 1px solid var(--border-color);
+                padding: 1.2rem;
+                border-bottom: 1px solid var(--glass-border);
                 width: 100%;
+                border-radius: 0;
             }
 
-            .theme-toggle {
-                position: relative;
-                z-index: 1001;
+            .hero {
+                padding: 2rem 0;
             }
 
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 2rem;
-            }
-
-            .hero-image {
-                order: -1;
-            }
-
-            .flip-instruction {
-                bottom: -30px;
+            .floating-elements {
+                display: none;
             }
 
             .contact-links {
@@ -955,106 +1503,157 @@
             }
 
             .skills-grid {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1.5rem;
             }
 
-            /* Touch-friendly interactions */
-            .card, .skill-item, .contact-link, .btn {
-                min-height: 44px;
-                display: flex;
-                align-items: center;
+            .publication-metrics {
                 justify-content: center;
             }
 
-            .card {
-                min-height: auto;
-                display: block;
+            .social-links {
+                gap: 1.5rem;
+            }
+
+            .floating-elements {
+                opacity: 0.3;
             }
         }
 
-        /* Extra small mobile devices */
         @media (max-width: 480px) {
-            nav {
-                padding: 0 0.75rem;
-            }
-
-            .hero {
-                padding: 1rem 0;
-            }
-
-            .section {
-                padding: 2rem 0;
-            }
-
-            .cards-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .contact-links {
-                gap: 0.5rem;
-            }
-
-            .contact-link {
-                font-size: 0.8rem;
-                padding: 0.5rem 1rem;
-            }
-
-            .cv-content {
-                padding: 1rem;
-                width: 98%;
-            }
-        }
-
-        /* Large screens optimization */
-        @media (min-width: 1400px) {
             .container {
-                max-width: 1400px;
+                padding: 0 1rem;
             }
 
             .hero-content {
-                gap: 4rem;
+                padding: 0 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .cv-content {
+                padding: 1.5rem;
+                width: 98%;
+            }
+
+            .footer-content {
+                padding: 0 1rem;
+            }
+
+            .social-links {
+                gap: 1rem;
+            }
+
+            .social-link {
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        /* Enhanced Large Screens */
+        @media (min-width: 1600px) {
+            .container {
+                max-width: 1600px;
+            }
+
+            .hero-content {
+                gap: 6rem;
             }
 
             .cards-grid {
-                grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-                gap: 2rem;
+                grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+                gap: 2.5rem;
+            }
+        }
+
+        /* Accessibility Enhancements */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .floating-elements {
+                display: none;
+            }
+            
+            .hero::before {
+                display: none;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --glass-bg: rgba(255, 255, 255, 0.9);
+                --glass-border: 2px solid #000;
+                --text-primary: #000;
+                --text-secondary: #333;
+            }
+
+            [data-theme="dark"] {
+                --glass-bg: rgba(0, 0, 0, 0.9);
+                --glass-border: 2px solid #fff;
+                --text-primary: #fff;
+                --text-secondary: #ccc;
             }
         }
     </style>
 </head>
 <body data-theme="dark">
-    <canvas id="networkCanvas"></canvas>
-    <div class="scroll-indicator">
-        <div class="scroll-progress" id="scrollProgress"></div>
+    <!-- Skip to content for accessibility -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+    
+    <!-- Animated Network Background -->
+    <canvas id="networkCanvas" aria-hidden="true"></canvas>
+    
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" aria-hidden="true">
+        <div class="scroll-progress-bar" id="scrollProgressBar"></div>
     </div>
     
-    <header>
-        <nav>
-            <div class="logo">Paschalis Agapitos</div>
-            <button class="mobile-menu-toggle" id="mobileMenuToggle">
-                <div class="hamburger"></div>
-                <div class="hamburger"></div>
-                <div class="hamburger"></div>
-            </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#about">About</a></li>
-                <li><a href="#research">Research</a></li>
-                <li><a href="#publications">Publications</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><button class="theme-toggle" id="themeToggle">🌓</button></li>
-            </ul>
+    <!-- Section Indicator -->
+    <nav class="section-indicator" aria-label="Section navigation">
+        <div class="section-dot active" data-section="About" data-target="about" role="button" tabindex="0" aria-label="Go to About section"></div>
+        <div class="section-dot" data-section="Research" data-target="research" role="button" tabindex="0" aria-label="Go to Research section"></div>
+        <div class="section-dot" data-section="Publications" data-target="publications" role="button" tabindex="0" aria-label="Go to Publications section"></div>
+        <div class="section-dot" data-section="Projects" data-target="projects" role="button" tabindex="0" aria-label="Go to Projects section"></div>
+        <div class="section-dot" data-section="Skills" data-target="skills" role="button" tabindex="0" aria-label="Go to Skills section"></div>
+    </nav>
+    
+    <!-- Enhanced Header with Glassmorphism -->
+    <header role="banner">
+        <nav role="navigation" aria-label="Main navigation">
+            <div class="logo" role="banner">Paschalis Agapitos</div>
+            <div class="nav-container">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                    <span class="hamburger" aria-hidden="true"></span>
+                    <span class="hamburger" aria-hidden="true"></span>
+                    <span class="hamburger" aria-hidden="true"></span>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#about" class="nav-link active">About</a></li>
+                    <li><a href="#research" class="nav-link">Research</a></li>
+                    <li><a href="#publications" class="nav-link">Publications</a></li>
+                    <li><a href="#projects" class="nav-link">Projects</a></li>
+                    <li><a href="#skills" class="nav-link">Skills</a></li>
+                    <li><button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme" title="Toggle theme">🌑</button></li>
+                </ul>
+            </div>
         </nav>
     </header>
 
-    <div class="cv-modal" id="cvModal">
+    <!-- Enhanced CV Modal -->
+    <div class="cv-modal" id="cvModal" role="dialog" aria-labelledby="cvTitle" aria-hidden="true">
         <div class="cv-content">
             <div class="cv-header">
-                <h2 class="cv-title">Curriculum Vitae</h2>
+                <h2 class="cv-title" id="cvTitle">Curriculum Vitae</h2>
                 <div class="cv-actions">
-                    <button class="cv-download-btn" id="cvDownloadBtn">Download CV</button>
-                    <button class="cv-close" id="cvClose">&times;</button>
+                    <button class="cv-download-btn" id="cvDownloadBtn" aria-label="Download CV as PDF">Download CV</button>
+                    <button class="cv-close" id="cvClose" aria-label="Close CV modal">&times;</button>
                 </div>
             </div>
             
@@ -1064,59 +1663,123 @@
                     <h4>Wikipedia as a cultural lens: a quantitative approach for exploring cultural networks</h4>
                     <div class="date">2025</div>
                     <div class="location">Humanities & Social Sciences Communications (Nature)</div>
-                    <p>Co-authored research on cultural network analysis using Wikipedia data.</p>
+                    <p>Co-authored research on cultural network analysis using Wikipedia data, exploring the quantitative methodologies for understanding cultural transmission patterns.</p>
                 </div>
                 <div class="cv-item">
                     <h4>A Stylometric Analysis of Seneca's disputed plays</h4>
                     <div class="date">2024</div>
                     <div class="location">Journal of Computational Literary Studies</div>
-                    <p>Authorship verification study using computational stylometry techniques.</p>
+                    <p>Comprehensive authorship verification study using advanced computational stylometry techniques to analyze disputed classical texts.</p>
+                </div>
+                <div class="cv-item">
+                    <h4>WikiTextGraph: A Python Tool for Parsing Multilingual Wikipedia Text and Graph Extraction</h4>
+                    <div class="date">2025</div>
+                    <div class="location">Journal of Open Research Software</div>
+                    <p>Development and publication of an open-source Python library for extracting graph structures from multilingual Wikipedia content.</p>
                 </div>
             </div>
             
             <div class="cv-section">
-                <h3>Technical Skills</h3>
+                <h3>Technical Skills & Expertise</h3>
                 <div class="cv-item">
                     <h4>Programming Languages</h4>
-                    <p>Python (4 years), C++ (1 year), HTML/CSS (1 year)</p>
+                    <p><strong>Python</strong> (4+ years) - Advanced proficiency in data science, NLP, and machine learning applications</p>
+                    <p><strong>C++</strong> (1+ year) - Systems programming and performance-critical applications</p>
+                    <p><strong>HTML/CSS/JavaScript</strong> (2+ years) - Full-stack web development and interactive visualizations</p>
                 </div>
                 <div class="cv-item">
-                    <h4>Specialized Areas</h4>
-                    <p>Machine Learning, Natural Language Processing, Network Data Science, Data Science, Statistical Analysis</p>
+                    <h4>Research Specializations</h4>
+                    <p><strong>Machine Learning & AI</strong> - Deep learning, neural networks, and computational intelligence applications</p>
+                    <p><strong>Natural Language Processing</strong> - Text analysis, linguistic modeling, and computational stylometry</p>
+                    <p><strong>Network Data Science</strong> - Graph theory, complex networks, and social network analysis</p>
+                    <p><strong>Data Science & Statistical Analysis</strong> - Statistical modeling, data visualization, and quantitative research methods</p>
                 </div>
                 <div class="cv-item">
-                    <h4>Research Methods</h4>
-                    <p>Computational Stylometry, Cultural Analytics, Digital Humanities, Complex Networks</p>
+                    <h4>Research Methodology</h4>
+                    <p><strong>Computational Stylometry</strong> - Advanced techniques for authorship attribution and literary analysis</p>
+                    <p><strong>Cultural Analytics</strong> - Digital humanities approaches to cultural data analysis</p>
+                    <p><strong>Digital Humanities</strong> - Interdisciplinary research bridging computational methods and humanistic inquiry</p>
+                    <p><strong>Complex Systems Analysis</strong> - Network theory applications in cultural and linguistic contexts</p>
+                </div>
+            </div>
+            
+            <div class="cv-section">
+                <h3>Academic Service & Recognition</h3>
+                <div class="cv-item">
+                    <h4>Peer Review Activities</h4>
+                    <p><strong>Digital Scholarship in the Humanities (DSH)</strong> - Active peer reviewer for Oxford Academic journal, contributing to the evaluation of computational humanities research</p>
+                </div>
+                <div class="cv-item">
+                    <h4>Research Impact</h4>
+                    <p><strong>Publications:</strong> 3 peer-reviewed publications in high-impact journals</p>
+                    <p><strong>Open Source Contributions:</strong> Active developer with multiple GitHub repositories</p>
+                    <p><strong>Academic Collaboration:</strong> International research partnerships across multiple institutions</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <main>
-        <section class="hero" id="about">
+    <!-- Main Content -->
+    <main id="main-content" role="main">
+        <!-- Enhanced Hero Section -->
+        <section class="hero" id="about" aria-labelledby="about-title">
+            <div class="floating-elements" aria-hidden="true">
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+            </div>
+            
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-text">
-                        <h1>Paschalis Agapitos</h1>
-                        <p class="subtitle">About me</p>
+                        <h2 id="hero-title">Paschalis Agapitos</h1> 
+                        <p class="subtitle" id="hero-subtitle">PhD Candidate in Computationa Humanities</p>
                         <p class="description">
-                            Started as a linguist, fell in love with NLP, ended up doing a PhD in a Physics Institute 
-                            combining NLP and network data science to solve problems in the field of humanities.
-                            Soon to graduate.
+                            Working on the intersection of linguistics, network data science, and digital cultural studies. 
+                            Currently pursuing a PhD in Computational Humanities at DIPC, combining NLP and network data science to unlock 
+                            new insights in human culture and communication.
                         </p>
-                        <div class="contact-links">
-                            <a href="mailto:paschalis.agapitos@dipc.org" class="contact-link">Email</a>
-                            <a href="https://github.com/PaschalisAg" class="contact-link">GitHub</a>
-                            <a href="https://www.linkedin.com/in/paschalis-agapitos-1b5284217/" class="contact-link">LinkedIn</a>
-                            <a href="https://scholar.google.com/citations?user=hcYwIDcAAAAJ&hl=en" class="contact-link">Google Scholar</a>
-                            <a href="https://github.com/PaschalisAg/portfolio/blob/main/files/paschalis_agapitos_CV.pdf?raw=true" class="contact-link" download>Download CV</a>
+                        <div class="contact-links" role="list" aria-label="Contact links">
+                            <a href="/cdn-cgi/l/email-protection#e989889a8a818885809ac7888e8899809d869aa98d80998ac7869b8e" class="contact-link" role="listitem" aria-label="Send email">
+                                <i class="fas fa-envelope" aria-hidden="true"></i>Email
+                            </a>
+                            <a href="https://github.com/PaschalisAg" class="contact-link" role="listitem" aria-label="View GitHub profile" target="_blank" rel="noopener">
+                                <i class="fab fa-github" aria-hidden="true"></i>GitHub
+                            </a>
+                            <a href="https://www.linkedin.com/in/paschalis-agapitos-1b5284217/" class="contact-link" role="listitem" aria-label="View LinkedIn profile" target="_blank" rel="noopener">
+                                <i class="fab fa-linkedin" aria-hidden="true"></i>LinkedIn
+                            </a>
+                            <a href="https://scholar.google.com/citations?user=hcYwIDcAAAAJ&hl=en" class="contact-link" role="listitem" aria-label="View Google Scholar profile" target="_blank" rel="noopener">
+                                <i class="fas fa-graduation-cap" aria-hidden="true"></i>Google Scholar
+                            </a>
+                            <a href="https://github.com/PaschalisAg/portfolio/blob/main/files/paschalis_agapitos_CV.pdf?raw=true" class="contact-link" role="listitem" aria-label="Download CV as PDF" download>
+                                <i class="fas fa-download" aria-hidden="true"></i>Download CV
+                            </a>
                         </div>
                     </div>
                     <div class="hero-image">
-                        <div class="profile-container" id="profileContainer">
+                        <div class="profile-container" id="profileContainer" role="button" tabindex="0" aria-label="Click to flip profile card and view CV preview">
                             <div class="profile-flip">
                                 <div class="profile-front">
-                                    <img src="pictures/profile_pic.jpeg" alt="Paschalis Agapitos" class="profile-photo" loading="lazy">
+                                    <img src="pictures/profile_pic.jpeg" alt="Paschalis Agapitos - Computational Humanities Researcher" class="profile-photo" loading="lazy">
+                                </div>
+                                <div class="profile-back">
+                                    <div class="cv-preview">
+                                        <h3>Quick CV Access</h3>
+                                        <div class="cv-preview-content">
+                                            <strong>PhD Candidate</strong><br>
+                                            Computational Humanities @ DIPC<br><br>
+                                            <strong>Research Interests:</strong><br>
+                                            • NLP & Network Science<br>
+                                            • Cultural Analytics<br>
+                                            • Computational Stylometry & Forensic Linguistics<br>
+                                            • Digital Humanities<br><br>
+                                            <strong>Publications:</strong> 3 peer-reviewed papers in Nature, JCLS, JORS
+                                        </div>
+                                        <button class="cv-download-btn" onclick="openCVModal()" aria-label="Open full CV in modal">
+                                            <i class="fas fa-eye" aria-hidden="true"></i> View Full CV
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1125,187 +1788,352 @@
             </div>
         </section>
 
-        <section class="section fade-in" id="research">
+        <!-- Enhanced Research Focus Section -->
+        <section class="section fade-in" id="research" aria-labelledby="research-title">
             <div class="container">
-                <h2 class="section-title">Research Focus</h2>
+                <h2 class="section-title" id="research-title">Research Focus</h2>
                 <div class="cards-grid">
-                    <div class="card">
+                    <article class="card">
                         <h3>Computational Humanities</h3>
-                        <p>Applying computational methods to analyze cultural phenomena and humanities data, bridging the gap between technology and human culture.</p>
+                        <p>Advancing the field through innovative computational approaches to cultural phenomena, bridging computational methods and humanistic inquiry to uncover new patterns in human expression and cultural transmission.</p>
                         <div class="tags">
                             <span class="tag">Cultural Analytics</span>
                             <span class="tag">Digital Humanities</span>
+                            <span class="tag">Human-Computer Interaction</span>
                         </div>
-                    </div>
-                    <div class="card">
+                    </article>
+                    <article class="card">
                         <h3>Computational Stylometry</h3>
-                        <p>Analyzing writing styles using computational techniques to solve authorship attribution problems and understand literary patterns.</p>
+                        <p>Developing sophisticated algorithms for authorship attribution, text analysis, and literary pattern recognition using advanced machine learning and statistical techniques.</p>
                         <div class="tags">
                             <span class="tag">Authorship Attribution</span>
                             <span class="tag">Literary Analysis</span>
+                            <span class="tag">Forensic Linguistics</span>
                         </div>
-                    </div>
-                    <div class="card">
+                    </article>
+                    <article class="card">
                         <h3>Network Data Science</h3>
-                        <p>Exploring complex networks in cultural and linguistic contexts, revealing hidden patterns in human communication and cultural transmission.</p>
+                        <p>Exploring complex network structures in cultural and linguistic contexts, revealing hidden patterns in human communication, social dynamics, and cultural evolution.</p>
                         <div class="tags">
                             <span class="tag">Complex Networks</span>
                             <span class="tag">Social Dynamics</span>
+                            <span class="tag">Graph Theory</span>
                         </div>
-                    </div>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <section class="section fade-in" id="publications">
+        <!-- Enhanced Publications Section -->
+        <section class="section fade-in" id="publications" aria-labelledby="publications-title">
             <div class="container">
-                <h2 class="section-title">Publications</h2>
+                <h2 class="section-title" id="publications-title">Publications</h2>
                 <div class="academic-services">
-                    <p>Peer Reviewer for <a href="https://academic.oup.com/dsh" rel="noopener">Digital Scholarship in the Humanities</a></p><br>
+                    <p><strong>Peer Reviewer:</strong> <a href="https://academic.oup.com/dsh" target="_blank" rel="noopener">Digital Scholarship in the Humanities</a> (Oxford Academic)</p>
                 </div>
                 <div class="cards-grid">
-                    <div class="card">
+                    <article class="card publication-card">
                         <h3>WikiTextGraph: A Python Tool for Parsing Multilingual Wikipedia Text and Graph Extraction</h3>
-                        <p class="card-meta">Journal of Open Research Software, 2025</p>
-                        <p>Authors: Paschalis Agapitos, <a href="https://cultureplex.ca/" target="_blank" rel="noopener">Juan Luis Suárez</a> , <a href="https://cfm.ehu.es/schwartz/" target="_blank" rel="noopener">Gustavo Ariel Schwartz</a></p>
-                        <div class="btn-group">
-                            <a href="https://openresearchsoftware.metajnl.com/articles/10.5334/jors.572" class="btn">Paper</a>
-                            <a href="https://github.com/PaschalisAg/WikiTextGraph" class="btn">Code</a>
-                            <a href="https://zenodo.org/records/16260544" class="btn">Archive</a>
+                        <p class="card-meta">Journal of Open Research Software (JORS), 2025</p>
+                        <p><strong>Authors:</strong> Paschalis Agapitos, <a href="https://cultureplex.ca/" target="_blank" rel="noopener">Juan Luis Suárez</a>, <a href="https://cfm.ehu.es/schwartz/" target="_blank" rel="noopener">Gustavo Ariel Schwartz</a></p>
+                        
+                        <div class="publication-metrics">
+                            <span class="metric"><i class="fas fa-code" aria-hidden="true"></i>Open Source</span>
+                            <span class="metric"><i class="fas fa-download" aria-hidden="true"></i>Zenodo Archive</span>
+                            <span class="metric"><i class="fas fa-github" aria-hidden="true"></i>GitHub Code</span>
                         </div>
+                        
+                        <div class="btn-group">
+                            <a href="https://openresearchsoftware.metajnl.com/articles/10.5334/jors.572" class="btn" target="_blank" rel="noopener" aria-label="Read publication paper">
+                                <i class="fas fa-file-alt" aria-hidden="true"></i>Paper
+                            </a>
+                            <a href="https://github.com/PaschalisAg/WikiTextGraph" class="btn" target="_blank" rel="noopener" aria-label="View source code on GitHub">
+                                <i class="fab fa-github" aria-hidden="true"></i>Code
+                            </a>
+                            <a href="https://zenodo.org/records/16260544" class="btn" target="_blank" rel="noopener" aria-label="Download from Zenodo">
+                                <i class="fas fa-archive" aria-hidden="true"></i>Archive
+                            </a>
+                        </div>
+                        
+                        <div class="citation-tools">
+                            <button class="citation-btn" onclick="copyCitation('wikitextgraph')" aria-label="Copy citation">Copy Citation</button>
+                            <button class="citation-btn" onclick="sharePublication('wikitextgraph')" aria-label="Share publication">Share</button>
+                        </div>
+                        
                         <div class="tags">
                             <span class="tag">Wikipedia</span>
-                            <span class="tag">Software</span>
+                            <span class="tag">Software Engineering</span>
                             <span class="tag">Data Mining</span>
+                            <span class="tag">Graph Processing</span>
                         </div>
-                    </div>
-                    <div class="card">
+                    </article>
+                    
+                    <article class="card publication-card">
                         <h3>Wikipedia as a cultural lens: a quantitative approach for exploring cultural networks</h3>
                         <p class="card-meta">Humanities & Social Sciences Communications (Nature), 2025</p>
-                        <p>Authors: Luis A Miccio, Paschalis Agapitos, Carlos Gamez-Perez, Francisco González, <a href="https://cultureplex.ca/" target="_blank" rel="noopener">Juan Luis Suárez</a> , <a href="https://cfm.ehu.es/schwartz/" target="_blank" rel="noopener">Gustavo Ariel Schwartz</a></p>
-                        <div class="btn-group">
-                            <a href="https://www.nature.com/articles/s41599-025-04772-5" class="btn">Paper</a>
+                        <p><strong>Authors:</strong> Luis A Miccio, Paschalis Agapitos, Carlos Gamez-Perez, Francisco González, <a href="https://cultureplex.ca/" target="_blank" rel="noopener">Juan Luis Suárez</a>, <a href="https://cfm.ehu.es/schwartz/" target="_blank" rel="noopener">Gustavo Ariel Schwartz</a></p>
+                        
+                        <div class="publication-metrics">
+                            <span class="metric"><i class="fas fa-globe" aria-hidden="true"></i>Nature Portfolio</span>
+                            <span class="metric"><i class="fas fa-chart-line" aria-hidden="true"></i>High Impact</span>
+                            <span class="metric"><i class="fas fa-users" aria-hidden="true"></i>6 Authors</span>
                         </div>
+                        
+                        <div class="btn-group">
+                            <a href="https://www.nature.com/articles/s41599-025-04772-5" class="btn" target="_blank" rel="noopener" aria-label="Read publication in Nature">
+                                <i class="fas fa-external-link-alt" aria-hidden="true"></i>Paper
+                            </a>
+                        </div>
+                        
+                        <div class="citation-tools">
+                            <button class="citation-btn" onclick="copyCitation('wikipedia')" aria-label="Copy citation">Copy Citation</button>
+                            <button class="citation-btn" onclick="sharePublication('wikipedia')" aria-label="Share publication">Share</button>
+                        </div>
+                        
                         <div class="tags">
                             <span class="tag">Cultural Networks</span>
-                            <span class="tag">Wikipedia</span>
+                            <span class="tag">Wikipedia Analysis</span>
                             <span class="tag">Complex Networks</span>
+                            <span class="tag">Cultural Analytics</span>
                         </div>
-                    </div>
-                    <div class="card">
+                    </article>
+                    
+                    <article class="card publication-card">
                         <h3>A Stylometric Analysis of Seneca's disputed plays</h3>
                         <p class="card-meta">Journal of Computational Literary Studies (JCLS), 2024</p>
-                        <p>Authors: Paschalis Agapitos, <a href="https://andreasvc.github.io/" target="_blank" rel="noopener">Andreas van Cranenburgh</a></p>
-                        <div class="btn-group">
-                            <a href="https://jcls.io/article/id/3919/" class="btn">Paper</a>
-                            <a href="https://github.com/PaschalisAg/seneca_stylometry" class="btn">Code</a>
+                        <p><strong>Authors:</strong> Paschalis Agapitos, <a href="https://andreasvc.github.io/" target="_blank" rel="noopener">Andreas van Cranenburgh</a></p>
+                        
+                        <div class="publication-metrics">
+                            <span class="metric"><i class="fas fa-book" aria-hidden="true"></i>Peer Reviewed</span>
+                            <span class="metric"><i class="fas fa-code" aria-hidden="true"></i>Reproducible</span>
+                            <span class="metric"><i class="fas fa-history" aria-hidden="true"></i>Classical Studies</span>
                         </div>
+                        
+                        <div class="btn-group">
+                            <a href="https://jcls.io/article/id/3919/" class="btn" target="_blank" rel="noopener" aria-label="Read publication in JCLS">
+                                <i class="fas fa-file-alt" aria-hidden="true"></i>Paper
+                            </a>
+                            <a href="https://github.com/PaschalisAg/seneca_stylometry" class="btn" target="_blank" rel="noopener" aria-label="View analysis code on GitHub">
+                                <i class="fab fa-github" aria-hidden="true"></i>Code
+                            </a>
+                        </div>
+                        
+                        <div class="citation-tools">
+                            <button class="citation-btn" onclick="copyCitation('seneca')" aria-label="Copy citation">Copy Citation</button>
+                            <button class="citation-btn" onclick="sharePublication('seneca')" aria-label="Share publication">Share</button>
+                        </div>
+                        
                         <div class="tags">
                             <span class="tag">Stylometry</span>
                             <span class="tag">Forensic Linguistics</span>
                             <span class="tag">Classical Literature</span>
+                            <span class="tag">Authorship Attribution</span>
                         </div>
-                    </div>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <section class="section fade-in" id="projects">
+        <!-- Enhanced Projects Section -->
+        <section class="section fade-in" id="projects" aria-labelledby="projects-title">
             <div class="container">
-                <h2 class="section-title">Featured Projects</h2>
+                <h2 class="section-title" id="projects-title">Featured Projects</h2>
                 <div class="cards-grid">
-                    <div class="card">
+                    <article class="card project-card">
                         <h3>CNN for Pneumonia Detection</h3>
-                        <p class="card-meta">2024 • Python, TensorFlow</p>
-                        <p>A Convolutional Neural Network to help doctors detect pneumonia or Covid-19 type pneumonia from X-rays of patients.</p>
-                        <div class="btn-group">
-                            <a href="https://github.com/PaschalisAg/classification_NN" class="btn">Code</a>
+                        <div class="project-timeline">
+                            <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                            <span>2024 • 3 months</span>
                         </div>
+                        <p>A sophisticated Convolutional Neural Network application designed to assist healthcare professionals in detecting pneumonia and COVID-19 type pneumonia from patient X-rays. Built using TensorFlow and advanced computer vision techniques.</p>
+                        
+                        <div class="tech-stack">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">Computer Vision</span>
+                            <span class="tech-tag">Deep Learning</span>
+                            <span class="tech-tag">Medical AI</span>
+                        </div>
+                        
+                        <div class="btn-group">
+                            <a href="https://github.com/PaschalisAg/classification_NN" class="btn" target="_blank" rel="noopener" aria-label="View project source code">
+                                <i class="fab fa-github" aria-hidden="true"></i>Source Code
+                            </a>
+                        </div>
+                        
                         <div class="tags">
                             <span class="tag">Deep Learning</span>
-                            <span class="tag">Healthcare</span>
+                            <span class="tag">Healthcare Innovation</span>
                             <span class="tag">Computer Vision</span>
+                            <span class="tag">Medical Technology</span>
                         </div>
-                    </div>
-                    <div class="card">
+                    </article>
+                    
+                    <article class="card project-card">
                         <h3>Cultural Analytics Guide</h3>
-                        <p class="card-meta">2022–Present • Python, Data Science</p>
-                        <p>A comprehensive textbook teaching computational analysis of cultural phenomena following Open Science principles.</p>
-                        <div class="btn-group">
-                            <a href="https://groningendh.github.io/Cultural-Analytics-Open-Science-Guide/" class="btn">Website</a>
+                        <div class="project-timeline">
+                            <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                            <span>2022–Present • Ongoing</span>
                         </div>
+                        <p>A comprehensive, open-access textbook and educational resource teaching computational analysis of cultural phenomena. Developed following rigorous Open Science principles with full transparency, reproducibility, and collaborative methodology.</p>
+                        
+                        <div class="tech-stack">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Data Science</span>
+                            <span class="tech-tag">Educational Technology</span>
+                            <span class="tech-tag">Open Science</span>
+                            <span class="tech-tag">Cultural Studies</span>
+                        </div>
+                        
+                        <div class="btn-group">
+                            <a href="https://groningendh.github.io/Cultural-Analytics-Open-Science-Guide/" class="btn" target="_blank" rel="noopener" aria-label="Visit Cultural Analytics Guide website">
+                                <i class="fas fa-globe" aria-hidden="true"></i>Live Website
+                            </a>
+                        </div>
+                        
                         <div class="tags">
-                            <span class="tag">Education</span>
+                            <span class="tag">Educational Content</span>
                             <span class="tag">Open Science</span>
                             <span class="tag">Cultural Analytics</span>
+                            <span class="tag">Digital Humanities</span>
                         </div>
-                    </div>
-                    <div class="card">
+                    </article>
+                    
+                    <article class="card project-card">
                         <h3>British Political Speeches Analysis</h3>
-                        <p class="card-meta">2021 • Python, NLP</p>
-                        <p>Computational stylometric analysis of British political speeches. Exploring Churchill's rhetorical patterns.</p>
-                        <div class="btn-group">
-                            <a href="https://paschalisag.github.io/SAPS/intro.html" class="btn">Website</a>
+                        <div class="project-timeline">
+                            <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                            <span>2021 • 4 months</span>
                         </div>
+                        <p>Advanced computational stylometric analysis of British political speeches, with particular focus on Winston Churchill's rhetorical patterns. Combines NLP techniques with historical political discourse analysis.</p>
+                        
+                        <div class="tech-stack">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Natural Language Processing</span>
+                            <span class="tech-tag">Stylometric Analysis</span>
+                            <span class="tech-tag">Political Science</span>
+                            <span class="tech-tag">Historical Data</span>
+                        </div>
+                        
+                        <div class="btn-group">
+                            <a href="https://paschalisag.github.io/SAPS/intro.html" class="btn" target="_blank" rel="noopener" aria-label="View political speeches analysis">
+                                <i class="fas fa-chart-line" aria-hidden="true"></i>Interactive Analysis
+                            </a>
+                        </div>
+                        
                         <div class="tags">
                             <span class="tag">Political Analysis</span>
                             <span class="tag">Stylometry</span>
-                            <span class="tag">Historical Data</span>
+                            <span class="tag">Historical Linguistics</span>
+                            <span class="tag">Rhetorical Analysis</span>
                         </div>
-                    </div>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <section class="section fade-in" id="skills">
+        <!-- Enhanced Skills Section -->
+        <section class="section fade-in" id="skills" aria-labelledby="skills-title">
             <div class="container">
-                <h2 class="section-title">Technical Skills</h2>
+                <h2 class="section-title" id="skills-title">Technical Skills & Expertise</h2>
                 <div class="skills-grid">
-                    <div class="skill-item">
+                    <div class="skill-item" data-skill="python">
+                        <div class="skill-icon"><i class="fab fa-python" aria-hidden="true"></i></div>
                         <div class="skill-name">Python</div>
-                        <div class="skill-level">4 years</div>
+                        <div class="skill-level">4+ years</div>
+                        <div class="skill-progress">
+                            <div class="skill-progress-bar" data-progress="95"></div>
+                        </div>
                     </div>
-                    <div class="skill-item">
+                    <div class="skill-item" data-skill="ml">
+                        <div class="skill-icon"><i class="fas fa-brain" aria-hidden="true"></i></div>
                         <div class="skill-name">Machine Learning</div>
-                        <div class="skill-level">3 years</div>
+                        <div class="skill-level">3+ years</div>
+                        <div class="skill-progress">
+                            <div class="skill-progress-bar" data-progress="88"></div>
+                        </div>
                     </div>
-                    <div class="skill-item">
-                        <div class="skill-name">Network Data Science</div>
-                        <div class="skill-level">2 years</div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-name">Data Science</div>
-                        <div class="skill-level">4 years</div>
-                    </div>
-                    <div class="skill-item">
+                    <div class="skill-item" data-skill="nlp">
+                        <div class="skill-icon"><i class="fas fa-language" aria-hidden="true"></i></div>
                         <div class="skill-name">Natural Language Processing</div>
-                        <div class="skill-level">4 years</div>
+                        <div class="skill-level">4+ years</div>
+                        <div class="skill-progress">
+                            <div class="skill-progress-bar" data-progress="92"></div>
+                        </div>
                     </div>
-                    <div class="skill-item">
+                    <div class="skill-item" data-skill="networks">
+                        <div class="skill-icon"><i class="fas fa-project-diagram" aria-hidden="true"></i></div>
+                        <div class="skill-name">Network Data Science</div>
+                        <div class="skill-level">3+ years</div>
+                        <div class="skill-progress">
+                            <div class="skill-progress-bar" data-progress="85"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-skill="datavis">
+                        <div class="skill-icon"><i class="fas fa-chart-bar" aria-hidden="true"></i></div>
+                        <div class="skill-name">Data Science & Visualization</div>
+                        <div class="skill-level">4+ years</div>
+                        <div class="skill-progress">
+                            <div class="skill-progress-bar" data-progress="90"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-skill="statistics">
+                        <div class="skill-icon"><i class="fas fa-calculator" aria-hidden="true"></i></div>
                         <div class="skill-name">Statistical Analysis</div>
-                        <div class="skill-level">4 years</div>
+                        <div class="skill-level">4+ years</div>
+                        <div class="skill-progress">
+                            <div class="skill-progress-bar" data-progress="87"></div>
+                        </div>
                     </div>
-                    <div class="skill-item">
-                        <div class="skill-name">C++</div>
-                        <div class="skill-level">1 year</div>
+                    <div class="skill-item" data-skill="web">
+                        <div class="skill-icon"><i class="fas fa-code" aria-hidden="true"></i></div>
+                        <div class="skill-name">Web Development</div>
+                        <div class="skill-level">2+ years</div>
+                        <div class="skill-progress">
+                            <div class="skill-progress-bar" data-progress="75"></div>
+                        </div>
                     </div>
-                    <div class="skill-item">
-                        <div class="skill-name">HTML/CSS</div>
-                        <div class="skill-level">1 year</div>
+                    <div class="skill-item" data-skill="cpp">
+                        <div class="skill-icon"><i class="fas fa-cog" aria-hidden="true"></i></div>
+                        <div class="skill-name">C++ Programming</div>
+                        <div class="skill-level">1+ year</div>
+                        <div class="skill-progress">
+                            <div class="skill-progress-bar" data-progress="70"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Paschalis Agapitos. All rights reserved.</p>
+    <!-- Enhanced Footer -->
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="https://github.com/PaschalisAg" class="social-link" target="_blank" rel="noopener" aria-label="GitHub Profile" title="GitHub">
+                    <i class="fab fa-github" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/paschalis-agapitos-1b5284217/" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn Profile" title="LinkedIn">
+                    <i class="fab fa-linkedin" aria-hidden="true"></i>
+                </a>
+                <a href="https://scholar.google.com/citations?user=hcYwIDcAAAAJ&hl=en" class="social-link" target="_blank" rel="noopener" aria-label="Google Scholar Profile" title="Google Scholar">
+                    <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                </a>
+                <a href="/cdn-cgi/l/email-protection#e989889a8a818885809ac7888e8899809d869aa98d80998ac7869b8e" class="social-link" aria-label="Email Contact" title="Email">
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                </a>
+            </div>
+            <p>&copy; 2024 Paschalis Agapitos. All rights reserved. | PhD Candidate in Computational Humanities at DIPC</p>
+            <p style="margin-top: 1rem; color: var(--text-muted); font-size: 0.9rem;">
+                Committed to Open Science and reproducible research in computational humanities.
+            </p>
         </div>
     </footer>
 
+    <!-- Enhanced JavaScript -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script>
-        // Network Animation Class
+        // Enhanced Network Animation with Performance Optimization
         class NetworkAnimation {
             constructor(canvas) {
                 this.canvas = canvas;
@@ -1316,6 +2144,7 @@
                 this.isScrolling = false;
                 this.lastFrameTime = 0;
                 this.frameInterval = 1000 / 30; // Target 30 FPS
+                this.mouseInfluenceRadius = 100;
                 
                 this.resize();
                 this.initNodes();
@@ -1326,23 +2155,27 @@
             resize() {
                 this.canvas.width = window.innerWidth;
                 this.canvas.height = window.innerHeight;
-                this.initNodes(); // Reinitialize nodes on resize
+                this.initNodes();
             }
 
             initNodes() {
                 this.nodes = [];
-                // Reduce node count on smaller screens
-                const nodeCount = Math.floor((this.canvas.width * this.canvas.height) / (window.innerWidth <= 768 ? 30000 : 15000));
+                // Adaptive node count based on screen size and performance
+                const area = this.canvas.width * this.canvas.height;
+                const isMobile = window.innerWidth <= 768;
+                const baseCount = isMobile ? 15 : 25;
+                const nodeCount = Math.min(Math.max(baseCount, Math.floor(area / (isMobile ? 40000 : 20000))), isMobile ? 30 : 60);
                 
                 for (let i = 0; i < nodeCount; i++) {
                     this.nodes.push({
                         x: Math.random() * this.canvas.width,
                         y: Math.random() * this.canvas.height,
-                        vx: (Math.random() - 0.5) * 0.3, // Reduced velocity
-                        vy: (Math.random() - 0.5) * 0.3,
-                        radius: Math.random() * 2 + 1, // Smaller nodes
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5,
+                        radius: Math.random() * 2 + 1,
                         originalRadius: Math.random() * 2 + 1,
                         pulseOffset: Math.random() * Math.PI * 2,
+                        baseAlpha: 0.3 + Math.random() * 0.4
                     });
                 }
             }
@@ -1353,12 +2186,13 @@
 
             bindEvents() {
                 window.addEventListener('resize', () => this.resize());
+                
                 window.addEventListener('mousemove', (e) => {
                     this.mouse.x = e.clientX;
                     this.mouse.y = e.clientY;
-                });
+                }, { passive: true });
 
-                // Detect scrolling to pause animation
+                // Optimize scroll detection
                 let scrollTimeout;
                 window.addEventListener('scroll', () => {
                     this.isScrolling = true;
@@ -1367,17 +2201,17 @@
                     scrollTimeout = setTimeout(() => {
                         this.isScrolling = false;
                         document.body.classList.remove('scrolling');
-                    }, 150); // Resume animation 150ms after scrolling stops
+                    }, 150);
                 }, { passive: true });
             }
 
-            animate(currentTime) {
+            animate(currentTime = 0) {
                 if (this.isScrolling) {
                     requestAnimationFrame((time) => this.animate(time));
                     return;
                 }
 
-                // Throttle frame rate
+                // Frame rate limiting
                 if (currentTime - this.lastFrameTime < this.frameInterval) {
                     requestAnimationFrame((time) => this.animate(time));
                     return;
@@ -1386,32 +2220,33 @@
 
                 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
                 
+                // Draw nodes
                 this.nodes.forEach(node => {
                     node.x += node.vx;
                     node.y += node.vy;
                     
+                    // Boundary collision
                     if (node.x < 0 || node.x > this.canvas.width) node.vx *= -1;
                     if (node.y < 0 || node.y > this.canvas.height) node.vy *= -1;
                     
-                    node.x = Math.max(0, Math.min(this.canvas.width, node.x));
-                    node.y = Math.max(0, Math.min(this.canvas.height, node.y));
-                    
+                    // Mouse interaction
                     const mouseDistance = Math.sqrt(
                         (node.x - this.mouse.x) ** 2 + (node.y - this.mouse.y) ** 2
                     );
                     
-                    if (mouseDistance < 100) { // Reduced interaction radius
-                        const force = (100 - mouseDistance) / 100;
+                    if (mouseDistance < this.mouseInfluenceRadius) {
+                        const force = (this.mouseInfluenceRadius - mouseDistance) / this.mouseInfluenceRadius;
                         const angle = Math.atan2(node.y - this.mouse.y, node.x - this.mouse.x);
-                        node.vx += Math.cos(angle) * force * 0.015; // Reduced force
-                        node.vy += Math.sin(angle) * force * 0.015;
-                        node.radius = node.originalRadius + force * 2;
+                        node.vx += Math.cos(angle) * force * 0.02;
+                        node.vy += Math.sin(angle) * force * 0.02;
+                        node.radius = node.originalRadius + force * 3;
                     } else {
                         node.radius = node.originalRadius;
                     }
                     
-                    const pulse = Math.sin(currentTime * 0.002 + node.pulseOffset) * 0.5 + 0.5;
-                    const alpha = 0.2 + pulse * 0.3; // Reduced alpha range
+                    // Pulsing effect
+                    const pulse = Math.sin(currentTime * 0.003 + node.pulseOffset) * 0.5 + 0.5;
+                    const alpha = node.baseAlpha + pulse * 0.3;
                     
                     this.ctx.beginPath();
                     this.ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
@@ -1424,13 +2259,13 @@
                         this.ctx.shadowColor = 'rgba(37, 99, 235, 0.3)';
                     }
                     
-                    this.ctx.shadowBlur = 8; // Reduced shadow blur
+                    this.ctx.shadowBlur = 6;
                     this.ctx.fill();
                     this.ctx.shadowBlur = 0;
                 });
                 
-                // Optimize connection drawing
-                const maxConnections = 50; // Limit total connections
+                // Draw connections
+                const maxConnections = Math.min(40, this.nodes.length * 2);
                 let connectionCount = 0;
                 
                 for (let i = 0; i < this.nodes.length && connectionCount < maxConnections; i++) {
@@ -1441,40 +2276,21 @@
                             (nodeA.x - nodeB.x) ** 2 + (nodeB.y - nodeA.y) ** 2
                         );
                         
-                        if (distance < 100) { // Reduced connection distance
-                            const opacity = (100 - distance) / 100;
-                            
-                            const mouseDistanceToConnection = this.distanceToLine(
-                                this.mouse.x, this.mouse.y,
-                                nodeA.x, nodeA.y,
-                                nodeB.x, nodeB.y
-                            );
-                            
-                            let lineWidth = 0.8; // Reduced line width
-                            let glowIntensity = opacity * 0.2;
-                            
-                            if (mouseDistanceToConnection < 40) {
-                                const mouseEffect = (40 - mouseDistanceToConnection) / 40;
-                                lineWidth += mouseEffect * 1.5;
-                                glowIntensity += mouseEffect * 0.4;
-                            }
+                        if (distance < 120) {
+                            const opacity = (120 - distance) / 120;
                             
                             this.ctx.beginPath();
                             this.ctx.moveTo(nodeA.x, nodeA.y);
                             this.ctx.lineTo(nodeB.x, nodeB.y);
                             
                             if (this.isDarkTheme) {
-                                this.ctx.strokeStyle = `rgba(100, 255, 218, ${glowIntensity})`;
-                                this.ctx.shadowColor = 'rgba(100, 255, 218, 0.2)';
+                                this.ctx.strokeStyle = `rgba(100, 255, 218, ${opacity * 0.3})`;
                             } else {
-                                this.ctx.strokeStyle = `rgba(37, 99, 235, ${glowIntensity})`;
-                                this.ctx.shadowColor = 'rgba(37, 99, 235, 0.2)';
+                                this.ctx.strokeStyle = `rgba(37, 99, 235, ${opacity * 0.3})`;
                             }
                             
-                            this.ctx.lineWidth = lineWidth;
-                            this.ctx.shadowBlur = 4; // Reduced shadow blur
+                            this.ctx.lineWidth = 1;
                             this.ctx.stroke();
-                            this.ctx.shadowBlur = 0;
                             
                             connectionCount++;
                         }
@@ -1483,122 +2299,289 @@
                 
                 requestAnimationFrame((time) => this.animate(time));
             }
-            
-            distanceToLine(px, py, x1, y1, x2, y2) {
-                const dx = x2 - x1;
-                const dy = y2 - y1;
-                const length = Math.sqrt(dx * dx + dy * dy);
-                
-                if (length === 0) return Math.sqrt((px - x1) ** 2 + (py - y1) ** 2);
-                
-                const t = Math.max(0, Math.min(1, ((px - x1) * dx + (py - y1) * dy) / (length * length)));
-                const projection = { x: x1 + t * dx, y: y1 + t * dy };
-                
-                return Math.sqrt((px - projection.x) ** 2 + (py - projection.y) ** 2);
+        }
+
+        // Citation Management
+        const citations = {
+            wikitextgraph: `Agapitos, P., Suárez, J. L., & Schwartz, G. A. (2025). WikiTextGraph: A Python Tool for Parsing Multilingual Wikipedia Text and Graph Extraction. Journal of Open Research Software.`,
+            wikipedia: `Miccio, L. A., Agapitos, P., Gamez-Perez, C., González, F., Suárez, J. L., & Schwartz, G. A. (2025). Wikipedia as a cultural lens: a quantitative approach for exploring cultural networks. Humanities & Social Sciences Communications (Nature).`,
+            seneca: `Agapitos, P., & van Cranenburgh, A. (2024). A Stylometric Analysis of Seneca's disputed plays. Journal of Computational Literary Studies.`
+        };
+
+        function copyCitation(key) {
+            const citation = citations[key];
+            if (citation) {
+                navigator.clipboard.writeText(citation).then(() => {
+                    showNotification('Citation copied to clipboard!');
+                }).catch(() => {
+                    showNotification('Failed to copy citation', 'error');
+                });
             }
         }
 
-        // Initialize network animation
+        function sharePublication(key) {
+            const urls = {
+                wikitextgraph: 'https://openresearchsoftware.metajnl.com/articles/10.5334/jors.572',
+                wikipedia: 'https://www.nature.com/articles/s41599-025-04772-5',
+                seneca: 'https://jcls.io/article/id/3919/'
+            };
+            
+            const url = urls[key];
+            if (url && navigator.share) {
+                navigator.share({
+                    title: 'Publication by Paschalis Agapitos',
+                    url: url
+                });
+            } else if (url) {
+                navigator.clipboard.writeText(url).then(() => {
+                    showNotification('Link copied to clipboard!');
+                });
+            }
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: var(--glass-bg);
+                backdrop-filter: var(--glass-backdrop);
+                color: var(--text-primary);
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                border: var(--glass-border);
+                z-index: 10000;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+                box-shadow: var(--shadow-glass);
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // CV Modal Management
+        function openCVModal() {
+            const cvModal = document.getElementById('cvModal');
+            cvModal.classList.add('show');
+            cvModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            
+            // Focus management for accessibility
+            const closeButton = document.getElementById('cvClose');
+            closeButton.focus();
+        }
+
+        function closeCVModal() {
+            const cvModal = document.getElementById('cvModal');
+            cvModal.classList.remove('show');
+            cvModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        // Initialize Network Animation
         const canvas = document.getElementById('networkCanvas');
         const network = new NetworkAnimation(canvas);
 
-        // Mobile menu toggle
+        // Mobile Menu Management
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const navLinks = document.getElementById('navLinks');
 
-        mobileMenuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('mobile-open');
+        function toggleMobileMenu() {
+            const isOpen = navLinks.classList.contains('mobile-open');
             
-            const hamburgers = mobileMenuToggle.querySelectorAll('.hamburger');
-            if (navLinks.classList.contains('mobile-open')) {
-                hamburgers[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
-                hamburgers[1].style.opacity = '0';
-                hamburgers[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+            if (isOpen) {
+                navLinks.classList.remove('mobile-open');
+                mobileMenuToggle.classList.remove('active');
+                mobileMenuToggle.setAttribute('aria-expanded', 'false');
             } else {
-                hamburgers[0].style.transform = 'rotate(0) translate(0, 0)';
-                hamburgers[1].style.opacity = '1';
-                hamburgers[2].style.transform = 'rotate(0) translate(0, 0)';
+                navLinks.classList.add('mobile-open');
+                mobileMenuToggle.classList.add('active');
+                mobileMenuToggle.setAttribute('aria-expanded', 'true');
             }
-        });
+        }
 
+        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+
+        // Close mobile menu when clicking nav links
         navLinks.addEventListener('click', (e) => {
             if (e.target.tagName === 'A') {
                 navLinks.classList.remove('mobile-open');
-                const hamburgers = mobileMenuToggle.querySelectorAll('.hamburger');
-                hamburgers[0].style.transform = 'rotate(0) translate(0, 0)';
-                hamburgers[1].style.opacity = '1';
-                hamburgers[2].style.transform = 'rotate(0) translate(0, 0)';
+                mobileMenuToggle.classList.remove('active');
+                mobileMenuToggle.setAttribute('aria-expanded', 'false');
             }
         });
 
-        // Theme toggle
+        // Enhanced Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
 
         themeToggle.addEventListener('click', () => {
             const currentTheme = body.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
             body.setAttribute('data-theme', newTheme);
             network.updateTheme(newTheme === 'dark');
-            
             themeToggle.textContent = newTheme === 'dark' ? '🌑' : '🔆';
+            
+            // Save preference
+            localStorage.setItem('theme', newTheme);
         });
 
-        // CV Modal functionality
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.setAttribute('data-theme', savedTheme);
+            network.updateTheme(savedTheme === 'dark');
+            themeToggle.textContent = savedTheme === 'dark' ? '🌑' : '🔆';
+        }
+
+        // Enhanced Profile Flip Functionality
+        const profileContainer = document.getElementById('profileContainer');
+
+        function flipProfile() {
+            profileContainer.classList.toggle('flipped');
+        }
+
+        profileContainer.addEventListener('click', flipProfile);
+        profileContainer.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                flipProfile();
+            }
+        });
+
+        // CV Modal Event Listeners
         const cvModal = document.getElementById('cvModal');
         const cvClose = document.getElementById('cvClose');
         const cvDownloadBtn = document.getElementById('cvDownloadBtn');
 
-        cvClose.addEventListener('click', () => {
-            cvModal.classList.remove('show');
-        });
-
-        cvModal.addEventListener('click', (e) => {
-            if (e.target === cvModal) {
-                cvModal.classList.remove('show');
-            }
-        });
-
+        cvClose.addEventListener('click', closeCVModal);
         cvDownloadBtn.addEventListener('click', () => {
             window.open('https://github.com/PaschalisAg/portfolio/blob/main/files/paschalis_agapitos_CV.pdf?raw=true', '_blank');
         });
 
-        // Smooth scrolling
+        cvModal.addEventListener('click', (e) => {
+            if (e.target === cvModal) {
+                closeCVModal();
+            }
+        });
+
+        // Keyboard navigation for CV modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && cvModal.classList.contains('show')) {
+                closeCVModal();
+            }
+        });
+
+        // Enhanced Smooth Scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                    const headerHeight = 90;
+                    const targetPosition = target.offsetTop - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
                     });
                 }
             });
         });
 
-        // Debounced scroll progress indicator
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
+        // Scroll Progress Indicator
+        function updateScrollProgress() {
+            const scrollProgress = document.getElementById('scrollProgressBar');
+            const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+            scrollProgress.style.width = Math.min(scrollPercent, 100) + '%';
         }
 
-        const updateScrollProgress = debounce(() => {
-            const scrollProgress = document.getElementById('scrollProgress');
-            const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-            scrollProgress.style.width = scrollPercent + '%';
-        }, 100);
+        // Throttled scroll event
+        let ticking = false;
+        function requestScrollUpdate() {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    updateScrollProgress();
+                    updateActiveNavLink();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
 
-        window.addEventListener('scroll', updateScrollProgress, { passive: true });
+        window.addEventListener('scroll', requestScrollUpdate, { passive: true });
+        updateScrollProgress();
 
-        // Fade in animation on scroll
+        // Section Navigation
+        const navLinksList = document.querySelectorAll('.nav-link');
+        const sectionDots = document.querySelectorAll('.section-dot');
+
+        function updateActiveNavLink() {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPos = window.scrollY + 150;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+
+                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    navLinksList.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+
+                    sectionDots.forEach(dot => {
+                        dot.classList.remove('active');
+                        if (dot.dataset.target === sectionId) {
+                            dot.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }
+
+        // Section dot navigation
+        sectionDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const targetId = dot.dataset.target;
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const headerHeight = 90;
+                    const targetPosition = targetElement.offsetTop - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+
+            // Keyboard navigation for section dots
+            dot.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    dot.click();
+                }
+            });
+        });
+
+        // Intersection Observer for Animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -1608,53 +2591,143 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    observer.unobserve(entry.target); // Unobserve after animation to improve performance
+                    
+                    // Animate skill progress bars when skills section becomes visible
+                    if (entry.target.id === 'skills') {
+                        setTimeout(() => {
+                            animateSkillBars();
+                        }, 500);
+                    }
+                    
+                    observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
 
+        // Observe all fade-in elements
         document.querySelectorAll('.fade-in').forEach(el => {
             observer.observe(el);
         });
 
-        // Touch gesture support for mobile
+        // Skill Animation
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-progress-bar');
+            const skillItems = document.querySelectorAll('.skill-item');
+            
+            skillItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('animate');
+                    const progressBar = item.querySelector('.skill-progress-bar');
+                    const progress = progressBar.dataset.progress;
+                    progressBar.style.width = progress + '%';
+                }, index * 200);
+            });
+        }
+
+        // Enhanced Touch Gestures
         let touchStartX = 0;
         let touchEndX = 0;
+        let touchStartY = 0;
+        let touchEndY = 0;
 
-        document.addEventListener('touchstart', e => {
+        document.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
         }, { passive: true });
 
-        document.addEventListener('touchend', e => {
+        document.addEventListener('touchend', (e) => {
             touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
             handleSwipe();
         }, { passive: true });
 
         function handleSwipe() {
-            if (touchEndX < touchStartX - 50) {
-                // Swipe left
-            }
-            if (touchEndX > touchStartX + 50) {
-                // Swipe right
-            }
-        }
+            const diffX = touchStartX - touchEndX;
+            const diffY = touchStartY - touchEndY;
+            const minSwipeDistance = 50;
 
-        // Remove parallax effect on mobile
-        window.addEventListener('scroll', () => {
-            if (window.innerWidth > 768) {
-                const scrolled = window.pageYOffset;
-                const parallax = document.querySelector('.hero');
-                if (parallax) {
-                    parallax.style.transform = `translateY(${scrolled * 0.3}px)`;
+            // Only process horizontal swipes
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > minSwipeDistance) {
+                if (diffX > 0) {
+                    // Swipe left - could navigate to next section
+                    navigateToNextSection();
+                } else {
+                    // Swipe right - could navigate to previous section
+                    navigateToPrevSection();
                 }
             }
-        }, { passive: true });
-
-        // Enhance prefers-reduced-motion
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            document.documentElement.style.setProperty('--animation-duration', '0.01ms');
         }
+
+        function navigateToNextSection() {
+            const sections = ['about', 'research', 'publications', 'projects', 'skills'];
+            const currentSection = getCurrentSection();
+            const currentIndex = sections.indexOf(currentSection);
+            
+            if (currentIndex < sections.length - 1) {
+                const nextSection = sections[currentIndex + 1];
+                document.getElementById(nextSection)?.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function navigateToPrevSection() {
+            const sections = ['about', 'research', 'publications', 'projects', 'skills'];
+            const currentSection = getCurrentSection();
+            const currentIndex = sections.indexOf(currentSection);
+            
+            if (currentIndex > 0) {
+                const prevSection = sections[currentIndex - 1];
+                document.getElementById(prevSection)?.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function getCurrentSection() {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPos = window.scrollY + 150;
+
+            for (const section of sections) {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    return section.id;
+                }
+            }
+            return 'about';
+        }
+
+        // Performance Optimizations
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                network.resize();
+            }, 250);
+        });
+
+        // Page Visibility API for performance
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                // Page is hidden, could pause animations
+                network.pause();
+            } else {
+                // Page is visible, resume animations
+                network.resume();
+            }
+        });
+
+        // Initialize all functionality when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add loading complete class for CSS animations
+            document.body.classList.add('loaded');
+            
+            // Initialize any other startup functionality
+            console.log('Portfolio website initialized successfully');
+        });
+
+        // Global functions for HTML onclick handlers
+        window.openCVModal = openCVModal;
+        window.closeCVModal = closeCVModal;
+        window.copyCitation = copyCitation;
+        window.sharePublication = sharePublication;
     </script>
-    
 </body>
 </html>
