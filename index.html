@@ -45,11 +45,16 @@
     <meta property="og:url" content="https://paschalisag.github.io/portfolio/">
     <meta property="og:image" content="./pictures/profile_pic.jpeg">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Paschalis Agapitos - Computational Humanities Predoctoral Researcher">
+    <meta name="twitter:description" content="PhD candidate at DIPC specializing in NLP and network data science">
+    <meta name="twitter:image" content="./pictures/profile_pic.jpeg">
 
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3k.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -71,9 +76,9 @@
             --text-accent: #64b5f6;
             
             /* Colorblind-Safe Accent Colors with Patterns */
-            --accent-blue: #2196f3;      /* Primary actions */
+            --accent-blue: #26a69a;      /* Primary actions */
             --accent-teal: #26a69a;      /* Success/positive */
-            --accent-amber: #ffa726;     /* Warning/attention */
+            --accent-amber: #26a69a;     /* Warning/attention */
             --accent-purple: #ab47bc;    /* Special/featured */
             --accent-red: #ef5350;       /* Error/critical */
             
@@ -95,9 +100,9 @@
             --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             
             /* Typography Scale */
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             --font-serif: 'Merriweather', Georgia, serif;
-            --font-mono: 'JetBrains Mono', monospace;
+            --font-mono: 'JetBrains Mono', 'Courier New', Courier, monospace;
             
             /* Border Radius */
             --radius-sm: 8px;
@@ -107,19 +112,19 @@
         }
 
         [data-theme="light"] {
-            --primary-bg: #f8f9fa;
-            --secondary-bg: #ffffff;
-            --accent-bg: #e9ecef;
-            --card-bg: #ffffff;
+            --primary-bg: #fff0e6;
+            --secondary-bg: #fff0e6;
+            --accent-bg: #fff0e6;
+            --card-bg: #f7f3f0;
             
             --text-primary: #1a1a1a;
             --text-secondary: #2d3436;
             --text-muted: #636e72;
             --text-accent: #1976d2;
             
-            --accent-blue: #1976d2;
-            --accent-teal: #00897b;
-            --accent-amber: #f57c00;
+            --accent-blue: #10162e;
+            --accent-teal: #10162e;
+            --accent-amber: #10162e;
             --accent-purple: #7b1fa2;
             --accent-red: #d32f2f;
             
@@ -246,7 +251,8 @@
             }
             
             #networkCanvas {
-                display: none !important;
+                display: block !important;
+                opacity: 0.9 !important;
             }
         }
 
@@ -295,7 +301,7 @@
         }
 
         [data-theme="light"] #networkCanvas {
-            opacity: 0.15;
+            opacity: 0.9;
         }
 
         /* ===================================
@@ -1409,7 +1415,6 @@
                 </div>
                 <div class="cv-item">
                     <h4>Research Impact</h4>
-                    <p><strong>Publications:</strong> 3 peer-reviewed publications in high-impact journals</p>
                     <p><strong>Open Source Contributions:</strong> Active developer with multiple GitHub repositories</p>
                     <p><strong>Academic Collaboration:</strong> International research partnerships across multiple institutions</p>
                 </div>
@@ -1425,7 +1430,6 @@
                 <div class="hero-content">
                     <div class="hero-text">
                         <h2 id="hero-title">Short bio</h2
-                        <p class="subtitle">PhD Candidate in Computational Humanities</p>
                         <p class="description">
                             Working at the intersection of linguistics, network data science, and digital cultural studies. 
                             Currently pursuing a PhD in Computational Humanities at DIPC, combining NLP and network data science to unlock 
@@ -1468,10 +1472,9 @@
                                             Computational Humanities @ DIPC<br><br>
                                             <strong>Research Interests:</strong><br>
                                             • NLP & Network Science<br>
-                                            • Cultural Analytics<br>
+                                            • Cultural Data Analytics<br>
                                             • Computational Stylometry<br>
-                                            • Digital Humanities<br><br>
-                                            <strong>Publications:</strong> 3 peer-reviewed papers
+                                            • Computational Humanities<br><br>
                                         </div>
                                         <button class="cv-download-btn" onclick="openCVModal()">
                                             <i class="fas fa-eye" aria-hidden="true"></i> View Full CV
@@ -1490,7 +1493,7 @@
             <div class="container">
                 <h2 class="section-title" id="research-title">Research Focus</h2>
                 <p class="section-subtitle">
-                    Devel and using computational methods to understand human culture, language, and communication through interdisciplinary research.
+                    Developing and using computational methods to understand human culture, language, and communication through interdisciplinary research.
                 </p>
                 <div class="cards-grid">
                     <article class="card research-card">
@@ -1867,13 +1870,10 @@
             </div>
             <p>&copy; 2025 Paschalis Agapitos. All rights reserved.</p>
             <p style="margin-top: 0.5rem;">PhD Candidate in Computational Humanities at DIPC</p>
-            <p style="margin-top: 1rem; font-size: 0.95rem;">
-                Committed to Open Science and reproducible research in computational humanities.
             </p>
         </div>
     </footer>
 
-    <!-- Enhanced JavaScript -->
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // ===================================
         // Network Animation
@@ -1952,8 +1952,8 @@
                     this.ctx.beginPath();
                     this.ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
                     this.ctx.fillStyle = this.isDarkTheme 
-                        ? 'rgba(100, 181, 246, 0.6)' 
-                        : 'rgba(25, 118, 210, 0.6)';
+                    ? 'rgba(255, 213, 0, 0.7)' // darkish yellow for dark theme
+                    : 'rgba(50, 50, 50, 0.7)'; // Dark gray for light theme
                     this.ctx.fill();
                 });
                 
@@ -1972,8 +1972,8 @@
                             this.ctx.moveTo(nodeA.x, nodeA.y);
                             this.ctx.lineTo(nodeB.x, nodeB.y);
                             this.ctx.strokeStyle = this.isDarkTheme
-                                ? `rgba(100, 181, 246, ${opacity * 0.3})`
-                                : `rgba(25, 118, 210, ${opacity * 0.3})`;
+                                ? `rgba(255, 213, 0, ${opacity * 0.3})`
+                                : `rgba(50, 50, 50, ${opacity * 0.3})`; // Match node color
                             this.ctx.lineWidth = 1;
                             this.ctx.stroke();
                         }
