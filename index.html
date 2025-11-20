@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-16B83QME0W"></script>
@@ -8,14 +8,18 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-16B83QME0W');
+        
+        // Remove no-js class if JS is enabled
+        document.documentElement.classList.remove('no-js');
     </script>
     
-    <!--Connect website to other profiles-->
+    <!-- JSON-LD for SEO -->
     <script type="application/ld+json">
     {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Paschalis Agapitos",
+    "jobTitle": "PhD Candidate in Computational Humanities",
     "url": "https://paschalisag.github.io/portfolio/",
     "sameAs": [
         "https://www.linkedin.com/in/paschalis-agapitos-1b5284217/",
@@ -28,34 +32,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Enhanced SEO Meta Tags -->
-    <title>Paschalis Agapitos - Computational Humanities Researcher | PhD DIPC</title>
-    <meta name="description" content="Paschalis Agapitos: PhD candidate in Computational Humanities at DIPC. Expert in NLP, network science, cultural analytics. Publications in Nature, JCLS, and JORS.">
-    <meta name="keywords" content="Paschalis Agapitos, Computational Humanities, NLP, Network Data Science, Digital Humanities, Stylometry, Cultural Analytics, Research, Publications">
+    <title>Paschalis Agapitos - Computational Humanities Researcher</title>
+    <meta name="description" content="PhD candidate in Computational Humanities at DIPC. Expert in NLP, network science, and cultural analytics.">
+    <meta name="keywords" content="Paschalis Agapitos, Computational Humanities, NLP, Network Science, Digital Humanities, Research">
     <meta name="author" content="Paschalis Agapitos">
     <meta name="robots" content="index, follow">
     
-    <!-- Enhanced Open Graph -->
+    <!-- Open Graph / Twitter -->
     <meta property="og:title" content="Paschalis Agapitos - Computational Humanities Researcher">
-    <meta property="og:description" content="PhD candidate at DIPC specializing in NLP and network data science. Explore publications, projects, and research in computational humanities.">
+    <meta property="og:description" content="PhD candidate at DIPC specializing in NLP and network data science.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://paschalisag.github.io/portfolio/">
     <meta property="og:image" content="./pictures/profile_pic.jpeg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Paschalis Agapitos - Computational Humanities Researcher">
-    <meta name="twitter:description" content="PhD candidate at DIPC specializing in NLP and network data science">
-    <meta name="twitter:image" content="./pictures/profile_pic.jpeg">
 
-    <!-- Fonts -->
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
