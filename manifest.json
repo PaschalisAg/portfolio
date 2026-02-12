@@ -1,0 +1,28 @@
+{
+  "name": "Paschalis Agapitos - Computational Humanities Portfolio",
+  "short_name": "P. Agapitos",
+  "description": "PhD candidate in Computational Humanities at DIPC. Expert in NLP, network science, and cultural analytics.",
+  "start_url": "/portfolio/",
+  "scope": "/portfolio/",
+  "display": "standalone",
+  "background_color": "#0f1419",
+  "theme_color": "#0f1419",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/portfolio/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/portfolio/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "lang": "en-US",
+  "dir": "ltr"
+}

@@ -199,6 +199,30 @@
             border-width: 0;
         }
 
+        /* Skip to content - highly visible on focus */
+        .skip-to-content {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-blue);
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            z-index: 10000;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow-lg);
+            border: 3px solid white;
+            transition: top var(--transition-fast);
+        }
+
+        .skip-to-content:focus {
+            top: 20px;
+            outline: none;
+        }
+
         /* Enhanced focus indicators - highly visible */
         *:focus {
             outline: 3px solid var(--accent-blue);
@@ -1482,7 +1506,7 @@
                         <div class="profile-container" id="profileContainer" role="button" tabindex="0" aria-label="Profile image - Click or press Enter to flip card and view CV preview">
                             <div class="profile-flip">
                                 <div class="profile-front">
-                                    <img src="pictures/profile_pic.webp" alt="Portrait photo of Paschalis Agapitos, PhD Candidate in Computational Humanities at DIPC, smiling professionally" class="profile-photo" loading="eager" width="450" height="450" decoding="async">
+                                    <img src="pictures/profile_pic.webp" alt="Portrait photo of Paschalis Agapitos" class="profile-photo" loading="eager" width="450" height="450" decoding="async">
                                 </div>
                                 <div class="profile-back">
                                     <div class="cv-preview">
@@ -2465,6 +2489,7 @@
         // ===================================
         // Initialization
         // ===================================
+        console.log('Enhanced accessible portfolio initialized successfully');
     </script>
 </body>
 </html>
