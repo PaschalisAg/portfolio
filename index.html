@@ -1519,8 +1519,8 @@
                         <p>Using and developing computational approaches to cultural phenomena, bridging computational methods and humanistic inquiry to uncover new patterns in human expression and cultural transmission.</p>
                         <div class="tags" role="list" aria-label="Research tags">
                             <span class="tag" role="listitem">Cultural Analytics</span>
-                            <span class="tag" role="listitem">Digital Humanities</span>
-                            <span class="tag" role="listitem">Human-Computer Interaction</span>
+                            <span class="tag" role="listitem">Computational Humanities</span>
+                            <span class="tag" role="listitem">Wikipedia's network analysis</span>
                         </div>
                     </article>
                     <article class="card research-card">
@@ -1803,66 +1803,42 @@
                     <div class="skill-item" data-skill="python">
                         <div class="skill-icon" aria-hidden="true"><i class="fab fa-python"></i></div>
                         <div class="skill-name">Python</div>
-                        <div class="skill-level">4+ years experience</div>
-                        <div class="skill-progress" role="progressbar" aria-label="Python proficiency" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100">
-                            <div class="skill-progress-bar" data-progress="95"></div>
-                        </div>
+                        <div class="skill-level">Intermediate to Expert</div>
                     </div>
                     <div class="skill-item" data-skill="ml">
                         <div class="skill-icon" aria-hidden="true"><i class="fas fa-brain"></i></div>
                         <div class="skill-name">Machine Learning</div>
-                        <div class="skill-level">3+ years experience</div>
-                        <div class="skill-progress" role="progressbar" aria-label="Machine Learning proficiency" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100">
-                            <div class="skill-progress-bar" data-progress="88"></div>
-                        </div>
+                        <div class="skill-level">Intermediate</div>
                     </div>
                     <div class="skill-item" data-skill="nlp">
                         <div class="skill-icon" aria-hidden="true"><i class="fas fa-language"></i></div>
                         <div class="skill-name">Natural Language Processing</div>
-                        <div class="skill-level">4+ years experience</div>
-                        <div class="skill-progress" role="progressbar" aria-label="NLP proficiency" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100">
-                            <div class="skill-progress-bar" data-progress="92"></div>
-                        </div>
+                        <div class="skill-level">Intermediate to Expert</div>
                     </div>
                     <div class="skill-item" data-skill="networks">
                         <div class="skill-icon" aria-hidden="true"><i class="fas fa-project-diagram"></i></div>
                         <div class="skill-name">Network Data Science</div>
-                        <div class="skill-level">3+ years experience</div>
-                        <div class="skill-progress" role="progressbar" aria-label="Network Science proficiency" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-                            <div class="skill-progress-bar" data-progress="85"></div>
-                        </div>
+                        <div class="skill-level">Intermediate</div>
                     </div>
                     <div class="skill-item" data-skill="datavis">
                         <div class="skill-icon" aria-hidden="true"><i class="fas fa-chart-bar"></i></div>
                         <div class="skill-name">Data Science & Visualization</div>
-                        <div class="skill-level">4+ years experience</div>
-                        <div class="skill-progress" role="progressbar" aria-label="Data Science proficiency" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-                            <div class="skill-progress-bar" data-progress="90"></div>
-                        </div>
+                        <div class="skill-level">Intermediate to Expert</div>
                     </div>
                     <div class="skill-item" data-skill="statistics">
                         <div class="skill-icon" aria-hidden="true"><i class="fas fa-calculator"></i></div>
                         <div class="skill-name">Statistical Analysis</div>
-                        <div class="skill-level">4+ years experience</div>
-                        <div class="skill-progress" role="progressbar" aria-label="Statistics proficiency" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100">
-                            <div class="skill-progress-bar" data-progress="87"></div>
-                        </div>
+                        <div class="skill-level">Intermediate to Expert</div>
                     </div>
                     <div class="skill-item" data-skill="web">
                         <div class="skill-icon" aria-hidden="true"><i class="fas fa-code"></i></div>
                         <div class="skill-name">Web Development</div>
-                        <div class="skill-level">2+ years experience</div>
-                        <div class="skill-progress" role="progressbar" aria-label="Web Development proficiency" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                            <div class="skill-progress-bar" data-progress="75"></div>
-                        </div>
+                        <div class="skill-level">Beginner</div>
                     </div>
                     <div class="skill-item" data-skill="cpp">
                         <div class="skill-icon" aria-hidden="true"><i class="fas fa-cog"></i></div>
                         <div class="skill-name">C++ Programming</div>
-                        <div class="skill-level">1+ year experience</div>
-                        <div class="skill-progress" role="progressbar" aria-label="C++ proficiency" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
-                            <div class="skill-progress-bar" data-progress="70"></div>
-                        </div>
+                        <div class="skill-level">Beginner</div>
                     </div>
                 </div>
             </div>
@@ -1887,7 +1863,7 @@
                 </a>
             </div>
             <p>&copy; 2025 Paschalis Agapitos. All rights reserved.</p>
-            <p style="margin-top: 0.5rem;">PhD Candidate in Computational Humanities at DIPC</p>
+            <p style="margin-top: 0.5rem;">PhD Candidate in Computational Humanities</p>
             </p>
         </div>
     </footer>
@@ -1895,22 +1871,41 @@
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" defer></script>
     <script>
         // ===================================
-        // Network Animation - Performance Optimized
+        // NLP & Data Science Text Animation - Performance Optimized
         // ===================================
-        class NetworkAnimation {
+        class NLPAnimation {
             constructor(canvas) {
                 this.canvas = canvas;
                 this.ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
-                this.nodes = [];
-                this.mouse = { x: 0, y: 0 };
+                this.embeddings = [];
                 this.isDarkTheme = true;
                 this.frameInterval = 1000 / 30; // 30 FPS for better performance
                 this.lastFrameTime = 0;
                 this.animationId = null;
                 this.isVisible = true;
                 
+                // Semantic clusters for embeddings (grouped by meaning)
+                this.clusters = {
+                    nlp: { 
+                        words: ['NLP', 'tokenize', 'embedding', 'semantic', 'syntax', 'parse', 'sentiment', 'entity', 'lemma', 'language'],
+                        color: { r: 100, g: 181, b: 246 } // Blue
+                    },
+                    ml: {
+                        words: ['neural', 'transformer', 'model', 'train', 'predict', 'accuracy', 'learning', 'algorithm'],
+                        color: { r: 156, g: 39, b: 176 } // Purple
+                    },
+                    data: {
+                        words: ['data', 'analysis', 'vector', 'classify', 'cluster', 'feature', 'extract', 'pattern', 'insight'],
+                        color: { r: 38, g: 166, b: 154 } // Teal
+                    },
+                    network: {
+                        words: ['network', 'graph', 'node', 'edge', 'context', 'corpus', 'tf-idf'],
+                        color: { r: 255, g: 152, b: 0 } // Orange
+                    }
+                };
+                
                 this.resize();
-                this.initNodes();
+                this.initEmbeddings();
                 this.bindEvents();
                 this.checkVisibility();
                 this.animate();
@@ -1924,25 +1919,39 @@
                 this.canvas.style.height = window.innerHeight + 'px';
                 this.ctx.setTransform(1, 0, 0, 1, 0, 0);
                 this.ctx.scale(dpr, dpr);
-                this.initNodes();
+                this.initEmbeddings();
             }
 
-            initNodes() {
-                this.nodes = [];
-                const area = window.innerWidth * window.innerHeight;
+            initEmbeddings() {
+                this.embeddings = [];
                 const isMobile = window.innerWidth <= 768;
-                const nodeCount = Math.min(
-                    Math.max(isMobile ? 15 : 25, Math.floor(area / (isMobile ? 40000 : 20000))),
-                    isMobile ? 30 : 60
-                );
+                const embeddingCount = isMobile ? 15 : 30;
                 
-                for (let i = 0; i < nodeCount; i++) {
-                    this.nodes.push({
+                // Create embeddings from clustered vocabulary
+                const allWords = [];
+                Object.entries(this.clusters).forEach(([clusterName, cluster]) => {
+                    cluster.words.forEach(word => {
+                        allWords.push({ word, cluster: clusterName, color: cluster.color });
+                    });
+                });
+                
+                // Select random words and create embedding nodes
+                for (let i = 0; i < embeddingCount; i++) {
+                    const selected = allWords[Math.floor(Math.random() * allWords.length)];
+                    const fontSize = Math.random() * 8 + 10; // 10-18px
+                    
+                    this.embeddings.push({
+                        text: selected.word,
+                        cluster: selected.cluster,
+                        color: selected.color,
                         x: Math.random() * window.innerWidth,
                         y: Math.random() * window.innerHeight,
-                        vx: (Math.random() - 0.5) * 0.5,
-                        vy: (Math.random() - 0.5) * 0.5,
-                        radius: Math.random() * 2 + 1
+                        vx: (Math.random() - 0.5) * 0.2,
+                        vy: (Math.random() - 0.5) * 0.2,
+                        fontSize: fontSize,
+                        nodeRadius: Math.random() * 3 + 3, // 3-6px radius
+                        opacity: Math.random() * 0.2 + 0.3, // 0.3-0.5
+                        glowIntensity: Math.random() * 0.5 + 0.5
                     });
                 }
             }
@@ -1952,7 +1961,6 @@
             }
 
             checkVisibility() {
-                // Pause animation when page is not visible
                 document.addEventListener('visibilitychange', () => {
                     this.isVisible = !document.hidden;
                     if (this.isVisible && !this.animationId) {
@@ -1967,11 +1975,6 @@
                     clearTimeout(resizeTimeout);
                     resizeTimeout = setTimeout(() => this.resize(), 250);
                 });
-                
-                window.addEventListener('mousemove', (e) => {
-                    this.mouse.x = e.clientX;
-                    this.mouse.y = e.clientY;
-                }, { passive: true });
             }
 
             animate(currentTime = 0) {
@@ -1988,46 +1991,112 @@
 
                 this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
                 
-                // Draw nodes
-                this.nodes.forEach(node => {
-                    node.x += node.vx;
-                    node.y += node.vy;
-                    
-                    if (node.x < 0 || node.x > window.innerWidth) node.vx *= -1;
-                    if (node.y < 0 || node.y > window.innerHeight) node.vy *= -1;
-                    
-                    this.ctx.beginPath();
-                    this.ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-                    this.ctx.fillStyle = this.isDarkTheme 
-                        ? 'rgba(255, 213, 0, 0.7)'
-                        : 'rgba(50, 50, 50, 0.7)';
-                    this.ctx.fill();
-                });
-                
-                // Draw connections
-                for (let i = 0; i < this.nodes.length; i++) {
-                    for (let j = i + 1; j < this.nodes.length; j++) {
-                        const nodeA = this.nodes[i];
-                        const nodeB = this.nodes[j];
+                // Draw network connections first (behind nodes)
+                for (let i = 0; i < this.embeddings.length; i++) {
+                    for (let j = i + 1; j < this.embeddings.length; j++) {
+                        const embA = this.embeddings[i];
+                        const embB = this.embeddings[j];
                         const distance = Math.sqrt(
-                            (nodeA.x - nodeB.x) ** 2 + (nodeA.y - nodeB.y) ** 2
+                            (embA.x - embB.x) ** 2 + (embA.y - embB.y) ** 2
                         );
                         
-                        if (distance < 120) {
-                            const opacity = (120 - distance) / 120;
+                        // Stronger connections for same cluster (semantic similarity)
+                        const maxDistance = embA.cluster === embB.cluster ? 200 : 150;
+                        const baseOpacity = embA.cluster === embB.cluster ? 0.3 : 0.15;
+                        
+                        if (distance < maxDistance) {
+                            const opacity = (maxDistance - distance) / maxDistance * baseOpacity;
+                            const lineWidth = embA.cluster === embB.cluster ? 1.5 : 0.8;
+                            
                             this.ctx.beginPath();
-                            this.ctx.moveTo(nodeA.x, nodeA.y);
-                            this.ctx.lineTo(nodeB.x, nodeB.y);
-                            this.ctx.strokeStyle = this.isDarkTheme
-                                ? `rgba(255, 213, 0, ${opacity * 0.3})`
-                                : `rgba(50, 50, 50, ${opacity * 0.3})`;
-                            this.ctx.lineWidth = 1;
+                            this.ctx.moveTo(embA.x, embA.y);
+                            this.ctx.lineTo(embB.x, embB.y);
+                            
+                            // Use gradient for connections
+                            const gradient = this.ctx.createLinearGradient(embA.x, embA.y, embB.x, embB.y);
+                            const colorA = this.isDarkTheme ? embA.color : this.adjustColorForLight(embA.color);
+                            const colorB = this.isDarkTheme ? embB.color : this.adjustColorForLight(embB.color);
+                            gradient.addColorStop(0, `rgba(${colorA.r}, ${colorA.g}, ${colorA.b}, ${opacity})`);
+                            gradient.addColorStop(1, `rgba(${colorB.r}, ${colorB.g}, ${colorB.b}, ${opacity})`);
+                            
+                            this.ctx.strokeStyle = gradient;
+                            this.ctx.lineWidth = lineWidth;
                             this.ctx.stroke();
                         }
                     }
                 }
                 
+                // Update and draw embedding nodes with text
+                this.embeddings.forEach((emb) => {
+                    emb.x += emb.vx;
+                    emb.y += emb.vy;
+                    
+                    // Bounce off edges
+                    if (emb.x < -50 || emb.x > window.innerWidth + 50) emb.vx *= -1;
+                    if (emb.y < -50 || emb.y > window.innerHeight + 50) emb.vy *= -1;
+                    
+                    // Apply subtle attraction within same cluster (embedding space behavior)
+                    this.embeddings.forEach((other) => {
+                        if (other !== emb && other.cluster === emb.cluster) {
+                            const dx = other.x - emb.x;
+                            const dy = other.y - emb.y;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            if (distance > 0 && distance < 250) {
+                                const force = 0.0002;
+                                emb.vx += (dx / distance) * force;
+                                emb.vy += (dy / distance) * force;
+                            }
+                        }
+                    });
+                    
+                    // Limit velocity
+                    const maxSpeed = 0.3;
+                    const speed = Math.sqrt(emb.vx * emb.vx + emb.vy * emb.vy);
+                    if (speed > maxSpeed) {
+                        emb.vx = (emb.vx / speed) * maxSpeed;
+                        emb.vy = (emb.vy / speed) * maxSpeed;
+                    }
+                    
+                    const color = this.isDarkTheme ? emb.color : this.adjustColorForLight(emb.color);
+                    
+                    // Draw glow effect
+                    this.ctx.save();
+                    this.ctx.shadowBlur = 15 * emb.glowIntensity;
+                    this.ctx.shadowColor = `rgba(${color.r}, ${color.g}, ${color.b}, 0.6)`;
+                    
+                    // Draw node circle
+                    this.ctx.beginPath();
+                    this.ctx.arc(emb.x, emb.y, emb.nodeRadius, 0, Math.PI * 2);
+                    this.ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${emb.opacity + 0.3})`;
+                    this.ctx.fill();
+                    
+                    // Draw node border
+                    this.ctx.strokeStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${emb.opacity + 0.5})`;
+                    this.ctx.lineWidth = 1.5;
+                    this.ctx.stroke();
+                    
+                    this.ctx.restore();
+                    
+                    // Draw text label
+                    this.ctx.save();
+                    this.ctx.font = `${emb.fontSize}px 'JetBrains Mono', monospace`;
+                    this.ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${emb.opacity})`;
+                    this.ctx.textAlign = 'center';
+                    this.ctx.textBaseline = 'top';
+                    this.ctx.fillText(emb.text, emb.x, emb.y + emb.nodeRadius + 4);
+                    this.ctx.restore();
+                });
+                
                 this.animationId = requestAnimationFrame((time) => this.animate(time));
+            }
+            
+            adjustColorForLight(color) {
+                // Make colors darker for light theme
+                return {
+                    r: Math.floor(color.r * 0.6),
+                    g: Math.floor(color.g * 0.6),
+                    b: Math.floor(color.b * 0.6)
+                };
             }
         }
 
@@ -2188,36 +2257,35 @@
             });
         }
 
-        // ===================================
-        // Initialize Network Animation
-        // ===================================
-        let network = null;
-        function initNetworkAnimation() {
-            if (network) return;
-            // Respect user preference for reduced motion — but allow a dev override
-            // to force-enable the animation for testing: add `#force-network` to the URL
-            // or set `localStorage.setItem('forceNetwork','1')` in the console.
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const forceOverride = location.hash === '#force-network' || localStorage.getItem('forceNetwork') === '1';
-            if (prefersReducedMotion && !forceOverride) return;
+        // Initialize NLP Text Animation
+        let nlpAnimation = null;
+        function initNLPAnimation() {
+            if (nlpAnimation) return;
+            
+            // FIX: Removed the "prefers-reduced-motion" check that was preventing 
+            // the animation from starting on some systems.
+            
             const canvas = document.getElementById('networkCanvas');
             if (!canvas) return;
-            network = new NetworkAnimation(canvas);
+            
+            nlpAnimation = new NLPAnimation(canvas);
+            
             const currentTheme = document.body.getAttribute('data-theme') || 'dark';
-            network.updateTheme(currentTheme === 'dark');
-            if (forceOverride) console.info('Network animation: forceOverride active — animation started for testing');
+            nlpAnimation.updateTheme(currentTheme === 'dark');
+            
         }
 
-        function scheduleNetworkInit() {
+        function scheduleNLPInit() {
+            // Initialize slightly faster (500ms instead of 1000/1500ms) to make it visible sooner
             if ('requestIdleCallback' in window) {
-                requestIdleCallback(initNetworkAnimation, { timeout: 1500 });
+                requestIdleCallback(initNLPAnimation, { timeout: 1000 });
             } else {
-                setTimeout(initNetworkAnimation, 1000);
+                setTimeout(initNLPAnimation, 500);
             }
         }
 
-        scheduleNetworkInit();
-        window.addEventListener('load', initNetworkAnimation, { once: true });
+        scheduleNLPInit();
+        window.addEventListener('load', initNLPAnimation, { once: true });
 
         // ===================================
         // Mobile Menu Management
@@ -2260,8 +2328,8 @@
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             
             body.setAttribute('data-theme', newTheme);
-            if (network) {
-                network.updateTheme(newTheme === 'dark');
+            if (nlpAnimation) {
+                nlpAnimation.updateTheme(newTheme === 'dark');
             }
             themeToggle.querySelector('span[aria-hidden]').textContent = newTheme === 'dark' ? '🌑' : '☀️';
             
@@ -2285,8 +2353,8 @@
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
             body.setAttribute('data-theme', savedTheme);
-            if (network) {
-                network.updateTheme(savedTheme === 'dark');
+            if (nlpAnimation) {
+                nlpAnimation.updateTheme(savedTheme === 'dark');
             }
             themeToggle.querySelector('span[aria-hidden]').textContent = savedTheme === 'dark' ? '🌑' : '☀️';
             
