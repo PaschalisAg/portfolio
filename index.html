@@ -2194,13 +2194,18 @@
         let network = null;
         function initNetworkAnimation() {
             if (network) return;
+            // Respect user preference for reduced motion — but allow a dev override
+            // to force-enable the animation for testing: add `#force-network` to the URL
+            // or set `localStorage.setItem('forceNetwork','1')` in the console.
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (prefersReducedMotion) return;
+            const forceOverride = location.hash === '#force-network' || localStorage.getItem('forceNetwork') === '1';
+            if (prefersReducedMotion && !forceOverride) return;
             const canvas = document.getElementById('networkCanvas');
             if (!canvas) return;
             network = new NetworkAnimation(canvas);
             const currentTheme = document.body.getAttribute('data-theme') || 'dark';
             network.updateTheme(currentTheme === 'dark');
+            if (forceOverride) console.info('Network animation: forceOverride active — animation started for testing');
         }
 
         function scheduleNetworkInit() {
