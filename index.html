@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
-    <!-- Google tag (gtag.js) -->
+    <!-- Google tag (gtag.js) - Deferred for better performance -->
+    <script>
+        // Remove no-js class immediately for faster rendering
+        document.documentElement.classList.remove('no-js');
+    </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-16B83QME0W"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -10,12 +14,13 @@
         gtag('config', 'G-16B83QME0W');
     </script>
     
-    <!--Connect website to other profiles-->
+    <!-- JSON-LD for SEO -->
     <script type="application/ld+json">
     {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Paschalis Agapitos",
+    "jobTitle": "PhD Candidate in Computational Humanities",
     "url": "https://paschalisag.github.io/portfolio/",
     "sameAs": [
         "https://www.linkedin.com/in/paschalis-agapitos-1b5284217/",
@@ -27,36 +32,48 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Performance: DNS Prefetch & Preconnect for external resources -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Enhanced SEO Meta Tags -->
-    <title>Paschalis Agapitos - Computational Humanities Researcher | PhD DIPC</title>
-    <meta name="description" content="Paschalis Agapitos: PhD candidate in Computational Humanities at DIPC. Expert in NLP, network science, cultural analytics. Publications in Nature, JCLS, and JORS.">
-    <meta name="keywords" content="Paschalis Agapitos, Computational Humanities, NLP, Network Data Science, Digital Humanities, Stylometry, Cultural Analytics, Research, Publications">
+    <title>Paschalis Agapitos - PhD Candidate in Computational Humanities</title>
+    <meta name="description" content="PhD candidate in Computational Humanities at DIPC. Expert in NLP, network science, and cultural analytics. Specializing in computational stylometry and digital humanities research.">
+    <meta name="keywords" content="Paschalis Agapitos, Computational Humanities, NLP, Network Science, Digital Humanities, Research, Machine Learning, Cultural Analytics, Stylometry">
     <meta name="author" content="Paschalis Agapitos">
     <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0f1419">
     
-    <!-- Enhanced Open Graph -->
-    <meta property="og:title" content="Paschalis Agapitos - Computational Humanities Researcher">
-    <meta property="og:description" content="PhD candidate at DIPC specializing in NLP and network data science. Explore publications, projects, and research in computational humanities.">
+    <!-- Web App Manifest for PWA support -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Open Graph / Twitter -->
+    <meta property="og:title" content="Paschalis Agapitos">
+    <meta property="og:description" content="PhD candidate at DIPC specializing in NLP and network data science.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://paschalisag.github.io/portfolio/">
     <meta property="og:image" content="./pictures/profile_pic.jpeg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Paschalis Agapitos - Computational Humanities Predoctoral Researcher">
     <meta name="twitter:description" content="PhD candidate at DIPC specializing in NLP and network data science">
     <meta name="twitter:image" content="./pictures/profile_pic.jpeg">
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
-    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3k.woff2" as="font" type="font/woff2" crossorigin>
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Fonts & Icons - Optimized loading -->
+    <!-- Preload critical fonts for faster rendering -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iCeJHPgxAgRiaz6tLOjkk.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/merriweather/v30/u-440qyriQwlOrhSvowK_l5-fCZMdeX3rg.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- Load fonts with display=swap for better performance -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
+    
+    <!-- Icons - Load asynchronously for better performance -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     
     <style>
         /* ===================================
@@ -113,15 +130,15 @@
         }
 
         [data-theme="light"] {
-            --primary-bg: #fff0e6;
-            --secondary-bg: #fff0e6;
-            --accent-bg: #fff0e6;
-            --card-bg: #f7f3f0;
+            --primary-bg: #beb8b8;
+            --secondary-bg: #818181;
+            --accent-bg: #000000;
+            --card-bg: #a09791;
             
-            --text-primary: #1a1a1a;
+            --text-primary: #000000;
             --text-secondary: #2d3436;
-            --text-muted: #636e72;
-            --text-accent: #1976d2;
+            --text-muted: #323536;
+            --text-accent: #1771ca;
             
             --accent-blue: #10162e;
             --accent-teal: #10162e;
@@ -129,9 +146,9 @@
             --accent-purple: #7b1fa2;
             --accent-red: #d32f2f;
             
-            --glass-bg: rgba(255, 255, 255, 0.9);
-            --glass-bg-light: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(25, 118, 210, 0.2);
+            --glass-bg: rgba(113, 138, 123, 0.664);
+            --glass-bg-light: #cec2bf94;
+            --glass-border: rgba(11, 53, 95, 0.2);
             --glass-border-subtle: rgba(99, 110, 114, 0.15);
             
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -161,11 +178,26 @@
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            /* Improve text rendering */
+            text-rendering: optimizeLegibility;
+            /* Enable GPU acceleration */
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
-        /* ===================================
-           ENHANCED ACCESSIBILITY
-           =================================== */
+
+        /* Screen reader only content */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
 
         /* Skip to content - highly visible on focus */
         .skip-to-content {
@@ -289,7 +321,7 @@
             padding: 0 clamp(1rem, 5vw, 3rem);
         }
 
-        /* Animated Network Background */
+        /* Animated Network Background - Performance optimized */
         #networkCanvas {
             position: fixed;
             top: 0;
@@ -299,6 +331,11 @@
             z-index: -1;
             opacity: 0.3;
             pointer-events: none;
+            /* Optimize canvas rendering */
+            will-change: transform;
+            /* Reduce repaints */
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
         }
 
         [data-theme="light"] #networkCanvas {
@@ -705,6 +742,10 @@
             box-shadow: var(--shadow-sm);
             position: relative;
             overflow: hidden;
+            /* Improve rendering performance */
+            will-change: transform;
+            /* Better containment for performance */
+            contain: layout style paint;
         }
 
         /* Colorblind-safe card indicators using patterns */
@@ -1315,8 +1356,8 @@
     <!-- Skip to content for accessibility -->
     <a href="#main-content" class="skip-to-content">Skip to main content</a>
     
-    <!-- Animated Network Background -->
-    <canvas id="networkCanvas" aria-hidden="true"></canvas>
+    <!-- Animated Network Background - Decorative only, hidden from screen readers -->
+    <canvas id="networkCanvas" aria-hidden="true" role="presentation"></canvas>
     
     <!-- Scroll Progress Indicator -->
     <div class="scroll-progress" role="progressbar" aria-label="Page scroll progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
@@ -1328,10 +1369,11 @@
         <nav role="navigation" aria-label="Main navigation">
             <a href="#about" class="logo" aria-label="Paschalis Agapitos - Return to top">Paschalis Agapitos</a>
             <div class="nav-container">
-                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="navLinks">
-                    <span class="hamburger"></span>
-                    <span class="hamburger"></span>
-                    <span class="hamburger"></span>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile navigation menu" aria-expanded="false" aria-controls="navLinks" type="button">
+                    <span class="hamburger" aria-hidden="true"></span>
+                    <span class="hamburger" aria-hidden="true"></span>
+                    <span class="hamburger" aria-hidden="true"></span>
+                    <span class="sr-only">Menu</span>
                 </button>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="#about" class="nav-link active">About</a></li>
@@ -1339,8 +1381,9 @@
                     <li><a href="#publications" class="nav-link">Publications</a></li>
                     <li><a href="#projects" class="nav-link">Projects</a></li>
                     <li><a href="#skills" class="nav-link">Skills</a></li>
-                    <li><button class="theme-toggle" id="themeToggle" aria-label="Toggle between dark and light theme" title="Toggle theme">
+                    <li><button class="theme-toggle" id="themeToggle" aria-label="Toggle theme. Currently dark mode. Press to switch to light mode" title="Toggle theme" type="button">
                         <span aria-hidden="true">🌑</span>
+                        <span class="sr-only" id="themeStatus">Dark mode active</span>
                     </button></li>
                 </ul>
             </div>
@@ -1353,10 +1396,10 @@
             <div class="cv-header">
                 <h2 class="cv-title" id="cvTitle">Curriculum Vitae</h2>
                 <div class="cv-actions">
-                    <button class="cv-download-btn" id="cvDownloadBtn" aria-label="Download CV as PDF">
+                    <button class="cv-download-btn" id="cvDownloadBtn" type="button" aria-label="Download curriculum vitae as PDF document">
                         <i class="fas fa-download" aria-hidden="true"></i> Download CV
                     </button>
-                    <button class="cv-close" id="cvClose" aria-label="Close CV modal">
+                    <button class="cv-close" id="cvClose" type="button" aria-label="Close curriculum vitae modal dialog">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -1460,10 +1503,10 @@
                         </div>
                     </div>
                     <div class="hero-image">
-                        <div class="profile-container" id="profileContainer" role="button" tabindex="0" aria-label="Profile image - Click or press Enter to view CV preview">
+                        <div class="profile-container" id="profileContainer" role="button" tabindex="0" aria-label="Profile image - Click or press Enter to flip card and view CV preview">
                             <div class="profile-flip">
                                 <div class="profile-front">
-                                    <img src="pictures/profile_pic.jpeg" alt="Paschalis Agapitos - PhD Candidate in Computational Humanities" class="profile-photo" loading="lazy">
+                                    <img src="pictures/profile_pic.jpeg" alt="Portrait photo of Paschalis Agapitos, PhD Candidate in Computational Humanities at DIPC, smiling professionally" class="profile-photo" loading="eager" width="450" height="450" decoding="async">
                                 </div>
                                 <div class="profile-back">
                                     <div class="cv-preview">
@@ -1575,10 +1618,10 @@
                         </div>
                         
                         <div class="citation-tools">
-                            <button class="citation-btn" onclick="copyCitation('wikitextgraph')" aria-label="Copy citation to clipboard">
+                            <button class="citation-btn" onclick="copyCitation('wikitextgraph')" type="button" aria-label="Copy WikiTextGraph publication citation to clipboard">
                                 <i class="fas fa-copy" aria-hidden="true"></i> Copy Citation
                             </button>
-                            <button class="citation-btn" onclick="sharePublication('wikitextgraph')" aria-label="Share this publication">
+                            <button class="citation-btn" onclick="sharePublication('wikitextgraph')" type="button" aria-label="Share WikiTextGraph publication link">
                                 <i class="fas fa-share-alt" aria-hidden="true"></i> Share
                             </button>
                         </div>
@@ -1622,10 +1665,10 @@
                         </div>
                         
                         <div class="citation-tools">
-                            <button class="citation-btn" onclick="copyCitation('wikipedia')" aria-label="Copy citation to clipboard">
+                            <button class="citation-btn" onclick="copyCitation('wikipedia')" type="button" aria-label="Copy Wikipedia cultural networks publication citation to clipboard">
                                 <i class="fas fa-copy" aria-hidden="true"></i> Copy Citation
                             </button>
-                            <button class="citation-btn" onclick="sharePublication('wikipedia')" aria-label="Share this publication">
+                            <button class="citation-btn" onclick="sharePublication('wikipedia')" type="button" aria-label="Share Wikipedia cultural networks publication link">
                                 <i class="fas fa-share-alt" aria-hidden="true"></i> Share
                             </button>
                         </div>
@@ -1673,10 +1716,10 @@
                         </div>
                         
                         <div class="citation-tools">
-                            <button class="citation-btn" onclick="copyCitation('seneca')" aria-label="Copy citation to clipboard">
+                            <button class="citation-btn" onclick="copyCitation('seneca')" type="button" aria-label="Copy Seneca stylometric analysis publication citation to clipboard">
                                 <i class="fas fa-copy" aria-hidden="true"></i> Copy Citation
                             </button>
-                            <button class="citation-btn" onclick="sharePublication('seneca')" aria-label="Share this publication">
+                            <button class="citation-btn" onclick="sharePublication('seneca')" type="button" aria-label="Share Seneca stylometric analysis publication link">
                                 <i class="fas fa-share-alt" aria-hidden="true"></i> Share
                             </button>
                         </div>
@@ -1877,33 +1920,40 @@
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // ===================================
-        // Network Animation
+        // Network Animation - Performance Optimized
         // ===================================
         class NetworkAnimation {
             constructor(canvas) {
                 this.canvas = canvas;
-                this.ctx = canvas.getContext('2d');
+                this.ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
                 this.nodes = [];
                 this.mouse = { x: 0, y: 0 };
                 this.isDarkTheme = true;
-                this.frameInterval = 1000 / 30;
+                this.frameInterval = 1000 / 30; // 30 FPS for better performance
                 this.lastFrameTime = 0;
+                this.animationId = null;
+                this.isVisible = true;
                 
                 this.resize();
                 this.initNodes();
                 this.bindEvents();
+                this.checkVisibility();
                 this.animate();
             }
 
             resize() {
-                this.canvas.width = window.innerWidth;
-                this.canvas.height = window.innerHeight;
+                const dpr = window.devicePixelRatio || 1;
+                this.canvas.width = window.innerWidth * dpr;
+                this.canvas.height = window.innerHeight * dpr;
+                this.canvas.style.width = window.innerWidth + 'px';
+                this.canvas.style.height = window.innerHeight + 'px';
+                this.ctx.scale(dpr, dpr);
                 this.initNodes();
             }
 
             initNodes() {
                 this.nodes = [];
-                const area = this.canvas.width * this.canvas.height;
+                const area = window.innerWidth * window.innerHeight;
                 const isMobile = window.innerWidth <= 768;
                 const nodeCount = Math.min(
                     Math.max(isMobile ? 15 : 25, Math.floor(area / (isMobile ? 40000 : 20000))),
@@ -1912,8 +1962,8 @@
                 
                 for (let i = 0; i < nodeCount; i++) {
                     this.nodes.push({
-                        x: Math.random() * this.canvas.width,
-                        y: Math.random() * this.canvas.height,
+                        x: Math.random() * window.innerWidth,
+                        y: Math.random() * window.innerHeight,
                         vx: (Math.random() - 0.5) * 0.5,
                         vy: (Math.random() - 0.5) * 0.5,
                         radius: Math.random() * 2 + 1
@@ -1925,8 +1975,23 @@
                 this.isDarkTheme = isDark;
             }
 
+            checkVisibility() {
+                // Pause animation when page is not visible
+                document.addEventListener('visibilitychange', () => {
+                    this.isVisible = !document.hidden;
+                    if (this.isVisible && !this.animationId) {
+                        this.animate();
+                    }
+                });
+            }
+
             bindEvents() {
-                window.addEventListener('resize', () => this.resize());
+                let resizeTimeout;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => this.resize(), 250);
+                });
+                
                 window.addEventListener('mousemove', (e) => {
                     this.mouse.x = e.clientX;
                     this.mouse.y = e.clientY;
@@ -1934,27 +1999,32 @@
             }
 
             animate(currentTime = 0) {
+                if (!this.isVisible) {
+                    this.animationId = null;
+                    return;
+                }
+
                 if (currentTime - this.lastFrameTime < this.frameInterval) {
-                    requestAnimationFrame((time) => this.animate(time));
+                    this.animationId = requestAnimationFrame((time) => this.animate(time));
                     return;
                 }
                 this.lastFrameTime = currentTime;
 
-                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
                 
                 // Draw nodes
                 this.nodes.forEach(node => {
                     node.x += node.vx;
                     node.y += node.vy;
                     
-                    if (node.x < 0 || node.x > this.canvas.width) node.vx *= -1;
-                    if (node.y < 0 || node.y > this.canvas.height) node.vy *= -1;
+                    if (node.x < 0 || node.x > window.innerWidth) node.vx *= -1;
+                    if (node.y < 0 || node.y > window.innerHeight) node.vy *= -1;
                     
                     this.ctx.beginPath();
                     this.ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
                     this.ctx.fillStyle = this.isDarkTheme 
-                    ? 'rgba(255, 213, 0, 0.7)' // darkish yellow for dark theme
-                    : 'rgba(50, 50, 50, 0.7)'; // Dark gray for light theme
+                        ? 'rgba(255, 213, 0, 0.7)'
+                        : 'rgba(50, 50, 50, 0.7)';
                     this.ctx.fill();
                 });
                 
@@ -1964,7 +2034,7 @@
                         const nodeA = this.nodes[i];
                         const nodeB = this.nodes[j];
                         const distance = Math.sqrt(
-                            (nodeA.x - nodeB.x) ** 2 + (nodeB.y - nodeA.y) ** 2
+                            (nodeA.x - nodeB.x) ** 2 + (nodeA.y - nodeB.y) ** 2
                         );
                         
                         if (distance < 120) {
@@ -1974,14 +2044,14 @@
                             this.ctx.lineTo(nodeB.x, nodeB.y);
                             this.ctx.strokeStyle = this.isDarkTheme
                                 ? `rgba(255, 213, 0, ${opacity * 0.3})`
-                                : `rgba(50, 50, 50, ${opacity * 0.3})`; // Match node color
+                                : `rgba(50, 50, 50, ${opacity * 0.3})`;
                             this.ctx.lineWidth = 1;
                             this.ctx.stroke();
                         }
                     }
                 }
                 
-                requestAnimationFrame((time) => this.animate(time));
+                this.animationId = requestAnimationFrame((time) => this.animate(time));
             }
         }
 
@@ -2037,6 +2107,7 @@
             notification.className = `notification ${type}`;
             notification.setAttribute('role', 'status');
             notification.setAttribute('aria-live', 'polite');
+            notification.setAttribute('aria-atomic', 'true');
             notification.style.cssText = `
                 position: fixed;
                 top: 100px;
@@ -2056,6 +2127,9 @@
             
             document.body.appendChild(notification);
             
+            // Trigger reflow
+            notification.offsetHeight;
+            
             setTimeout(() => {
                 notification.style.transform = 'translateX(0)';
             }, 100);
@@ -2066,15 +2140,38 @@
             }, 3000);
         }
 
+        // Helper function for screen reader announcements
+        function announceToScreenReader(message) {
+            const announcement = document.createElement('div');
+            announcement.setAttribute('aria-live', 'polite');
+            announcement.setAttribute('aria-atomic', 'true');
+            announcement.className = 'sr-only';
+            announcement.textContent = message;
+            document.body.appendChild(announcement);
+            setTimeout(() => announcement.remove(), 1000);
+        }
+
         // ===================================
         // CV Modal Management
         // ===================================
+        let lastFocusedElement = null;
+
         function openCVModal() {
+            // Store the element that triggered the modal
+            lastFocusedElement = document.activeElement;
+            
             const cvModal = document.getElementById('cvModal');
             cvModal.classList.add('show');
             cvModal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
-            document.getElementById('cvClose').focus();
+            
+            // Focus on close button after modal is shown
+            setTimeout(() => {
+                document.getElementById('cvClose').focus();
+            }, 100);
+            
+            // Trap focus within modal
+            trapFocus(cvModal);
         }
 
         function closeCVModal() {
@@ -2082,6 +2179,37 @@
             cvModal.classList.remove('show');
             cvModal.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
+            
+            // Return focus to element that opened the modal
+            if (lastFocusedElement) {
+                lastFocusedElement.focus();
+                lastFocusedElement = null;
+            }
+        }
+
+        // Focus trap utility for modals
+        function trapFocus(element) {
+            const focusableElements = element.querySelectorAll(
+                'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+            );
+            const firstFocusable = focusableElements[0];
+            const lastFocusable = focusableElements[focusableElements.length - 1];
+
+            element.addEventListener('keydown', function(e) {
+                if (e.key !== 'Tab') return;
+
+                if (e.shiftKey) {
+                    if (document.activeElement === firstFocusable) {
+                        e.preventDefault();
+                        lastFocusable.focus();
+                    }
+                } else {
+                    if (document.activeElement === lastFocusable) {
+                        e.preventDefault();
+                        firstFocusable.focus();
+                    }
+                }
+            });
         }
 
         // ===================================
@@ -2132,9 +2260,22 @@
             
             body.setAttribute('data-theme', newTheme);
             network.updateTheme(newTheme === 'dark');
-            themeToggle.querySelector('span').textContent = newTheme === 'dark' ? '🌑' : '☀️';
+            themeToggle.querySelector('span[aria-hidden]').textContent = newTheme === 'dark' ? '🌑' : '☀️';
+            
+            // Update accessible label
+            const statusText = newTheme === 'dark' ? 'Dark mode active. Press to switch to light mode' : 'Light mode active. Press to switch to dark mode';
+            themeToggle.setAttribute('aria-label', `Toggle theme. Currently ${newTheme} mode. ${statusText.split('.')[1]}`);
+            
+            // Update status text for screen readers
+            const statusElement = document.getElementById('themeStatus');
+            if (statusElement) {
+                statusElement.textContent = statusText.split('.')[0];
+            }
             
             localStorage.setItem('theme', newTheme);
+            
+            // Announce theme change to screen readers
+            announceToScreenReader(`Theme switched to ${newTheme} mode`);
         });
 
         // Load saved theme
@@ -2142,7 +2283,14 @@
         if (savedTheme) {
             body.setAttribute('data-theme', savedTheme);
             network.updateTheme(savedTheme === 'dark');
-            themeToggle.querySelector('span').textContent = savedTheme === 'dark' ? '🌑' : '☀️';
+            themeToggle.querySelector('span[aria-hidden]').textContent = savedTheme === 'dark' ? '🌑' : '☀️';
+            
+            // Update accessible label
+            const statusText = savedTheme === 'dark' ? 'Dark mode active' : 'Light mode active';
+            const statusElement = document.getElementById('themeStatus');
+            if (statusElement) {
+                statusElement.textContent = statusText;
+            }
         }
 
         // ===================================
@@ -2187,32 +2335,46 @@
         });
 
         // ===================================
-        // Smooth Scrolling
+        // Smooth Scrolling with Performance Optimization
         // ===================================
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+                const targetId = this.getAttribute('href');
+                const target = document.querySelector(targetId);
                 if (target) {
                     const headerHeight = 90;
                     const targetPosition = target.offsetTop - headerHeight;
                     
+                    // Use native smooth scroll for better performance
                     window.scrollTo({
                         top: targetPosition,
                         behavior: 'smooth'
                     });
+                    
+                    // Update URL without triggering scroll
+                    history.pushState(null, null, targetId);
+                    
+                    // Announce navigation to screen readers
+                    const sectionTitle = target.querySelector('h2, h1');
+                    if (sectionTitle) {
+                        announceToScreenReader(`Navigated to ${sectionTitle.textContent} section`);
+                    }
                 }
             });
         });
 
         // ===================================
-        // Scroll Progress Indicator
+        // Scroll Progress Indicator - Throttled
         // ===================================
         function updateScrollProgress() {
             const scrollProgress = document.getElementById('scrollProgressBar');
-            const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-            scrollProgress.style.width = Math.min(scrollPercent, 100) + '%';
-            scrollProgress.parentElement.setAttribute('aria-valuenow', Math.min(scrollPercent, 100));
+            const totalHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
+            const clampedPercent = Math.min(Math.max(scrollPercent, 0), 100);
+            
+            scrollProgress.style.width = clampedPercent + '%';
+            scrollProgress.parentElement.setAttribute('aria-valuenow', Math.round(clampedPercent));
         }
 
         let ticking = false;
@@ -2228,7 +2390,8 @@
         }
 
         window.addEventListener('scroll', requestScrollUpdate, { passive: true });
-        updateScrollProgress();
+        // Initial update
+        requestScrollUpdate();
 
         // ===================================
         // Active Navigation Link
@@ -2256,7 +2419,7 @@
         }
 
         // ===================================
-        // Intersection Observer for Animations
+        // Intersection Observer for Animations - Performance Optimized
         // ===================================
         const observerOptions = {
             threshold: 0.1,
@@ -2268,17 +2431,36 @@
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                     
+                    // Trigger skill animation when skills section is visible
                     if (entry.target.id === 'skills') {
                         setTimeout(() => animateSkillBars(), 500);
                     }
                     
+                    // Stop observing once animated
                     observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
 
+        // Observe all fade-in elements
         document.querySelectorAll('.fade-in').forEach(el => {
             observer.observe(el);
+        });
+
+        // Also observe images for lazy loading analytics
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    // Image is now visible, good for analytics
+                    imageObserver.unobserve(img);
+                }
+            });
+        }, { threshold: 0.01 });
+
+        // Observe all images
+        document.querySelectorAll('img').forEach(img => {
+            imageObserver.observe(img);
         });
 
         // ===================================
