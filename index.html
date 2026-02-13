@@ -756,9 +756,9 @@
 
                         if (distSq < maxDistSq) {
                             const distance = Math.sqrt(distSq);
-                            const baseOpacity = embA.cluster === embB.cluster ? 0.05 : 0.08;
+                            const baseOpacity = embA.cluster === embB.cluster ? .5 : .5;
                             const opacity = (maxDistance - distance) / maxDistance * baseOpacity;
-                            const lineWidth = embA.cluster === embB.cluster ? 2.8 : 1.8;
+                            const lineWidth = embA.cluster === embB.cluster ? .5 : .8;
                             
                             this.ctx.beginPath();
                             this.ctx.moveTo(embA.x, embA.y);
