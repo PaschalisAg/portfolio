@@ -1033,28 +1033,47 @@
 
         // Initialize NLP Text Animation
         let nlpAnimation = null;
+
+        function shouldEnableCanvasAnimation() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const isMobile = window.matchMedia('(max-width: 768px)').matches;
+            const saveData = navigator.connection && navigator.connection.saveData;
+            return !(prefersReducedMotion || isMobile || saveData);
+        }
+
+        function disableCanvasAnimation() {
+            const canvas = document.getElementById('networkCanvas');
+            if (canvas) {
+                canvas.style.display = 'none';
+            }
+        }
+
         function initNLPAnimation() {
             if (nlpAnimation) return;
-            
-            // FIX: Removed the "prefers-reduced-motion" check that was preventing 
-            // the animation from starting on some systems.
-            
+            if (!shouldEnableCanvasAnimation()) {
+                disableCanvasAnimation();
+                return;
+            }
+
             const canvas = document.getElementById('networkCanvas');
             if (!canvas) return;
-            
+
             nlpAnimation = new NLPAnimation(canvas);
-            
+
             const currentTheme = document.body.getAttribute('data-theme') || 'dark';
             nlpAnimation.updateTheme(currentTheme === 'dark');
-            
         }
 
         function scheduleNLPInit() {
-            // Initialize slightly faster (500ms instead of 1000/1500ms) to make it visible sooner
+            if (!shouldEnableCanvasAnimation()) {
+                disableCanvasAnimation();
+                return;
+            }
+
             if ('requestIdleCallback' in window) {
                 requestIdleCallback(initNLPAnimation, { timeout: 1000 });
             } else {
-                setTimeout(initNLPAnimation, 500);
+                setTimeout(initNLPAnimation, 800);
             }
         }
 
@@ -1244,12 +1263,12 @@
         // Active Navigation Link
         // ===================================
         const navLinksList = document.querySelectorAll('.nav-link');
+        const sectionAnchors = Array.from(document.querySelectorAll('section[id]'));
 
         function updateActiveNavLink() {
-            const sections = document.querySelectorAll('section[id]');
             const scrollPos = window.scrollY + 150;
 
-            sections.forEach(section => {
+            sectionAnchors.forEach(section => {
                 const sectionTop = section.offsetTop;
                 const sectionHeight = section.offsetHeight;
                 const sectionId = section.getAttribute('id');
