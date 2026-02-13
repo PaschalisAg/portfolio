@@ -17,11 +17,11 @@
     --text-accent: #64b5f6;
     
     /* Colorblind-Safe Accent Colors with Patterns */
-    --accent-blue: #26a69a;
-    --accent-teal: #26a69a;
-    --accent-amber: #26a69a;
+    --accent-blue: #188550;
+    --accent-teal: #ffffff;
+    --accent-amber: #123524;
     --accent-purple: #ab47bc;
-    --accent-red: #ef5350;
+    --accent-red: #970805;
     
     /* Glassmorphism with Better Contrast */
     --glass-bg: rgba(30, 36, 51, 0.85);
