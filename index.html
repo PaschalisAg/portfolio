@@ -131,31 +131,33 @@
         }
 
         [data-theme="light"] {
-            --primary-bg: #beb8b8;
-            --secondary-bg: #818181;
-            --accent-bg: #000000;
-            --card-bg: #a09791;
+            /* Warmer & Cosier Light Theme (Accessible) */
+            --primary-bg: #f9f6f2;       /* Cream/Warm White */
+            --secondary-bg: #e6e0d8;     /* Warm Beige */
+            --accent-bg: #3d3532;        /* Dark Warm Brown/Charcoal for contrast */
+            --card-bg: #ffffff;          /* White for clarity */
             
-            --text-primary: #000000;
-            --text-secondary: #2d3436;
-            --text-muted: #323536;
-            --text-accent: #1771ca;
+            --text-primary: #1a1512;     /* Very Dark Warm Brown (Almost Black) */
+            --text-secondary: #4a403a;   /* Dark Brown-Grey */
+            --text-muted: #736b66;       /* Medium Warm Grey */
+            --text-accent: #005a9c;      /* Accessible Blue */
             
-            --accent-blue: #10162e;
-            --accent-teal: #10162e;
-            --accent-amber: #10162e;
-            --accent-purple: #7b1fa2;
-            --accent-red: #d32f2f;
+            /* Enhanced Accessible Accent Colors */
+            --accent-blue: #02352f;      /* Strong Blue */
+            --accent-teal: #02352f;      /* Dark Teal */
+            --accent-amber: #02352f;     /* High Contrast Orange */
+            --accent-purple: #6a1b9a;    /* Deep Purple */
+            --accent-red: #c62828;       /* Deep Red */
             
-            --glass-bg: rgba(113, 138, 123, 0.664);
-            --glass-bg-light: #cec2bf94;
-            --glass-border: rgba(11, 53, 95, 0.2);
-            --glass-border-subtle: rgba(99, 110, 114, 0.15);
+            --glass-bg: rgba(255, 255, 255, 0.85); /* Warmer frosted glass */
+            --glass-bg-light: rgba(249, 246, 242, 0.9);
+            --glass-border: rgba(45, 36, 32, 0.1);
+            --glass-border-subtle: rgba(45, 36, 32, 0.05);
             
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
-            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
-            --shadow-focus: 0 0 0 3px rgba(25, 118, 210, 0.3);
+            --shadow-sm: 0 2px 8px rgba(45, 36, 32, 0.08); /* Warmer shadow tones */
+            --shadow-md: 0 4px 16px rgba(45, 36, 32, 0.1);
+            --shadow-lg: 0 8px 32px rgba(45, 36, 32, 0.12);
+            --shadow-focus: 0 0 0 3px rgba(0, 90, 156, 0.3);
         }
 
         * {
@@ -303,7 +305,7 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            opacity: 0.5;
+            opacity: 0.3;
             pointer-events: none;
             display: block;
             /* Optimize canvas rendering */
@@ -314,7 +316,7 @@
         }
 
         [data-theme="light"] #networkCanvas {
-            opacity: 0.5;
+            opacity: 0.3;
         }
 
         /* ===================================
@@ -1429,7 +1431,7 @@
                 <h3>Academic Service & Recognition</h3>
                 <div class="cv-item">
                     <h4>Peer Review Activities</h4>
-                    <p><strong>Digital Scholarship in the Humanities (DSH)</strong> - Active peer reviewer for Oxford Academic journal, contributing to the evaluation of computational humanities research</p>
+                    <p><strong>Digital Scholarship in the Humanities (DSH)</strong></p>
                 </div>
                 <div class="cv-item">
                     <h4>Research Impact</h4>
@@ -1991,35 +1993,46 @@
 
                 this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
                 
+                // Optimizations for mobile
+                const isMobile = window.innerWidth <= 768;
+
                 // Draw network connections first (behind nodes)
                 for (let i = 0; i < this.embeddings.length; i++) {
                     for (let j = i + 1; j < this.embeddings.length; j++) {
                         const embA = this.embeddings[i];
                         const embB = this.embeddings[j];
-                        const distance = Math.sqrt(
-                            (embA.x - embB.x) ** 2 + (embA.y - embB.y) ** 2
-                        );
+                        const dx = embA.x - embB.x;
+                        const dy = embA.y - embB.y;
+                        const distSq = dx * dx + dy * dy;
                         
                         // Stronger connections for same cluster (semantic similarity)
                         const maxDistance = embA.cluster === embB.cluster ? 200 : 150;
-                        const baseOpacity = embA.cluster === embB.cluster ? 0.3 : 0.15;
-                        
-                        if (distance < maxDistance) {
+                        const maxDistSq = maxDistance * maxDistance;
+
+                        if (distSq < maxDistSq) {
+                            const distance = Math.sqrt(distSq);
+                            const baseOpacity = embA.cluster === embB.cluster ? 0.3 : 0.15;
                             const opacity = (maxDistance - distance) / maxDistance * baseOpacity;
-                            const lineWidth = embA.cluster === embB.cluster ? 1.5 : 0.8;
+                            const lineWidth = embA.cluster === embB.cluster ? 2.8 : 1.8;
                             
                             this.ctx.beginPath();
                             this.ctx.moveTo(embA.x, embA.y);
                             this.ctx.lineTo(embB.x, embB.y);
                             
-                            // Use gradient for connections
-                            const gradient = this.ctx.createLinearGradient(embA.x, embA.y, embB.x, embB.y);
+                            // Use gradient for connections only on desktop
                             const colorA = this.isDarkTheme ? embA.color : this.adjustColorForLight(embA.color);
-                            const colorB = this.isDarkTheme ? embB.color : this.adjustColorForLight(embB.color);
-                            gradient.addColorStop(0, `rgba(${colorA.r}, ${colorA.g}, ${colorA.b}, ${opacity})`);
-                            gradient.addColorStop(1, `rgba(${colorB.r}, ${colorB.g}, ${colorB.b}, ${opacity})`);
                             
-                            this.ctx.strokeStyle = gradient;
+                            if (!isMobile) {
+                                const gradient = this.ctx.createLinearGradient(embA.x, embA.y, embB.x, embB.y);
+                                const colorB = this.isDarkTheme ? embB.color : this.adjustColorForLight(embB.color);
+                                gradient.addColorStop(0, `rgba(${colorA.r}, ${colorA.g}, ${colorA.b}, ${opacity})`);
+                                gradient.addColorStop(1, `rgba(${colorB.r}, ${colorB.g}, ${colorB.b}, ${opacity})`);
+                                this.ctx.strokeStyle = gradient;
+                            } else {
+                                // Solid color for mobile performance
+                                this.ctx.strokeStyle = `rgba(${colorA.r}, ${colorA.g}, ${colorA.b}, ${opacity})`;
+                            }
+
                             this.ctx.lineWidth = lineWidth;
                             this.ctx.stroke();
                         }
@@ -2040,8 +2053,10 @@
                         if (other !== emb && other.cluster === emb.cluster) {
                             const dx = other.x - emb.x;
                             const dy = other.y - emb.y;
-                            const distance = Math.sqrt(dx * dx + dy * dy);
-                            if (distance > 0 && distance < 250) {
+                            const distSq = dx * dx + dy * dy;
+                            // 250^2 = 62500
+                            if (distSq > 0 && distSq < 62500) {
+                                const distance = Math.sqrt(distSq);
                                 const force = 0.0002;
                                 emb.vx += (dx / distance) * force;
                                 emb.vy += (dy / distance) * force;
@@ -2051,18 +2066,21 @@
                     
                     // Limit velocity
                     const maxSpeed = 0.3;
-                    const speed = Math.sqrt(emb.vx * emb.vx + emb.vy * emb.vy);
-                    if (speed > maxSpeed) {
+                    const speedSq = emb.vx * emb.vx + emb.vy * emb.vy;
+                    if (speedSq > maxSpeed * maxSpeed) {
+                        const speed = Math.sqrt(speedSq);
                         emb.vx = (emb.vx / speed) * maxSpeed;
                         emb.vy = (emb.vy / speed) * maxSpeed;
                     }
                     
                     const color = this.isDarkTheme ? emb.color : this.adjustColorForLight(emb.color);
                     
-                    // Draw glow effect
+                    // Draw glow effect - Disable on mobile
                     this.ctx.save();
-                    this.ctx.shadowBlur = 15 * emb.glowIntensity;
-                    this.ctx.shadowColor = `rgba(${color.r}, ${color.g}, ${color.b}, 0.6)`;
+                    if (!isMobile) {
+                        this.ctx.shadowBlur = 15 * emb.glowIntensity;
+                        this.ctx.shadowColor = `rgba(${color.r}, ${color.g}, ${color.b}, 0.6)`;
+                    }
                     
                     // Draw node circle
                     this.ctx.beginPath();
@@ -2077,7 +2095,8 @@
                     
                     this.ctx.restore();
                     
-                    // Draw text label
+                    // Draw text label - REMOVED
+                    /*
                     this.ctx.save();
                     this.ctx.font = `${emb.fontSize}px 'JetBrains Mono', monospace`;
                     this.ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${emb.opacity})`;
@@ -2085,17 +2104,37 @@
                     this.ctx.textBaseline = 'top';
                     this.ctx.fillText(emb.text, emb.x, emb.y + emb.nodeRadius + 4);
                     this.ctx.restore();
+                    */
                 });
                 
                 this.animationId = requestAnimationFrame((time) => this.animate(time));
             }
             
             adjustColorForLight(color) {
-                // Make colors darker for light theme
+                // Map to specific warm/cosy/accessible colors for light theme
+                
+                // NLP (Blue) -> Deep Slate/Denim Blue
+                if (color.r === 100 && color.g === 181 && color.b === 246) {
+                    return { r: 21, g: 101, b: 192 };
+                }
+                // ML (Purple) -> Deep Aubergine
+                if (color.r === 156 && color.g === 39 && color.b === 176) {
+                    return { r: 106, g: 27, b: 154 };
+                }
+                // Data (Teal) -> Deep Pine Green
+                if (color.r === 38 && color.g === 166 && color.b === 154) {
+                    return { r: 0, g: 77, b: 64 };
+                }
+                // Network (Orange) -> Burnt Rust/Sienna
+                if (color.r === 255 && color.g === 152 && color.b === 0) {
+                    return { r: 191, g: 54, b: 12 };
+                }
+
+                // Fallback: darken and slight warm shift (reduce blue)
                 return {
                     r: Math.floor(color.r * 0.6),
                     g: Math.floor(color.g * 0.6),
-                    b: Math.floor(color.b * 0.6)
+                    b: Math.floor(color.b * 0.55)
                 };
             }
         }
