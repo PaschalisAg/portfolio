@@ -7,7 +7,8 @@ class NLPAnimation {
         this.ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
         this.embeddings = [];
         this.isDarkTheme = true;
-        this.frameInterval = 1000 / 30; // 30 FPS for better performance
+        this.isMobile = window.innerWidth <= 768;
+        this.frameInterval = this.isMobile ? 1000 / 24 : 1000 / 30; // Lower FPS on mobile
         this.lastFrameTime = 0;
         this.animationId = null;
         this.isVisible = true;
@@ -40,6 +41,8 @@ class NLPAnimation {
     }
 
     resize() {
+        this.isMobile = window.innerWidth <= 768;
+        this.frameInterval = this.isMobile ? 1000 / 24 : 1000 / 30;
         const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
         this.canvas.width = window.innerWidth * dpr;
         this.canvas.height = window.innerHeight * dpr;
@@ -52,8 +55,8 @@ class NLPAnimation {
 
     initEmbeddings() {
         this.embeddings = [];
-        const isMobile = window.innerWidth <= 768;
-        const embeddingCount = isMobile ? 15 : 30;
+        const isMobile = this.isMobile;
+        const embeddingCount = isMobile ? 10 : 30;
         
         // Create embeddings from clustered vocabulary
         const allWords = [];
@@ -66,7 +69,7 @@ class NLPAnimation {
         // Select random words and create embedding nodes
         for (let i = 0; i < embeddingCount; i++) {
             const selected = allWords[Math.floor(Math.random() * allWords.length)];
-            const fontSize = Math.random() * 8 + 10; // 10-18px
+            const fontSize = isMobile ? Math.random() * 6 + 9 : Math.random() * 8 + 10;
             
             this.embeddings.push({
                 text: selected.word,
@@ -77,8 +80,8 @@ class NLPAnimation {
                 vx: (Math.random() - 0.5) * 0.2,
                 vy: (Math.random() - 0.5) * 0.2,
                 fontSize: fontSize,
-                nodeRadius: Math.random() * 5 + 3,
-                opacity: Math.random() * 0.1,
+                nodeRadius: isMobile ? Math.random() * 4 + 4 : Math.random() * 5 + 3,
+                opacity: isMobile ? Math.random() * 0.2 + 0.1 : Math.random() * 0.1,
                 glowIntensity: Math.random() * 0.5 + 0.5
             });
         }
@@ -120,7 +123,7 @@ class NLPAnimation {
         this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         
         // Optimizations for mobile
-        const isMobile = window.innerWidth <= 768;
+        const isMobile = this.isMobile;
 
         // Draw network connections first (behind nodes)
         for (let i = 0; i < this.embeddings.length; i++) {
@@ -132,14 +135,14 @@ class NLPAnimation {
                 const distSq = dx * dx + dy * dy;
                 
                 // Stronger connections for same cluster (semantic similarity)
-                const maxDistance = embA.cluster === embB.cluster ? 200 : 150;
+                const maxDistance = embA.cluster === embB.cluster ? (isMobile ? 170 : 200) : (isMobile ? 130 : 150);
                 const maxDistSq = maxDistance * maxDistance;
 
                 if (distSq < maxDistSq) {
                     const distance = Math.sqrt(distSq);
-                    const baseOpacity = embA.cluster === embB.cluster ? .5 : .5;
+                    const baseOpacity = embA.cluster === embB.cluster ? (isMobile ? 0.7 : 0.5) : (isMobile ? 0.6 : 0.5);
                     const opacity = (maxDistance - distance) / maxDistance * baseOpacity;
-                    const lineWidth = embA.cluster === embB.cluster ? .5 : .8;
+                    const lineWidth = embA.cluster === embB.cluster ? (isMobile ? 1.1 : 0.5) : (isMobile ? 1.3 : 0.8);
                     
                     this.ctx.beginPath();
                     this.ctx.moveTo(embA.x, embA.y);
@@ -174,21 +177,23 @@ class NLPAnimation {
             if (emb.x < -50 || emb.x > window.innerWidth + 50) emb.vx *= -1;
             if (emb.y < -50 || emb.y > window.innerHeight + 50) emb.vy *= -1;
             
-            // Apply subtle attraction within same cluster (embedding space behavior)
-            this.embeddings.forEach((other) => {
-                if (other !== emb && other.cluster === emb.cluster) {
-                    const dx = other.x - emb.x;
-                    const dy = other.y - emb.y;
-                    const distSq = dx * dx + dy * dy;
-                    // 250^2 = 62500
-                    if (distSq > 0 && distSq < 62500) {
-                        const distance = Math.sqrt(distSq);
-                        const force = 0.0002;
-                        emb.vx += (dx / distance) * force;
-                        emb.vy += (dy / distance) * force;
+            // Apply subtle attraction within same cluster (skip on mobile)
+            if (!isMobile) {
+                this.embeddings.forEach((other) => {
+                    if (other !== emb && other.cluster === emb.cluster) {
+                        const dx = other.x - emb.x;
+                        const dy = other.y - emb.y;
+                        const distSq = dx * dx + dy * dy;
+                        // 250^2 = 62500
+                        if (distSq > 0 && distSq < 62500) {
+                            const distance = Math.sqrt(distSq);
+                            const force = 0.0002;
+                            emb.vx += (dx / distance) * force;
+                            emb.vy += (dy / distance) * force;
+                        }
                     }
-                }
-            });
+                });
+            }
             
             // Limit velocity
             const maxSpeed = 0.3;
@@ -211,12 +216,13 @@ class NLPAnimation {
             // Draw node circle
             this.ctx.beginPath();
             this.ctx.arc(emb.x, emb.y, emb.nodeRadius, 0, Math.PI * 2);
-            this.ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${emb.opacity + 0.15})`;
+            const nodeAlpha = emb.opacity + (isMobile ? 0.35 : 0.15);
+            this.ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${nodeAlpha})`;
             this.ctx.fill();
             
             // Draw node border
-            this.ctx.strokeStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${emb.opacity + 0.3})`;
-            this.ctx.lineWidth = 1.5;
+            this.ctx.strokeStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${emb.opacity + (isMobile ? 0.45 : 0.3)})`;
+            this.ctx.lineWidth = isMobile ? 1.8 : 1.5;
             this.ctx.stroke();
             
             this.ctx.restore();
