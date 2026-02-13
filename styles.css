@@ -175,8 +175,7 @@ a:hover::before,
     }
     
     #networkCanvas {
-        display: block !important;
-        opacity: 0.9 !important;
+        display: none !important;
     }
 }
 
@@ -546,6 +545,19 @@ main {
 /* Sections */
 .section {
     padding: clamp(4rem, 10vw, 8rem) 0;
+    content-visibility: auto;
+    contain-intrinsic-size: 1000px;
+}
+
+@media (max-width: 768px) {
+    #networkCanvas {
+        display: none;
+    }
+
+    header {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
 }
 
 .section-title {
