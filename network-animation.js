@@ -21,7 +21,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const nodeSpeed = 0.5;
     const connectionDistance = 120;
     const nodeColor = 'rgba(255, 193, 7, 0.8)'; 
-    const lineColor = 'rgba(255, 193, 7, 0.4)'; 
+    const lineColor = 'rgba(255, 193, 7, 0.4)';
+
+    function getThemeColors() {
+        const styles = getComputedStyle(document.documentElement);
+        return {
+            nodeColor: styles.getPropertyValue("--network-node-color").trim(),
+            lineColor: styles.getPropertyValue("--network-line-color").trim()
+        };
+    }
+    let { nodeColor, lineColor } = getThemeColors();
 
     function setCanvasSize() {
         const rect = heroSection.getBoundingClientRect();
@@ -78,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function animate() {
+        ({ nodeColor, lineColor } = getThemeColors());
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         nodes.forEach(node => {
             node.update();
