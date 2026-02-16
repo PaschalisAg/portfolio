@@ -18,19 +18,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let nodes = [];
     const nodeCount = window.innerWidth < 768 ? 40 : 80;
-    const nodeSpeed = 0.5;
-    const connectionDistance = 120;
-    const nodeColor = 'rgba(255, 193, 7, 0.8)'; 
-    const lineColor = 'rgba(255, 193, 7, 0.4)';
+    const nodeSpeed = .20;
+    const connectionDistance = 130;
+    let nodeColor = 'rgba(255, 193, 7, 0.2)'; 
+    let lineColor = 'rgba(255, 193, 7, 0.2)';
 
     function getThemeColors() {
-        const styles = getComputedStyle(document.documentElement);
+        const styles = getComputedStyle(document.body);
         return {
-            nodeColor: styles.getPropertyValue("--network-node-color").trim(),
-            lineColor: styles.getPropertyValue("--network-line-color").trim()
+            nodeColor: styles.getPropertyValue('--network-node-color').trim(),
+            lineColor: styles.getPropertyValue('--network-line-color').trim()
         };
     }
-    let { nodeColor, lineColor } = getThemeColors();
+
+    ({ nodeColor, lineColor } = getThemeColors());
 
     function setCanvasSize() {
         const rect = heroSection.getBoundingClientRect();
@@ -42,8 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
         constructor(x, y) {
             this.x = x;
             this.y = y;
-            this.vx = (Math.random() - 0.5) * nodeSpeed;
-            this.vy = (Math.random() - 0.5) * nodeSpeed;
+            this.vx = (Math.random() - 0.9) * nodeSpeed;
+            this.vy = (Math.random() - 0.9) * nodeSpeed;
             this.radius = Math.random() * 2 + 1;
         }
 
