@@ -77,9 +77,6 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body data-theme="dark">    
-    <!-- Animated Network Background - Decorative only, hidden from screen readers -->
-    <canvas id="networkCanvas" aria-hidden="true" role="presentation"></canvas>
-    
     <!-- Scroll Progress Indicator -->
     <div class="scroll-progress" role="progressbar" aria-label="Page scroll progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
         <div class="scroll-progress-bar" id="scrollProgressBar"></div>
@@ -191,6 +188,8 @@
     <main id="main-content" role="main">
         <!-- Enhanced Hero Section -->
         <section class="hero" id="about" aria-labelledby="hero-title">
+            <!-- Animated Network Background - scoped to hero section -->
+            <canvas id="networkCanvas" aria-hidden="true" role="presentation"></canvas>
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-text">
@@ -780,54 +779,8 @@
             });
         }
 
-        // Initialize NLP Text Animation
-        let nlpAnimation = null;
-
-        function shouldEnableCanvasAnimation() {
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const isMobile = window.matchMedia('(max-width: 768px)').matches;
-            const saveData = navigator.connection && navigator.connection.saveData;
-            return !(prefersReducedMotion || isMobile || saveData);
-        }
-
-        function disableCanvasAnimation() {
-            const canvas = document.getElementById('networkCanvas');
-            if (canvas) {
-                canvas.style.display = 'none';
-            }
-        }
-
-        function initNLPAnimation() {
-            if (nlpAnimation) return;
-            if (!shouldEnableCanvasAnimation()) {
-                disableCanvasAnimation();
-                return;
-            }
-
-            const canvas = document.getElementById('networkCanvas');
-            if (!canvas) return;
-
-            nlpAnimation = new NLPAnimation(canvas);
-
-            const currentTheme = document.body.getAttribute('data-theme') || 'dark';
-            nlpAnimation.updateTheme(currentTheme === 'dark');
-        }
-
-        function scheduleNLPInit() {
-            if (!shouldEnableCanvasAnimation()) {
-                disableCanvasAnimation();
-                return;
-            }
-
-            if ('requestIdleCallback' in window) {
-                requestIdleCallback(initNLPAnimation, { timeout: 1000 });
-            } else {
-                setTimeout(initNLPAnimation, 800);
-            }
-        }
-
-        scheduleNLPInit();
-        window.addEventListener('load', initNLPAnimation, { once: true });
+        // Network animation is handled by network-animation.js
+        // It uses the #networkCanvas element inside the hero section
 
         // ===================================
         // Mobile Menu Management
@@ -870,9 +823,6 @@
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             
             body.setAttribute('data-theme', newTheme);
-            if (nlpAnimation) {
-                nlpAnimation.updateTheme(newTheme === 'dark');
-            }
             themeToggle.querySelector('span[aria-hidden]').textContent = newTheme === 'dark' ? '🌑' : '☀️';
             
             // Update accessible label
@@ -895,9 +845,6 @@
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
             body.setAttribute('data-theme', savedTheme);
-            if (nlpAnimation) {
-                nlpAnimation.updateTheme(savedTheme === 'dark');
-            }
             themeToggle.querySelector('span[aria-hidden]').textContent = savedTheme === 'dark' ? '🌑' : '☀️';
             
             // Update accessible label

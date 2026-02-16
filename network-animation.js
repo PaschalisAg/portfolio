@@ -8,10 +8,13 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    const canvas = document.createElement('canvas');
-    canvas.id = 'network-animation';
-    document.body.appendChild(canvas);
+    // Use the existing canvas element inside the hero section
+    const canvas = document.getElementById('networkCanvas');
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
+
+    // Get the hero section as the bounding container
+    const heroSection = canvas.closest('.hero') || canvas.parentElement;
 
     let nodes = [];
     const nodeCount = window.innerWidth < 768 ? 40 : 80;
@@ -21,8 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const lineColor = 'rgba(255, 193, 7, 0.4)'; 
 
     function setCanvasSize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        const rect = heroSection.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
     }
 
     class Node {
