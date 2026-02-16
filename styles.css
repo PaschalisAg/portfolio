@@ -17,7 +17,7 @@
     --text-accent: #64b5f6;
     
     /* Colorblind-Safe Accent Colors with Patterns */
-    --accent-blue: #188550;
+    --accent-blue: #5FB3B3;
     --accent-teal: #ffffff;
     --accent-amber: #123524;
     --accent-purple: #ab47bc;
@@ -60,8 +60,8 @@
     --text-primary: #000000;
     --text-secondary: #2d3436;
     --text-muted: #323536;
-    --text-accent: #1771ca;
-    --accent-blue: #10162e;
+    --text-accent: #1d7edf;
+    --accent-blue: #3b1086;
     --accent-teal: #10162e;
     --accent-amber: #10162e;
     --accent-purple: #7b1fa2;
@@ -99,6 +99,17 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+}
+
+/* Global Link Styling */
+a {
+    color: var(--text-accent);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--accent-blue);
 }
 
 /* Screen reader only content */
@@ -642,7 +653,7 @@ main {
 }
 
 .card.research-card::before {
-    background: repeating-linear-gradient(45deg, var(--accent-teal), var(--accent-teal) 10px, var(--accent-blue) 10px, var(--accent-blue) 20px);
+    background: var(--accent-blue);
 }
 
 .card.publication-card::before {

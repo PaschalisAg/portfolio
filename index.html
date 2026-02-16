@@ -77,8 +77,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body data-theme="dark">    
-    <!-- Animated Network Background - Decorative only, hidden from screen readers -->
-    <canvas id="networkCanvas" aria-hidden="true" role="presentation"></canvas>
+    <!-- Animated Network Background - The script will create this -->
     
     <!-- Scroll Progress Indicator -->
     <div class="scroll-progress" role="progressbar" aria-label="Page scroll progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
@@ -196,9 +195,13 @@
                     <div class="hero-text">
                         <h2 id="hero-title">Short bio</h2
                         <p class="description">
-                            Working at the intersection of linguistics, network data science, and digital cultural studies. 
-                            Currently pursuing a PhD in Computational Humanities at DIPC, combining NLP and network data science to unlock 
-                            new insights in human culture and communication.
+                            I am a PhD Candidate in Computational Humanities at the Donostia International Physics Center and the University of the Basque Country, where I build NLP and network science solutions for large-scale cultural and textual data. 
+                            I apply machine learning and deep learning to model complex systems—turning unstructured text into actionable insights.
+                            With a background in Linguistics and extensive training in NLP, network data science, Big Data, and Deep Learning, 
+                            I have published peer-reviewed research and developed open-source tools such as WikiTextGraph for multilingual Wikipedia graph extraction. 
+                            Beyond academia, I have delivered end-to-end data science projects in overstock risk prediction and medical image classification.
+                            I am seeking data science roles in NLP and network analytics where research-grade models translate into measurable, production-level impact. 
+                            Connect with me on LinkedIn or explore my GitHub to see my work.
                         </p>
                         <div class="contact-links" role="list" aria-label="Contact and social media links">
                             <a href="/cdn-cgi/l/email-protection#f4849587979c95989d87da959395849d809b87b4909d8497da9b8693" class="contact-link" role="listitem">
@@ -616,8 +619,9 @@
     </footer>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" defer></script>
-    <script src="network-animation.js" defer></script>
-    <script>
+    <body>
+        <script src="network-animation.js"></script>
+    </body>
         
         // ===================================
         // Citation Management
@@ -781,49 +785,64 @@
 
         function shouldEnableCanvasAnimation() {
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const isMobile = window.matchMedia('(max-width: 768px)').matches;
             const saveData = navigator.connection && navigator.connection.saveData;
-            return !(prefersReducedMotion || isMobile || saveData);
+            return !(prefersReducedMotion || saveData);
         }
 
         function disableCanvasAnimation() {
             const canvas = document.getElementById('networkCanvas');
             if (canvas) {
-                canvas.style.display = 'none';
+                canvas.style.display = "none";
             }
         }
 
         function initNLPAnimation() {
-            if (nlpAnimation) return;
-            if (!shouldEnableCanvasAnimation()) {
-                disableCanvasAnimation();
-                return;
+            if (window.NLPAnimation && shouldEnableCanvasAnimation()) {
+                const canvas = document.getElementById('networkCanvas');
+                if (canvas) {
+                    window.nlpAnimation = new NLPAnimation(canvas);
+                    
+                    // Update theme when toggled
+                    const themeToggle = document.getElementById('themeToggle');
+                    if (themeToggle) {
+                        themeToggle.addEventListener('click', () => {
+                            setTimeout(() => {
+                                const isDark = document.body.getAttribute('data-theme') === 'dark';
+                                if (window.nlpAnimation) {
+                                    window.nlpAnimation.updateTheme(isDark);
+                                }
+                            }, 50);
+                        });
+                    }
+                }
             }
+        }
 
+        // Remove the old scheduleNLPInit and replace with this:
+        function initPortfolioAnimation() {
             const canvas = document.getElementById('networkCanvas');
             if (!canvas) return;
 
-            nlpAnimation = new NLPAnimation(canvas);
-
-            const currentTheme = document.body.getAttribute('data-theme') || 'dark';
-            nlpAnimation.updateTheme(currentTheme === 'dark');
-        }
-
-        function scheduleNLPInit() {
-            if (!shouldEnableCanvasAnimation()) {
-                disableCanvasAnimation();
+            // Check motion preferences for accessibility
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (prefersReducedMotion) {
+                canvas.style.display = 'none';
                 return;
             }
 
-            if ('requestIdleCallback' in window) {
-                requestIdleCallback(initNLPAnimation, { timeout: 1000 });
-            } else {
-                setTimeout(initNLPAnimation, 800);
-            }
+            // Instantiate the class globally so events can access it
+            window.nlpAnimation = new NLPAnimation(canvas);
+            
+            // Initial theme sync
+            const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+            window.nlpAnimation.updateTheme(currentTheme === 'dark');
         }
 
-        scheduleNLPInit();
-        window.addEventListener('load', initNLPAnimation, { once: true });
+        // Fire as soon as DOM is interactive, but re-sync on full load
+        document.addEventListener('DOMContentLoaded', initPortfolioAnimation);
+        window.addEventListener('load', () => {
+            if (window.nlpAnimation) window.nlpAnimation.resize();
+        });
 
         // ===================================
         // Mobile Menu Management
@@ -866,8 +885,8 @@
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             
             body.setAttribute('data-theme', newTheme);
-            if (nlpAnimation) {
-                nlpAnimation.updateTheme(newTheme === 'dark');
+            if (window.nlpAnimation) {
+                window.nlpAnimation.updateTheme(newTheme === 'dark');
             }
             themeToggle.querySelector('span[aria-hidden]').textContent = newTheme === 'dark' ? '🌑' : '☀️';
             
@@ -891,8 +910,8 @@
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
             body.setAttribute('data-theme', savedTheme);
-            if (nlpAnimation) {
-                nlpAnimation.updateTheme(savedTheme === 'dark');
+            if (window.nlpAnimation) {
+                window.nlpAnimation.updateTheme(savedTheme === 'dark');
             }
             themeToggle.querySelector('span[aria-hidden]').textContent = savedTheme === 'dark' ? '🌑' : '☀️';
             
