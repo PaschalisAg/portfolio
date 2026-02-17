@@ -77,6 +77,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body data-theme="dark">    
+    <canvas id="animationCanvas" style="position: fixed; top: 0; left: 0; z-index: -1;"></canvas>
     <!-- Scroll Progress Indicator -->
     <div class="scroll-progress" role="progressbar" aria-label="Page scroll progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
         <div class="scroll-progress-bar" id="scrollProgressBar"></div>
@@ -1054,5 +1055,6 @@
         // ===================================
         console.log('Enhanced accessible portfolio initialized successfully');
     </script>
+    <script src="network-animation.js"></script>
 </body>
 </html>
