@@ -1,74 +1,69 @@
-/* ===================================
-   ENHANCED ACCESSIBILITY & DESIGN
-   Performance Optimized External Stylesheet
-   =================================== */
-
 :root {
-    /* WCAG AAA Compliant Color Palette - Colorblind Safe */
-    --primary-bg: #0f1419;
-    --secondary-bg: #1a1f2e;
-    --accent-bg: #252b3a;
-    --card-bg: #1e2433;
+    /* ACCESSIBILITY-FIRST DARK PALETTE 
+       - Background: Deep Slate (Reduces blue light/eye strain vs pure black)
+       - Accents: High-luminance Blue & Amber (Safe for all colorblind types)
+    */
+    --primary-bg: #0f172a;          /* Deep Slate Blue - Confident & Stable */
+    --secondary-bg: #1e293b;        /* Lighter Slate for depth */
+    --accent-bg: #334155;           /* Surface contrast */
+    --card-bg: #1e293b;
     
-    /* High Contrast Text - WCAG AAA Compliant (7:1 ratio) */
-    --text-primary: #ffffff;
-    --text-secondary: #e0e6ed;
-    --text-muted: #a8b2c1;
-    --text-accent: #64b5f6;
+    /* Text - Optimized for 4.5:1+ contrast while avoiding halation */
+    --text-primary: #f1f5f9;        /* Soft White/Cream */
+    --text-secondary: #cbd5e1;      /* Muted Slate */
+    --text-muted: #94a3b8;          /* Accessible Gray */
+    --text-accent: #38bdf8;         /* Electric Cyan - High visibility */
     
-    /* Colorblind-Safe Accent Colors with Patterns */
-    --accent-blue: #5FB3B3;
-    --accent-teal: #ffffff;
-    --accent-amber: #123524;
-    --accent-purple: #ab47bc;
-    --accent-red: #970805;
+    /* Colorblind-Universal Accents (Focus on Blue/Orange spectrum) */
+    --accent-blue: #38bdf8;         /* Primary Action */
+    --accent-teal: #2dd4bf;         /* Success/Positive */
+    --accent-amber: #fbbf24;        /* Warning/Highlight - Visible to all */
+    --accent-purple: #c084fc;       /* Tertiary */
+    --accent-red: #fb7185;          /* Error - Softened to avoid vibration */
     
-    /* Glassmorphism with Better Contrast */
-    --glass-bg: rgba(30, 36, 51, 0.85);
-    --glass-bg-light: rgba(30, 36, 51, 0.7);
-    --glass-border: rgba(100, 181, 246, 0.2);
-    --glass-border-subtle: rgba(168, 178, 193, 0.15);
+    /* Glassmorphism Refined */
+    --glass-bg: rgba(15, 23, 42, 0.85);
+    --glass-bg-light: rgba(30, 41, 59, 0.7);
+    --glass-border: rgba(56, 189, 248, 0.3); /* Uses accent color for cohesion */
+    --glass-border-subtle: rgba(148, 163, 184, 0.2);
     
-    /* Shadows for Depth Perception */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
-    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
-    --shadow-focus: 0 0 0 3px rgba(33, 150, 243, 0.5);
+    --shadow-focus: 0 0 0 3px rgba(56, 189, 248, 0.5);
     
-    /* Transitions */
-    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    
-    /* Typography Scale */
-    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    --font-serif: 'Merriweather', Georgia, serif;
-    --font-mono: 'JetBrains Mono', 'Courier New', Courier, monospace;
-    
-    /* Border Radius */
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
-    --radius-xl: 28px;
+    /* Interactive Feedback */
+    --network-node-color: rgba(251, 191, 36, 0.8); /* Amber for high visibility */
+    --network-line-color: rgba(251, 191, 36, 0.3);
+
+    /* Typography stacks */
+    --font-serif: 'Merriweather', 'Charter', 'Georgia', serif;
+    --font-mono: 'JetBrains Mono', 'Cascadia Code', monospace;
 }
 
 [data-theme="light"] {
-    --primary-bg: #f5f1ed;          /* Warm off-white */
-    --secondary-bg: #e8e0d8;       /* Soft beige */
-    --accent-bg: #dcd4c8;           /* Light taupe */
-    --card-bg: #f0e8e0;             /* Warm white */
-    --text-primary: #1a120b;        /* Warm dark brown */
-    --text-secondary: #3a2e28;      /* Muted brown */
-    --text-muted: #5c4b43;          /* Soft taupe */
-    --text-accent: #5a9bd5;         /* Muted blue */
-    --accent-blue: #4a8bc2;         /* Deeper blue */
-    --accent-teal: #5a9b8f;         /* Muted teal */
-    --accent-amber: #c49a6a;        /* Warm amber */
-    --accent-purple: #9a7fb8;       /* Soft purple */
-    --accent-red: #c16b5a;          /* Warm red */
-    --glass-bg: rgba(229, 216, 204, 0.664);
-    --glass-bg-light: rgba(229, 216, 204, 0.9);
-    --glass-border: rgba(106, 89, 76, 0.2);
+    /* WARM STONE LIGHT THEME
+       - Avoids "Paper White" to reduce glare/eye strain
+    */
+    --primary-bg: #f8fafc;          /* Cool Stone White */
+    --secondary-bg: #f1f5f9;        /* Light Gray */
+    --accent-bg: #e2e8f0;           
+    --card-bg: #ffffff;             
+    
+    --text-primary: #0f172a;        /* High Contrast Navy */
+    --text-secondary: #334155;      
+    --text-muted: #64748b;          
+    --text-accent: #0284c7;         /* Deepened Blue for Light Mode */
+    
+    --accent-blue: #0284c7;
+    --accent-teal: #0d9488;
+    --accent-amber: #b45309;        /* Earthy Amber for contrast */
+    --accent-purple: #7e22ce;
+    --accent-red: #be123c;
+    
+    --glass-bg: rgba(248, 250, 252, 0.85);
+    --glass-bg-light: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(15, 23, 42, 0.1);
+    
+    --network-node-color: rgba(2, 132, 199, 0.6);
+    --network-line-color: rgba(2, 132, 199, 0.2);
 }
 
 
@@ -85,9 +80,11 @@ html {
 
 body {
     font-family: var(--font-sans);
+    font-size: 1rem;
     background: var(--primary-bg);
     color: var(--text-primary);
     line-height: 1.7;
+    letter-spacing: 0.015em;
     overflow-x: hidden;
     transition: background-color var(--transition-smooth), color var(--transition-smooth);
     min-height: 100vh;
@@ -203,6 +200,11 @@ a:hover::before,
         --text-secondary: #ffffff;
         --glass-border: rgba(255, 255, 255, 0.5);
         --glass-bg: rgba(0, 0, 0, 0.95);
+    }
+
+    body {
+        line-height: 1.8;
+        letter-spacing: 0.03em;
     }
 
     [data-theme="light"] {
@@ -437,12 +439,12 @@ main {
 
 .hero-text h1 {
     font-size: clamp(2.5rem, 7vw, 4.5rem);
-    font-weight: 900;
+    font-weight: 800;
     font-family: var(--font-serif);
     font-size-adjust: 0.5;
     margin-bottom: 1rem;
     line-height: 1.1;
-    letter-spacing: -0.03em;
+    letter-spacing: normal;
     color: var(--text-primary);
 }
 
@@ -592,7 +594,7 @@ main {
     text-align: center;
     margin-bottom: 1rem;
     color: var(--text-primary);
-    letter-spacing: -0.02em;
+    letter-spacing: normal;
 }
 
 .section-subtitle {
@@ -959,6 +961,7 @@ main {
     font-family: var(--font-serif);
     font-size-adjust: 0.5;
     color: var(--text-primary);
+    letter-spacing: normal;
 }
 
 .cv-actions {
