@@ -1,69 +1,53 @@
 :root {
-    /* ACCESSIBILITY-FIRST DARK PALETTE 
-       - Background: Deep Slate (Reduces blue light/eye strain vs pure black)
-       - Accents: High-luminance Blue & Amber (Safe for all colorblind types)
+    /* OS-NATIVE FONT STACK 
+       Ensures crisp rendering on Windows (Segoe), macOS (Apple System), and Linux (Ubuntu).
     */
-    --primary-bg: #0f172a;          /* Deep Slate Blue - Confident & Stable */
-    --secondary-bg: #1e293b;        /* Lighter Slate for depth */
-    --accent-bg: #334155;           /* Surface contrast */
-    --card-bg: #1e293b;
-    
-    /* Text - Optimized for 4.5:1+ contrast while avoiding halation */
-    --text-primary: #f1f5f9;        /* Soft White/Cream */
-    --text-secondary: #cbd5e1;      /* Muted Slate */
-    --text-muted: #94a3b8;          /* Accessible Gray */
-    --text-accent: #38bdf8;         /* Electric Cyan - High visibility */
-    
-    /* Colorblind-Universal Accents (Focus on Blue/Orange spectrum) */
-    --accent-blue: #38bdf8;         /* Primary Action */
-    --accent-teal: #2dd4bf;         /* Success/Positive */
-    --accent-amber: #fbbf24;        /* Warning/Highlight - Visible to all */
-    --accent-purple: #c084fc;       /* Tertiary */
-    --accent-red: #fb7185;          /* Error - Softened to avoid vibration */
-    
-    /* Glassmorphism Refined */
-    --glass-bg: rgba(15, 23, 42, 0.85);
-    --glass-bg-light: rgba(30, 41, 59, 0.7);
-    --glass-border: rgba(56, 189, 248, 0.3); /* Uses accent color for cohesion */
-    --glass-border-subtle: rgba(148, 163, 184, 0.2);
-    
-    --shadow-focus: 0 0 0 3px rgba(56, 189, 248, 0.5);
-    
-    /* Interactive Feedback */
-    --network-node-color: rgba(251, 191, 36, 0.8); /* Amber for high visibility */
-    --network-line-color: rgba(251, 191, 36, 0.3);
-
-    /* Typography stacks */
+    --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     --font-serif: 'Merriweather', 'Charter', 'Georgia', serif;
-    --font-mono: 'JetBrains Mono', 'Cascadia Code', monospace;
+    --font-mono: 'ui-monospace', 'Cascadia Code', 'Source Code Pro', Menlo, Monaco, Consolas, monospace;
+
+    /* ACCESSIBILITY-FIRST DARK PALETTE (Eye-Strain Optimized) */
+    --primary-bg: #0f172a;          
+    --secondary-bg: #1e293b;        
+    --text-primary: #f8fafc;        
+    --text-secondary: #cbd5e1;        
+    
+    /* COLORBLIND-UNIVERSAL ACCENTS (The "Blue/Amber" Spectrum) 
+    Blue and Orange/Amber are the most distinguishable colors across all vision types.
+    */
+    /* COLORBLIND-UNIVERSAL ACCENTS */
+    --accent-blue: #38bdf8;         
+    --accent-teal: #2dd4bf;         
+    --accent-amber: #fbbf24;        
+    --accent-red: #fb7185; /* Slightly softer red for dark mode */
+    
+    /* transitions */
+    --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --radius-lg: 12px;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
 }
 
 [data-theme="light"] {
-    /* WARM STONE LIGHT THEME
-       - Avoids "Paper White" to reduce glare/eye strain
-    */
-    --primary-bg: #f8fafc;          /* Cool Stone White */
-    --secondary-bg: #f1f5f9;        /* Light Gray */
+    /* WARM STONE LIGHT THEME - Reduces "Paper White" Glare */
+    --primary-bg: #fdfdfc;          /* Slightly warm to soothe eyes */
+    --secondary-bg: #f1f5f9;        
     --accent-bg: #e2e8f0;           
     --card-bg: #ffffff;             
     
-    --text-primary: #0f172a;        /* High Contrast Navy */
+    --text-primary: #0f172a;        
     --text-secondary: #334155;      
     --text-muted: #64748b;          
-    --text-accent: #0284c7;         /* Deepened Blue for Light Mode */
+    --text-accent: #0284c7;         
     
     --accent-blue: #0284c7;
     --accent-teal: #0d9488;
-    --accent-amber: #b45309;        /* Earthy Amber for contrast */
+    --accent-amber: #9a3412;        /* Darker amber for light mode legibility */
     --accent-purple: #7e22ce;
-    --accent-red: #be123c;
-    
-    --glass-bg: rgba(248, 250, 252, 0.85);
-    --glass-bg-light: rgba(255, 255, 255, 0.9);
-    --glass-border: rgba(15, 23, 42, 0.1);
-    
-    --network-node-color: rgba(2, 132, 199, 0.6);
-    --network-line-color: rgba(2, 132, 199, 0.2);
+    --accent-red: #b91c1c;
 }
 
 
@@ -75,23 +59,27 @@
 
 html {
     scroll-behavior: smooth;
-    font-size: 16px;
+    /* Base font size - allows user browser overrides to work */
+    font-size: 16px; 
 }
 
 body {
     font-family: var(--font-sans);
-    font-size: 1rem;
+    font-size: 1.05rem; /* Slightly larger for readability */
     background: var(--primary-bg);
     color: var(--text-primary);
-    line-height: 1.7;
+    line-height: 1.75; /* Increased for better tracking across lines */
     letter-spacing: 0.015em;
     overflow-x: hidden;
-    transition: background-color var(--transition-smooth), color var(--transition-smooth);
-    min-height: 100vh;
-    position: relative;
+    /* OS-specific font smoothing */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    transition: background-color var(--transition-smooth), color var(--transition-smooth);
+}
+
+p {
+    max-width: 70ch; /* The optimal 50-75 characters per line */
 }
 
 /* Global Link Styling */
@@ -129,10 +117,12 @@ a:hover {
     outline: none;
 }
 
+/* FOCUS STATES - Essential for Keyboard Users
+   Using a high-contrast double-ring for maximum visibility.
+*/
 *:focus-visible {
     outline: 3px solid var(--accent-blue);
     outline-offset: 3px;
-    box-shadow: var(--shadow-focus);
 }
 
 button:focus-visible,
@@ -167,19 +157,24 @@ a:hover::before,
 }
 
 /* Reduced motion support */
+/* ACCESSIBILITY: Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
+    *, ::before, ::after {
+        animation-delay: -1ms !important;
+        animation-duration: 1ms !important;
         animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+        background-attachment: initial !important;
         scroll-behavior: auto !important;
+        transition-duration: 0s !important;
+        transition-delay: 0s !important;
     }
-    
-    #networkCanvas {
-        display: none !important;
-    }
+}
+
+/* Layout container with fluid padding */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 clamp(1.5rem, 5vw, 4rem);
 }
 
 :root {
