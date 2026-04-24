@@ -33,13 +33,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Performance: DNS Prefetch & Preconnect for external resources -->
+    <!-- Performance: DNS Prefetch for external resources -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="pictures/profile_pic.webp" as="image" fetchpriority="high">
 
     <title>Paschalis Agapitos - PhD Candidate in Computational Humanities</title>
     <meta name="description" content="PhD candidate in Computational Humanities at DIPC. Experience in NLP, network science, and cultural analytics. Specializing in computational stylometry and digital humanities research.">
@@ -47,6 +46,7 @@
     <meta name="author" content="Paschalis Agapitos">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#0f1419">
+    <meta name="color-scheme" content="dark light">
     
     
     <!-- Open Graph / Twitter -->
@@ -61,14 +61,11 @@
     <meta name="twitter:image" content="./pictures/profile_pic.webp">
 
     <!-- Fonts & Icons - Optimized loading -->
-    <!-- Preload critical fonts for faster rendering -->
-    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iCeJHPgxAgRiaz6tLOjkk.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="https://fonts.gstatic.com/s/merriweather/v30/u-440qyriQwlOrhSvowK_l5-fCZMdeX3rg.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="pictures/profile_pic.webp" as="image" fetchpriority="high">
-    
-    <!-- Load fonts with display=swap for better performance -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
+    <!-- IBM Plex fonts — clean, technical, loved by data practitioners -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Serif:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Serif:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
     
     <!-- Icons - Load asynchronously for better performance -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
@@ -76,7 +73,10 @@
     
     <link rel="stylesheet" href="styles.css">
 </head>
-<body data-theme="dark">    
+<body data-theme="dark">
+    <!-- Skip to main content for keyboard users -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <!-- Scroll Progress Indicator -->
     <div class="scroll-progress" role="progressbar" aria-label="Page scroll progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
         <div class="scroll-progress-bar" id="scrollProgressBar"></div>
@@ -94,16 +94,17 @@
                     <span class="sr-only">Menu</span>
                 </button>
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="#about" class="nav-link active">About</a></li>
+                    <li><a href="#about" class="nav-link active" aria-current="page">About</a></li>
                     <li><a href="#research" class="nav-link">Research</a></li>
                     <li><a href="#publications" class="nav-link">Publications</a></li>
                     <li><a href="#projects" class="nav-link">Projects</a></li>
+                    <li><a href="#blog" class="nav-link">Blog</a></li>
                     <li><a href="#skills" class="nav-link">Skills</a></li>
-                    <li><button class="theme-toggle" id="themeToggle" aria-label="Toggle theme. Currently dark mode. Press to switch to light mode" title="Toggle theme" type="button">
-                        <span aria-hidden="true">🌑</span>
-                        <span class="sr-only" id="themeStatus">Dark mode active</span>
-                    </button></li>
                 </ul>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme. Currently dark mode. Press to switch to light mode" title="Toggle theme" type="button">
+                    <span aria-hidden="true">🌑</span>
+                    <span class="sr-only" id="themeStatus">Dark mode active</span>
+                </button>
             </div>
         </nav>
     </header>
@@ -187,23 +188,45 @@
     <!-- Main Content -->
     <main id="main-content" role="main">
         <!-- Enhanced Hero Section -->
-        <section class="hero" id="about" aria-labelledby="hero-title">
+        <section class="hero" id="about" aria-labelledby="hero-name">
             <!-- Animated Network Background - scoped to hero section -->
             <canvas id="networkCanvas" aria-hidden="true" role="presentation"></canvas>
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-text">
-                        <h2 id="hero-title">Short bio</h2
+                        <div class="status-badge" role="status" aria-label="Currently open to data science roles">
+                            <span class="status-dot" aria-hidden="true"></span>
+                            Open to DS Roles
+                        </div>
+                        <p class="hero-text h2" style="font-family:var(--font-mono);font-size:clamp(0.8rem,1.5vw,0.95rem);font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;">PhD Candidate · Computational Humanities</p>
+                        <h1 id="hero-name">Paschalis Agapitos</h1>
+                        <p class="subtitle">NLP &amp; Network Data Scientist</p>
                         <p class="description">
-                            I am a PhD Candidate in Computational Humanities at the Donostia International Physics Center and the University of the Basque Country, where I build NLP and network science solutions for large-scale cultural and textual data. 
-                            I apply machine learning and deep learning to model complex systems—turning unstructured text into actionable insights.
-                            With a background in Linguistics and extensive training in NLP, network data science, Big Data, and Deep Learning, 
-                            I have published peer-reviewed research and developed open-source tools such as WikiTextGraph for multilingual Wikipedia graph extraction. 
+                            I build <abbr title="Natural Language Processing">NLP</abbr> and network science pipelines for large-scale cultural and textual data at the <abbr title="Donostia International Physics Center">DIPC</abbr> and the University of the Basque Country.
+                            With a background in Linguistics and deep expertise in machine learning, deep learning, and <abbr title="Natural Language Processing">NLP</abbr>, I have published peer-reviewed research and developed open-source tools — including <code>WikiTextGraph</code> for multilingual Wikipedia graph extraction.
                             Beyond academia, I have delivered end-to-end data science projects in overstock risk prediction and medical image classification.
-                            I am seeking data science roles in NLP and network analytics where research-grade models translate into measurable, production-level impact. 
-                            Connect with me on LinkedIn or explore my GitHub to see my work. 
-                            <br><br>
+                            I am seeking data science roles in NLP and network analytics where research-grade models translate into production-level impact.
                         </p>
+
+                        <!-- DS impact stats — quick signal for recruiters scanning the page -->
+                        <div class="ds-stats-bar" role="region" aria-label="Key professional metrics">
+                            <div class="ds-stat">
+                                <span class="ds-stat-value">3</span>
+                                <span class="ds-stat-label">Publications</span>
+                            </div>
+                            <div class="ds-stat">
+                                <span class="ds-stat-value">4+</span>
+                                <span class="ds-stat-label">Years Python</span>
+                            </div>
+                            <div class="ds-stat">
+                                <span class="ds-stat-value">2</span>
+                                <span class="ds-stat-label">DS Projects</span>
+                            </div>
+                            <div class="ds-stat">
+                                <span class="ds-stat-value">OSS</span>
+                                <span class="ds-stat-label">Open Source</span>
+                            </div>
+                        </div>
                         <div class="contact-links" role="list" aria-label="Contact and social media links">
                             <a href="/cdn-cgi/l/email-protection#f4849587979c95989d87da959395849d809b87b4909d8497da9b8693" class="contact-link" role="listitem">
                                 <i class="fas fa-envelope" aria-hidden="true"></i>
@@ -228,12 +251,19 @@
                         </div>
                     </div>
                     <div class="hero-image">
-                        <div class="profile-container" id="profileContainer" role="button" tabindex="0" aria-label="Profile image - Click or press Enter to flip card and view CV preview">
+                        <!-- profile-container is a plain div; the flip trigger is a real <button> -->
+                        <div class="profile-container" id="profileContainer">
                             <div class="profile-flip">
                                 <div class="profile-front">
-                                    <img src="./images/profile_pic.webp" alt="Portrait photo of Paschalis Agapitos" class="profile-photo" loading="lazy" width="500" height="500" decoding="auto" fetchpriority="high">
+                                    <img src="./images/profile_pic.webp" alt="Portrait photo of Paschalis Agapitos" class="profile-photo" width="500" height="500" decoding="async" fetchpriority="high">
+                                    <!-- Overlay button that handles the flip -->
+                                    <button class="profile-flip-btn" id="profileFlipBtn" type="button"
+                                        aria-expanded="false"
+                                        aria-label="Flip card to view CV preview">
+                                        <span class="sr-only">Show CV preview</span>
+                                    </button>
                                 </div>
-                                <div class="profile-back">
+                                <div class="profile-back" id="profileBack" aria-hidden="true">
                                     <div class="cv-preview">
                                         <h3>Quick CV Access</h3>
                                         <div class="cv-preview-content">
@@ -245,8 +275,12 @@
                                             • Computational Stylometry<br>
                                             • Computational Humanities<br><br>
                                         </div>
-                                        <button class="cv-download-btn" onclick="openCVModal()">
+                                        <button class="cv-download-btn" type="button" onclick="openCVModal()" aria-label="Open full curriculum vitae modal">
                                             <i class="fas fa-eye" aria-hidden="true"></i> View Full CV
+                                        </button>
+                                        <button class="profile-flip-back-btn" type="button"
+                                            aria-label="Flip card back to profile photo">
+                                            <span class="sr-only">Show profile photo</span>
                                         </button>
                                     </div>
                                 </div>
@@ -305,6 +339,10 @@
                 </div>
                 <div class="cards-grid">
                     <article class="card publication-card">
+                        <div class="venue-badge" aria-label="Published in Journal of Open Research Software">
+                            <i class="fas fa-book-open" aria-hidden="true"></i>
+                            <abbr title="Journal of Open Research Software">JORS</abbr> · 2025
+                        </div>
                         <h3>WikiTextGraph: A Python Tool for Parsing Multilingual Wikipedia Text and Graph Extraction</h3>
                         <p class="card-meta">
                             <i class="fas fa-calendar-alt" aria-hidden="true"></i>
@@ -360,6 +398,10 @@
                     </article>
                     
                     <article class="card publication-card">
+                        <div class="venue-badge" aria-label="Published in Humanities and Social Sciences Communications, Nature">
+                            <i class="fas fa-atom" aria-hidden="true"></i>
+                            Nature · HSScomms · 2025
+                        </div>
                         <h3>Wikipedia as a cultural lens: a quantitative approach for exploring cultural networks</h3>
                         <p class="card-meta">
                             <i class="fas fa-calendar-alt" aria-hidden="true"></i>
@@ -407,6 +449,10 @@
                     </article>
                     
                     <article class="card publication-card">
+                        <div class="venue-badge" aria-label="Published in Journal of Computational Literary Studies">
+                            <i class="fas fa-scroll" aria-hidden="true"></i>
+                            <abbr title="Journal of Computational Literary Studies">JCLS</abbr> · 2024
+                        </div>
                         <h3>A Stylometric Analysis of Seneca's disputed plays</h3>
                         <p class="card-meta">
                             <i class="fas fa-calendar-alt" aria-hidden="true"></i>
@@ -485,6 +531,10 @@
                         </div>
                         
                         <div class="btn-group">
+                            <a href="blog/pneumonia-shortcut-learning.html" class="btn" aria-label="Read the pneumonia CNN case study article">
+                                <i class="fas fa-book-open" aria-hidden="true"></i>
+                                <span>Read Article</span>
+                            </a>
                             <a href="https://github.com/PaschalisAg/classification_NN" class="btn" target="_blank" rel="noopener noreferrer" aria-label="View project source code">
                                 <i class="fab fa-github" aria-hidden="true"></i>
                                 <span>Source Code</span>
@@ -543,6 +593,45 @@
             </div>
         </section>
 
+        <section class="section fade-in" id="blog" aria-labelledby="blog-title">
+            <div class="container">
+                <h2 class="section-title" id="blog-title">Blog</h2>
+                <p class="section-subtitle">
+                    Long-form project writing focused on technical decisions, experimental design, and the lessons hidden behind the headline metric.
+                </p>
+                <div class="cards-grid">
+                    <article class="card blog-card">
+                        <p class="article-kicker">Medical AI · Computer Vision · Model Auditing</p>
+                        <h3>When High Accuracy Lies: Building and Auditing a CNN for Pneumonia Detection</h3>
+                        <p class="card-meta">
+                            <i class="fas fa-feather-pointed" aria-hidden="true"></i>
+                            <span>Case study article • baseline modeling, Grad-CAM inspection, and shortcut-learning diagnosis</span>
+                        </p>
+                        <p>
+                            This article follows the project from the first baseline CNN to the moment explainability exposed a more important result than accuracy itself: the model was learning to trust image borders rather than lung pathology.
+                        </p>
+                        <div class="tags" role="list" aria-label="Article topics">
+                            <span class="tag" role="listitem">TensorFlow</span>
+                            <span class="tag" role="listitem">PyTorch</span>
+                            <span class="tag" role="listitem">Explainable AI</span>
+                            <span class="tag" role="listitem">Grad-CAM</span>
+                            <span class="tag" role="listitem">Medical Imaging</span>
+                        </div>
+                        <div class="btn-group">
+                            <a href="blog/pneumonia-shortcut-learning.html" class="btn" aria-label="Open the pneumonia CNN blog article">
+                                <i class="fas fa-book-open" aria-hidden="true"></i>
+                                <span>Open Article</span>
+                            </a>
+                            <a href="https://github.com/PaschalisAg/classification_NN" class="btn" target="_blank" rel="noopener noreferrer" aria-label="Open the source repository for the pneumonia CNN project">
+                                <i class="fab fa-github" aria-hidden="true"></i>
+                                <span>Repository</span>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
         <!-- Enhanced Skills Section -->
         <section class="section fade-in" id="skills" aria-labelledby="skills-title">
             <div class="container">
@@ -554,42 +643,82 @@
                     <div class="skill-item" data-skill="python">
                         <div class="skill-icon" aria-hidden="true"><i class="fab fa-python"></i></div>
                         <div class="skill-name">Python</div>
-                        <div class="skill-level">Intermediate to Expert</div>
+                        <div class="skill-tier expert" aria-label="Expert level">★★★ Expert</div>
+                        <div class="skill-bar" aria-hidden="true">
+                            <div class="skill-progress-bar" data-progress="85" style="width:0%"
+                                role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"
+                                aria-label="Python proficiency: 85 out of 100"></div>
+                        </div>
                     </div>
                     <div class="skill-item" data-skill="ml">
                         <div class="skill-icon" aria-hidden="true"><i class="fas fa-brain"></i></div>
                         <div class="skill-name">Machine Learning</div>
-                        <div class="skill-level">Intermediate</div>
+                        <div class="skill-tier advanced" aria-label="Advanced level">★★☆ Advanced</div>
+                        <div class="skill-bar" aria-hidden="true">
+                            <div class="skill-progress-bar" data-progress="65" style="width:0%"
+                                role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"
+                                aria-label="Machine Learning proficiency: 65 out of 100"></div>
+                        </div>
                     </div>
                     <div class="skill-item" data-skill="nlp">
                         <div class="skill-icon" aria-hidden="true"><i class="fas fa-language"></i></div>
-                        <div class="skill-name">Natural Language Processing</div>
-                        <div class="skill-level">Intermediate to Expert</div>
+                        <div class="skill-name"><abbr title="Natural Language Processing">NLP</abbr></div>
+                        <div class="skill-tier expert" aria-label="Expert level">★★★ Expert</div>
+                        <div class="skill-bar" aria-hidden="true">
+                            <div class="skill-progress-bar" data-progress="85" style="width:0%"
+                                role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"
+                                aria-label="Natural Language Processing proficiency: 85 out of 100"></div>
+                        </div>
                     </div>
                     <div class="skill-item" data-skill="networks">
                         <div class="skill-icon" aria-hidden="true"><i class="fas fa-project-diagram"></i></div>
                         <div class="skill-name">Network Data Science</div>
-                        <div class="skill-level">Intermediate</div>
+                        <div class="skill-tier advanced" aria-label="Advanced level">★★☆ Advanced</div>
+                        <div class="skill-bar" aria-hidden="true">
+                            <div class="skill-progress-bar" data-progress="65" style="width:0%"
+                                role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"
+                                aria-label="Network Data Science proficiency: 65 out of 100"></div>
+                        </div>
                     </div>
                     <div class="skill-item" data-skill="datavis">
                         <div class="skill-icon" aria-hidden="true"><i class="fas fa-chart-bar"></i></div>
-                        <div class="skill-name">Data Science & Visualization</div>
-                        <div class="skill-level">Intermediate to Expert</div>
+                        <div class="skill-name">Data Science &amp; Visualization</div>
+                        <div class="skill-tier expert" aria-label="Expert level">★★★ Expert</div>
+                        <div class="skill-bar" aria-hidden="true">
+                            <div class="skill-progress-bar" data-progress="85" style="width:0%"
+                                role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"
+                                aria-label="Data Science and Visualization proficiency: 85 out of 100"></div>
+                        </div>
                     </div>
                     <div class="skill-item" data-skill="statistics">
                         <div class="skill-icon" aria-hidden="true"><i class="fas fa-calculator"></i></div>
                         <div class="skill-name">Statistical Analysis</div>
-                        <div class="skill-level">Intermediate to Expert</div>
+                        <div class="skill-tier expert" aria-label="Expert level">★★★ Expert</div>
+                        <div class="skill-bar" aria-hidden="true">
+                            <div class="skill-progress-bar" data-progress="85" style="width:0%"
+                                role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"
+                                aria-label="Statistical Analysis proficiency: 85 out of 100"></div>
+                        </div>
                     </div>
                     <div class="skill-item" data-skill="web">
                         <div class="skill-icon" aria-hidden="true"><i class="fas fa-code"></i></div>
                         <div class="skill-name">Web Development</div>
-                        <div class="skill-level">Beginner</div>
+                        <div class="skill-tier intermediate" aria-label="Intermediate level">★☆☆ Intermediate</div>
+                        <div class="skill-bar" aria-hidden="true">
+                            <div class="skill-progress-bar" data-progress="35" style="width:0%"
+                                role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"
+                                aria-label="Web Development proficiency: 35 out of 100"></div>
+                        </div>
                     </div>
                     <div class="skill-item" data-skill="cpp">
                         <div class="skill-icon" aria-hidden="true"><i class="fas fa-cog"></i></div>
                         <div class="skill-name">C++ Programming</div>
-                        <div class="skill-level">Beginner</div>
+                        <div class="skill-tier intermediate" aria-label="Intermediate level">★☆☆ Intermediate</div>
+                        <div class="skill-bar" aria-hidden="true">
+                            <div class="skill-progress-bar" data-progress="35" style="width:0%"
+                                role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"
+                                aria-label="C++ Programming proficiency: 35 out of 100"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -615,7 +744,6 @@
             </div>
             <p>&copy; 2025 Paschalis Agapitos. All rights reserved.</p>
             <p style="margin-top: 0.5rem;">PhD Candidate in Computational Humanities</p>
-            </p>
         </div>
     </footer>
 
@@ -623,9 +751,7 @@
     <script src="./network-animation.js" defer></script>
     <script>
         
-        // ===================================
         // Citation Management
-        // ===================================
         const citations = {
             wikitextgraph: `Agapitos, P., Suárez, J. L., & Schwartz, G. A. (2025). WikiTextGraph: A Python Tool for Parsing Multilingual Wikipedia Text and Graph Extraction. Journal of Open Research Software.`,
             wikipedia: `Miccio, L. A., Agapitos, P., Gamez-Perez, C., González, F., Suárez, J. L., & Schwartz, G. A. (2025). Wikipedia as a cultural lens: a quantitative approach for exploring cultural networks. Humanities & Social Sciences Communications (Nature).`,
@@ -719,9 +845,7 @@
             setTimeout(() => announcement.remove(), 1000);
         }
 
-        // ===================================
         // CV Modal Management
-        // ===================================
         let lastFocusedElement = null;
 
         function openCVModal() {
@@ -783,9 +907,7 @@
         // Network animation is handled by network-animation.js
         // It uses the #networkCanvas element inside the hero section
 
-        // ===================================
         // Mobile Menu Management
-        // ===================================
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const navLinks = document.getElementById('navLinks');
 
@@ -813,9 +935,7 @@
             }
         });
 
-        // ===================================
         // Theme Toggle
-        // ===================================
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
 
@@ -856,26 +976,33 @@
             }
         }
 
-        // ===================================
         // Profile Flip Functionality
-        // ===================================
         const profileContainer = document.getElementById('profileContainer');
+        const profileFlipBtn = document.getElementById('profileFlipBtn');
+        const profileBack = document.getElementById('profileBack');
+        // "flip back" button lives inside the back face
+        const profileFlipBackBtn = profileContainer.querySelector('.profile-flip-back-btn');
 
-        function flipProfile() {
-            profileContainer.classList.toggle('flipped');
+        function flipProfile(show) {
+            const isFlipped = profileContainer.classList.contains('flipped');
+            const willFlip = (show !== undefined) ? show : !isFlipped;
+
+            profileContainer.classList.toggle('flipped', willFlip);
+
+            // Update ARIA state
+            if (profileFlipBtn) {
+                profileFlipBtn.setAttribute('aria-expanded', willFlip ? 'true' : 'false');
+                profileFlipBtn.setAttribute('aria-label', willFlip ? 'Flip card back to profile photo' : 'Flip card to view CV preview');
+            }
+            if (profileBack) {
+                profileBack.setAttribute('aria-hidden', willFlip ? 'false' : 'true');
+            }
         }
 
-        profileContainer.addEventListener('click', flipProfile);
-        profileContainer.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                flipProfile();
-            }
-        });
+        if (profileFlipBtn) profileFlipBtn.addEventListener('click', () => flipProfile());
+        if (profileFlipBackBtn) profileFlipBackBtn.addEventListener('click', () => flipProfile(false));
 
-        // ===================================
         // CV Modal Event Listeners
-        // ===================================
         const cvModal = document.getElementById('cvModal');
         const cvClose = document.getElementById('cvClose');
         const cvDownloadBtn = document.getElementById('cvDownloadBtn');
@@ -897,9 +1024,7 @@
             }
         });
 
-        // ===================================
         // Smooth Scrolling with Performance Optimization
-        // ===================================
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -927,9 +1052,7 @@
             });
         });
 
-        // ===================================
         // Scroll Progress Indicator - Throttled
-        // ===================================
         function updateScrollProgress() {
             const scrollProgress = document.getElementById('scrollProgressBar');
             const totalHeight = document.body.scrollHeight - window.innerHeight;
@@ -956,9 +1079,7 @@
         // Initial update
         requestScrollUpdate();
 
-        // ===================================
         // Active Navigation Link
-        // ===================================
         const navLinksList = document.querySelectorAll('.nav-link');
         const sectionAnchors = Array.from(document.querySelectorAll('section[id]'));
 
@@ -973,17 +1094,17 @@
                 if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
                     navLinksList.forEach(link => {
                         link.classList.remove('active');
+                        link.removeAttribute('aria-current');
                         if (link.getAttribute('href') === `#${sectionId}`) {
                             link.classList.add('active');
+                            link.setAttribute('aria-current', 'page');
                         }
                     });
                 }
             });
         }
 
-        // ===================================
         // Intersection Observer for Animations - Performance Optimized
-        // ===================================
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -1026,9 +1147,7 @@
             imageObserver.observe(img);
         });
 
-        // ===================================
         // Skill Animation
-        // ===================================
         function animateSkillBars() {
             const skillItems = document.querySelectorAll('.skill-item');
             
@@ -1041,17 +1160,13 @@
             });
         }
 
-        // ===================================
         // Global functions for HTML onclick handlers
-        // ===================================
         window.openCVModal = openCVModal;
         window.closeCVModal = closeCVModal;
         window.copyCitation = copyCitation;
         window.sharePublication = sharePublication;
 
-        // ===================================
         // Initialization
-        // ===================================
         console.log('Enhanced accessible portfolio initialized successfully');
     </script>
 </body>
