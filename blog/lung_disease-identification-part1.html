@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <script>
+        document.documentElement.classList.remove('no-js');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Convolutional Neural Network for Lung Disease Detection - Part 1 (Baseline)</title>
+    <meta name="description"
+        content="A technical case study on building a chest X-ray classifier, diagnosing shortcut learning with Grad-CAM, and retraining after discovering border artifacts.">
+    <meta name="author" content="Paschalis Agapitos">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#14181f">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f3ef">
+    <meta property="og:title" content="Convolutional Neural Network for Lung Disease Detection - Part 1 (Baseline)">
+    <meta property="og:description"
+        content="From baseline CNN to shortcut-learning diagnosis: a medical imaging case study in model auditing.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://paschalisag.github.io/portfolio/blog/lung_disease-identification-part1.html">
+    <meta property="og:image" content="../images/blog/pneumonia-cnn/confusion_matrix.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Convolutional Neural Network for Lung Disease Detection - Part 1 (Baseline)">
+    <meta name="twitter:description"
+        content="A case study on model building, explainability, and shortcut learning in chest X-ray classification.">
+    <meta name="twitter:image" content="../images/blog/pneumonia-cnn/confusion_matrix.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": "Convolutional Neural Network for Pneumonia Detection - Part 1 (Baseline)",
+            "description": "A technical case study on building a chest X-ray classifier, diagnosing shortcut learning with Grad-CAM, and retraining after discovering border artifacts.",
+            "image": "https://paschalisag.github.io/portfolio/images/blog/pneumonia-cnn/confusion_matrix.png",
+            "author": {
+                "@type": "Person",
+                "name": "Paschalis Agapitos"
+            },
+            "publisher": {
+                "@type": "Person",
+                "name": "Paschalis Agapitos"
+            },
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "https://paschalisag.github.io/portfolio/blog/blog/lung_disease-identification-part1.html"
+            },
+            "datePublished": "2026-03-01",
+            "dateModified": "2026-03-24",
+            "inLanguage": "en",
+            "articleSection": "Medical AI",
+            "keywords": [
+                "pneumonia detection",
+                "chest x-ray",
+                "cnn",
+                "grad-cam",
+                "shortcut learning",
+                "medical ai"
+            ]
+        }
+    </script>
+
+    <style>
+      /* ── X-ray Hero Background for Article Title ── */
+      .article-hero {
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Full-bleed X-ray background on the hero section */
+      .article-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url("../images/blog/pneumonia-cnn/background.png");
+        background-size: cover;
+        background-position: center 70%;
+        background-repeat: no-repeat;
+        filter: saturate(1.) brightness(0.6);
+        z-index: 0;
+        transform: scale(1.04);   /* slight zoom-out buffer so no white edges */
+      }
+
+      /* Gradient overlay: dark-to-transparent top-to-bottom for readability */
+      .article-hero::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(10, 12, 18, 0.72) 0%,
+          rgba(10, 12, 18, 0.55) 50%,
+          rgba(10, 12, 18, 0.82) 100%
+        );
+        z-index: 1;
+      }
+
+      /* Lift all hero inner content above the overlays */
+      .article-hero-inner {
+        position: relative;
+        z-index: 2;
+        padding-top: 3.5rem;
+        padding-bottom: 3.5rem;
+      }
+
+      /* ── Title text treatment ── */
+      h1.article-title {
+        color: #ffffff;
+        text-shadow:
+          0 2px 18px rgba(0, 0, 0, 0.85),
+          0 1px  4px rgba(0, 0, 0, 0.60);
+        letter-spacing: -0.01em;
+        line-height: 1.18;
+      }
+
+      /* Kicker, dek, and meta pills: keep readable over the image */
+      .article-kicker {
+        color: rgba(255, 220, 180, 0.92);
+        text-shadow: 0 1px 6px rgba(0,0,0,0.7);
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-size: 0.78rem;
+      }
+
+      .article-dek {
+        color: rgba(235, 235, 235, 0.90);
+        text-shadow: 0 1px 8px rgba(0,0,0,0.65);
+        max-width: 68ch;
+      }
+
+      .article-breadcrumb a,
+      .article-breadcrumb span {
+        color: rgba(200, 200, 200, 0.80);
+        text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+      }
+
+      .article-meta-pill {
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.20);
+        color: rgba(230, 230, 230, 0.95);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        text-shadow: none;
+      }
+    </style>
+
+</head>
+
+<body data-theme="dark" class="article-page" id="top">
+    <header role="banner">
+        <nav role="navigation" aria-label="Article navigation">
+            <a href="../index.html" class="logo" aria-label="Return to portfolio homepage">Paschalis Agapitos</a>
+            <ul class="article-nav">
+                <li><a href="../index.html#blog" class="btn">Back to Blog</a></li>
+                <li><a href="https://github.com/PaschalisAg/classification_NN" class="btn" target="_blank"
+                        rel="noopener noreferrer">Repository</a></li>
+                <li>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme"
+                        type="button">
+                        <span aria-hidden="true">🌑</span>
+                        <span class="sr-only" id="themeStatus">Dark mode active</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="article-main" role="main">
+        <section class="article-hero" aria-labelledby="article-title">
+            <div class="article-hero-inner">
+                <div class="article-breadcrumb">
+                    <a href="../index.html">Portfolio</a>
+                    <span>/</span>
+                    <a href="../index.html#blog">Blog</a>
+                    <span>/</span>
+                    <span>Medical AI Case Study</span>
+                </div>
+                <p class="article-kicker">Medical AI · Computer Vision · Explainability</p>
+                <h1 class="article-title" id="article-title" itemprop="headline">Convolutional Neural Network for Pneumonia Detection - Part 1 (Baseline)</h1>
+                <p class="article-dek">
+                    This project is part of a series on training a Convolutional Neural Network (CNN) for chest X-ray classification. 
+                    What began as a standard classification challenge evolved into a broader investigation: 
+                    I built a model, inspected what it learned, and corrected course when explainability revealed problems. 
+                    The core argument is a case study of: high classification scores don't guarantee the model is learning the right features.
+                    <br>
+                    TLTR: accuracy without explainability can be misleading.
+                </p>
+                <div class="article-meta-strip" aria-label="Article metadata">
+                    <span class="article-meta-pill">Published March 2026</span>
+                    <!-- the placeholder for the reading time must always be like this: for the readtime script -->
+                    <span class="article-meta-pill">Reading time: 9 minutes</span>
+                    <span class="article-meta-pill">Stack: TensorFlow, PyTorch, Grad-CAM</span>
+                </div>
+                <div class="metric-strip" aria-label="Key article metrics">
+                    <!-- <div class="metric-card">
+                        <span class="metric-label">Baseline Accuracy</span>
+                        <span class="metric-value">24%</span>
+                    </div> -->
+                    <!-- <div class="metric-card">
+                        <span class="metric-label">Classes</span>
+                        <span class="metric-value">3-way X-ray task</span>
+                    </div> -->
+                </div>
+            </div>
+        </section>
+
+        <div class="article-shell">
+            <div class="article-grid">
+                <article class="article-prose" itemscope itemtype="https://schema.org/BlogPosting">
+                    <meta itemprop="author" content="Paschalis Agapitos">
+                    <meta itemprop="datePublished" content="2026-03-01">
+                    <meta itemprop="dateModified" content="2026-03-24">
+                    <meta itemprop="inLanguage" content="en">
+                    <meta itemprop="mainEntityOfPage" content="https://paschalisag.github.io/portfolio/blog/blog/lung_disease-identification-part1.html">
+                    <section aria-labelledby="problem-title">
+                        <h2 id="problem-title">Do high classification scores mean the model learned the right features?</h2>
+                        <p>
+                            Medical image classification is many times presented as hitting the perfect score.
+                            Although scoring high is very important for the use of model in a medical context,
+                            it is not always the panacea. In my opinion, a neural model is truly useful in real-world settings only if its predictions are both <b>accurate</b> and <b>explainable</b>. 
+                            By accurate, I mean the model performs its task without errors. 
+                            By explainable, I mean it should be clear which features the model relies on to make its decisions.
+                            <br>
+                            The article below is mostly a reflection and a walk-through of my work
+                            on a project. Even though, at the very beginning
+                            of this project, my aim was to make a model that will score high, very quickly I realised
+                            the importance also lies on explaining what makes the model good and even more importantly,
+                            on what the model focusing on when making the prediction.
+                        </p>
+                        <h2>Problem to solve</h2>
+                        <p>
+                            The task was to classify chest X-rays into three categories: Covid, Normal, and Pneumonia.
+                        </p>
+                        <div class="article-pullquote">
+                            <p>
+                                The most important lesson of this project was not how to build a classifier. It was how
+                                quickly a convincing metric can stop being convincing once you inspect what the model is
+                                actually using.
+                            </p>
+                        </div>
+                    </section>
+
+                    <section aria-labelledby="baseline-title">
+                        <h2 id="baseline-title">Building the Baseline</h2>
+                        <div class="article-callout">
+                            <h3>Show Beside This Section</h3>
+                            <p><strong>Figure:</strong> class distribution bar chart.</p>
+                        </div>
+                        <p>
+                            I always start by examining the dataset’s basic properties (see <a href="#bar-chart-classes" aria-describedby="cap-chart-classes">Figure 1</a>). 
+                            For neural network training, checking class imbalance is especially important. 
+                            The class counts confirmed the dataset description: 
+                            this is a multi-class classification task with grayscale chest X-rays.
+                        </p>
+                        <figure class="article-figure" id="bar-chart-classes">
+                            <img src="../images/blog/pneumonia-cnn/class_distribution.webp"
+                                alt="Bar chart showing the number of X-ray images across the Covid, Normal, and Pneumonia classes.">
+                            <figcaption id="cap-chart-classes">
+                                Figure 1. Dataset distribution across the three classes used in the baseline experiment.
+                                There is a small imbalance but I do not believe that will affect that much the 
+                                final result.
+                            </figcaption>
+                        </figure>
+                        <p>
+                            The first pipeline was built around a small set of deliberate preprocessing decisions.
+                            Each one was chosen for a specific reason, not as a default.
+                        </p>
+                        <ul>
+                            <li><strong>Reading images directly from the folder structure using Keras image generators.</strong> I do that to keep the pipeline reproducible and at the same time tightly coupled to the dataset's original layout.</li>
+                            <li><strong>Resizing to 256 × 256 pixels.</strong> It is very important to keep a consistent spatial resolution before batching. At the same time, I need to preserce enough anatomical details while keeping memory and computation at a manageable level for a modest training setup.</li>
+                            <li><strong>Batching with a small batch size of 8.</strong> Think of it like studying for an exam by reviewing a few flashcards at a time rather than the entire stack at once. Smaller groups keep the learning process a little unpredictable, which stops the model from taking too many shortcuts and forces it to generalise rather than memorise.</li>
+                            <li><strong>Applying only rescaling in the data generators, then performing augmentation inside the model graph.</strong> This keeps the validation and test streams clean while still exposing the training path to meaningful stochastic variation.</li>
+                        </ul>
+                        <div class="article-snippet">
+                            <h3>Data Pipeline</h3>
+                            <pre><code>from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
+# single generator for train/validation split: rescale only
+train_val_generator = ImageDataGenerator(
+    rescale=1./255,
+    validation_split=0.2,
+)
+
+test_data_generator = ImageDataGenerator(rescale=1./255)
+
+train_data_iter = train_val_generator.flow_from_directory(
+    directory="Covid19-dataset/train/",
+    class_mode='categorical',
+    color_mode='grayscale',
+    target_size=(256, 256),
+    batch_size=BATCH_SIZE,
+    seed=SEED,
+    shuffle=True,
+    subset='training'
+)
+
+validation_data_iter = train_val_generator.flow_from_directory(
+    directory="Covid19-dataset/train/",
+    class_mode='categorical',
+    color_mode='grayscale',
+    target_size=(256, 256),
+    batch_size=BATCH_SIZE,
+    seed=SEED,
+    shuffle=False,
+    subset='validation'
+)
+
+test_data_iter = test_data_generator.flow_from_directory(
+    directory="Covid19-dataset/test/",
+    class_mode='categorical',
+    color_mode='grayscale',
+    target_size=(256, 256),
+    batch_size=BATCH_SIZE,
+    seed=SEED,
+    shuffle=False,
+)</code></pre>
+                        </div>
+                        <p>
+                            In this setup, all iterators perform only rescaling — no augmentation in the generators. The training iterator uses <code>shuffle=True</code> for stochastic batching, while the validation and test iterators use <code>shuffle=False</code> so that prediction order aligns with the ground-truth labels. Augmentation is handled inside the model with Keras random layers, which are active only during <code>model.fit()</code> and automatically disabled during evaluation and prediction.
+                        </p>
+                    </section>
+
+                    <section aria-labelledby="architecture-title">
+                        <h2 id="architecture-title">Architecture and training of the baseline model</h2>
+                        <p>
+                            <p>
+                                The baseline architecture was intentionally compact: a small custom CNN with three 
+                                convolutional stages, each using 3×3 convolutions<sup><a href="#fn-conv3x3" id="ref-conv3x3" aria-label="Footnote: What are 3x3 convolutions?">2</a></sup> and 
+                                max-pooling<sup><a href="#fn-maxpool" id="ref-maxpool" aria-label="Footnote: What is max-pooling?">3</a></sup> for progressive spatial compression. 
+                                The design is inspired by the small convnet patterns described in Chollet's <em>Deep Learning with Python</em>.<sup><a href="#fn-chollet" id="ref-chollet" aria-label="Footnote: Chollet Deep Learning with Python">8</a></sup>
+                            </p>
+                            <p>
+                                Instead of heavy preprocessing in the iterator, I placed augmentation layers directly in 
+                                the model graph. This way, random flips, rotations, translations, and zoom are applied 
+                                only while fitting, and stay disabled during validation and testing.
+                            </p>
+                            <p>
+                                I also used a single-channel input. Chest X-rays are greyscale, so a three-channel 
+                                RGB model would mean either duplicating the channel artificially or wasting two input 
+                                channels on zeros. Using <code>(256, 256, 1)</code> keeps the input honest.
+                            </p>
+                            <p>
+                                Finally, the classification head is intentionally small (Flatten → Dropout → Dense(64) → Softmax) 
+                                so the model remains a practical <strong>reference point</strong>, 
+                                not peak performance.
+                            </p>
+                        </p>
+                        <div class="article-snippet">
+                            <h3>Selected Code Snippet: Baseline Model</h3>
+                            <pre><code>import tensorflow as tf
+from tensorflow.keras.callbacks import EarlyStopping
+
+model = tf.keras.Sequential([
+    tf.keras.layers.Input(shape=(256, 256, 1)),
+
+    # in-model augmentation (active only during training)
+    tf.keras.layers.RandomFlip("horizontal", seed=SEED),
+    tf.keras.layers.RandomRotation(15 / 360, seed=SEED),
+    tf.keras.layers.RandomTranslation(0.1, 0.1, seed=SEED),
+    tf.keras.layers.RandomZoom(0.1, 0.1, seed=SEED),
+
+    # convolutional backbone
+    tf.keras.layers.Conv2D(32, (3, 3), activation='relu', padding='valid'),
+    tf.keras.layers.MaxPooling2D((2, 2)),
+    tf.keras.layers.Conv2D(64, (3, 3), activation='relu', padding='valid'),
+    tf.keras.layers.MaxPooling2D((2, 2)),
+    tf.keras.layers.Conv2D(64, (3, 3), activation='relu', padding='valid'),
+
+    # classification head
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dropout(0.5),
+    tf.keras.layers.Dense(64, activation='relu'),
+    tf.keras.layers.Dense(3, activation='softmax'),
+])
+
+model.compile(
+    optimizer=tf.keras.optimizers.Adam(learning_rate=1e-3),
+    loss=tf.keras.losses.CategoricalCrossentropy(),
+    metrics=[tf.keras.metrics.CategoricalAccuracy(), tf.keras.metrics.AUC(name='auc'), tf.keras.metrics.Precision(), tf.keras.metrics.Recall()]
+)
+
+print(model.summary())
+
+early_stopping = EarlyStopping(
+    monitor='val_loss',
+    patience=20,
+    restore_best_weights=True
+)</code></pre>
+                        </div>
+                        <p>
+                            During training, I tracked more than categorical accuracy. I also monitored AUC, precision,
+                            and recall. I trained with early stopping and <code>ReduceLROnPlateau</code>, then performed a one-shot
+                            evaluation on the held-out test set after training completed. That matters in medical classification
+                            because a model can look acceptable on one aggregate metric while collapsing on one class that matters clinically.
+                        </p>
+                        <figure class="article-figure" id="fig-baseline-curves">
+                            <img src="../images/blog/pneumonia-cnn/performance_plots.webp"
+                                alt="Three line plots showing baseline train, validation, and test loss, categorical accuracy, and AUC across training epochs.">
+                            <figcaption id="cap-baseline-curves">
+                                Figure 2. Training, validation, and test curves for the baseline.
+                            </figcaption>
+                        </figure>
+                        <p>
+                            By inspecting <a href="#fig-baseline-curves" aria-describedby="cap-baseline-curves">Figure 2</a>,
+                            the model shows the hallmarks of a healthy fit. Training and validation loss both decrease together
+                            from around 1.1 down to roughly 0.2 by epoch 50, with no diverging gap between them. There is some
+                            expected bounciness in validation loss during the first 10–15 epochs. In my opinion, unavoidable with a small
+                            dataset and mini-batch noise, but the two curves track each other closely from epoch 20 onward.
+                        </p>
+                        <p>
+                            Categorical accuracy tells the same story. Training accuracy climbs from about 0.50 to 0.93, while
+                            validation accuracy rises in parallel and settles in the 0.88–0.93 range. Validation occasionally
+                            edges slightly above training, which is the expected fingerprint of in-graph augmentation: the
+                            model sees distorted images at training time but clean ones at validation time. The two curves
+                            meeting and staying together indicates the model is learning generalisable patterns rather than memorising the training set.
+                        </p>
+                        <p>
+                            AUC climbs fastest of all three metrics, passing 0.95 within the first 10 epochs and saturating
+                            near 0.99 for both training and validation by epoch 20. The held-out test set confirm the whole behaviour:
+                            test accuracy of 0.85, test AUC of 0.95, and test loss of 0.43. The small drop from validation to
+                            test is normal sampling variability on a 66-image test set, not a generalisation failure. For a
+                            custom CNN trained from scratch on a few hundred images per class and on a 3-way task that
+                            includes the genuinely subtle Normal-versus-Pneumonia distinction, the performance of the baseline
+                            is actually very good to start with.
+                        </p>
+                    </section>
+
+                    <section aria-labelledby="results-title">
+                        <h2 id="results-title">How Did the Baseline Model Perform?</h2>
+                        <p>
+                            After training, the baseline reached approximately <strong>0.74 test accuracy</strong>, <strong>0.56 test loss</strong>,
+                            and around <strong>0.90 test AUC</strong>. This is clearly above random chance for a three-class task, so the model
+                            is learning useful signal. At the same time, the gap between accuracy and AUC suggests that class separation is
+                            better than final decision calibration. In practical terms: the baseline is informative, but still not reliable
+                            enough for high-confidence medical use.
+                        </p>
+                        <div class="article-snippet">
+                            <h3>Selected Code Snippet: Baseline Evaluation</h3>
+                            <pre><code>test_data_iter.reset()
+predictions = model.predict(test_data_iter)
+predicted_classes = np.argmax(predictions, axis=1)
+true_classes = test_data_iter.classes
+class_labels = list(test_data_iter.class_indices.keys())
+
+assert len(predicted_classes) == len(true_classes), (
+    "Prediction/label length mismatch - check that shuffle=False on test_data_iter."
+)
+
+report = classification_report(true_classes, predicted_classes, target_names=class_labels)
+print(report)
+
+cm = confusion_matrix(true_classes, predicted_classes)
+sns.heatmap(
+    cm / cm.sum(axis=1, keepdims=True),
+    annot=True,
+    fmt=".2f",
+    cmap="viridis",
+    xticklabels=class_labels,
+    yticklabels=class_labels,
+)</code></pre>
+                        </div>
+                        <figure class="article-figure" id="fig-confusion-matrix">
+                            <img src="../images/blog/pneumonia-cnn/confusion_matrix_normalized.webp"
+                                alt="Confusion matrix for the baseline chest X-ray classifier showing widespread misclassification across Covid, Normal, and Pneumonia classes.">
+                            <figcaption id="cap-confusion-matrix">
+                                Figure 3. The baseline confusion matrix of the test set.
+                            </figcaption>
+                        </figure>
+                        <p>
+                            Looking at <a href="#fig-confusion-matrix" aria-describedby="cap-confusion-matrix">Figure 3</a>
+                            allows us to break down the performance class by class. From top to bottom:
+                        </p>
+
+                        <p>
+                            <strong>Covid (row 1):</strong> The model correctly identifies 88% of Covid cases — the strongest result across all three classes.
+                            The remaining 12% are misclassified as Normal, and nothing leaks into Pneumonia.
+                            What does that zero mean? That the model is not confusing a Covid X-ray with a bacterial infection.
+                            It is worth noting that the 12% Covid-to-Normal confusion is not ideal in a medical context.
+                            However, for now I am only evaluating the baseline model and trying to gather as many insights as possible,
+                            which I will then use in the second article of this series to improve performance.
+                        </p>
+
+                        <p>
+                            <strong>Normal (row 2):</strong> 85% of Normal cases are correctly identified.
+                            The concerning figure here is the 15% that get pushed into Pneumonia.
+                            A healthy patient being flagged as potentially ill is a false positive.
+                            In a medical context, that is not necessarily a critical failure, since it is generally better to
+                            follow up with additional tests rather than miss a condition. However, for the patients themselves,
+                            it can be stressful and costly. It is still a pattern worth tracking as the model is improved.
+                        </p>
+
+                        <p>
+                            <strong>Pneumonia (row 3):</strong> This is where the model struggles most.
+                            Only 80% of true Pneumonia cases are caught, and 20% are misclassified as Normal.
+                            That is a false negative rate of one in five — meaning the model declares as "healty" almost 20% of the patients. 
+                            In a real screening pipeline, that is the error type the model can least afford to make.
+                            Unlike the false positives discussed above, a missed Pneumonia diagnosis can be life-threatening.
+                        </p>
+
+                        <p>
+                            Taken together, the picture is consistent with what the aggregate metrics already hinted at: the model has learned
+                            something useful, but it is not yet reliable enough across all classes.
+                            Covid is handled well; Pneumonia recall is the weak link.
+                            That asymmetry will guide what to improve next.
+                        </p>
+                    </section>
+                    
+                    <section aria-labelledby="conclusions-title">
+                        <h2 id="conclusions-title">Conclusions</h2>
+                        <p>
+                            In this article, I built and evaluated a baseline CNN for chest X-ray classification across three classes:
+                            Covid, Normal, and Pneumonia. The aggregate metrics — 0.74 test accuracy and 0.90 test AUC — place the model
+                            clearly above random chance and confirm that it is picking up genuine signal from the X-rays.
+                            For a custom architecture trained from scratch on a small dataset, that is an honest and useful starting point.
+                        </p>
+                        <p>
+                            The confusion matrix, however, tells a more sobering story. Covid is handled well at 88% recall,
+                            but Pneumonia tops out at only 80%. That means that one in five true Pneumonia cases is quietly sent into
+                            the Normal class. In a clinical screening context, that is precisely the error the model cannot afford
+                            to make. However, a missed Covid case is serious; a missed Pneumonia case in a fragile patient can be life-threatening.
+                            The aggregate accuracy hides this, which is exactly why reading the confusion matrix row by row is important in this case.
+                        </p>
+                        <p>
+                            Before trying to fix those numbers, though, I think there is another important question
+                            to ask: "what is the model actually looking at?". In other words, what are the parts of
+                            the lungs that have the highest discriminative power between classes. This is important 
+                            to figure it out because a model can score well for the wrong reasons. For instance,
+                            basing its prediction on irrelevant artefacts in the image rather than genuine anatomical features.
+                            If we add this one layer of explainability, we will already achieve something important:
+                            a good performance and an explanation of the performance as well as space to improve.
+                        </p>
+
+                    </section>
+
+                        <div class="article-footer-cta">
+                            <div>
+                                <h3>Next step</h3>
+                                <p>
+                                    The second part of this series shifts the focus from scores to features.
+                                    Using explainability tools, we will visualise the regions of each X-ray that drive the model's decisions —
+                                    and use that understanding as a lever to improve performance where it matters most.
+                                </p>
+                            </div>
+                            <div class="btn-group">
+                                <a href="../index.html#blog" class="btn">Back to Blog</a>
+                                <a href="https://github.com/PaschalisAg/classification_NN" class="btn" target="_blank"
+                                    rel="noopener noreferrer">View Source</a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section aria-labelledby="comments-title" class="article-comments">
+                        <h2 id="comments-title">Comments</h2>
+                        <p>
+                            Have a question, disagree with an assumption, or want to suggest an improvement? Leave a
+                            comment below and I will reply.
+                        </p>
+                        <script src="https://utteranc.es/client.js" repo="PaschalisAg/portfolio" issue-term="pathname"
+                            label="article-comment" theme="preferred-color-scheme" crossorigin="anonymous" async>
+                            </script>
+                    </section>
+                    <footer class="article-footnotes" aria-label="Footnotes">
+                        <ol>
+                            <li id="fn-vgg16">
+                                <strong>VGG16</strong> is a 16-layer deep convolutional neural network developed by the Visual Geometry Group at the University of Oxford. It follows a simple and uniform architecture: repeated blocks of 3×3 convolutional filters stacked in increasing depth, followed by max-pooling layers and a fully connected classification head. Despite its age, it remains a common baseline and backbone for image classification tasks. <a href="https://keras.io/api/applications/vgg/vgg_models/#vgg16-function" target="_blank" rel="noopener noreferrer">Keras VGG16 documentation ↗</a>
+                                <a href="#ref-vgg16" aria-label="Return to text">↩</a>
+                            </li>
+                            <li id="fn-conv3x3">
+                                <strong>3×3 convolutions</strong> are the core operation in most modern CNNs. A small 3×3 filter slides across the image and computes a weighted sum of each 3×3 neighbourhood of pixels, producing a new feature map that captures local patterns such as edges or textures. Using many small filters stacked in depth is more expressive and parameter-efficient than using a single large filter.
+                                <a href="#ref-conv3x3" aria-label="Return to text">↩</a>
+                            </li>
+                            <li id="fn-maxpool">
+                                <strong>Max-pooling</strong> is a downsampling operation that divides the feature map into small regions (typically 2×2) and keeps only the maximum value from each region. Think of it like summarising a paragraph by keeping only the most important word from each sentence. It reduces the spatial size of the representation, which lowers computation and introduces a degree of translation invariance — small shifts in the input produce the same output.
+                                <a href="#ref-maxpool" aria-label="Return to text">↩</a>
+                            </li>
+                            <li id="fn-skip">
+                                <strong>Skip connections</strong> (used in architectures like ResNet) are shortcut paths that feed the output of an earlier layer directly into a later layer, bypassing one or more intermediate layers. They help gradients flow during training and allow the network to learn residual corrections rather than full transformations. VGG16 has none — each layer must process the signal in sequence without shortcuts.
+                                <a href="#ref-skip" aria-label="Return to text">↩</a>
+                            </li>
+                            <li id="fn-branch">
+                                <strong>Complex branching</strong> refers to architectures where the network splits into multiple parallel paths that process the input differently and then merge — as seen in Inception or EfficientNet. Each branch can capture features at different scales or with different operations simultaneously. VGG16 is a single linear stack with no such parallel paths, which is why it is easy to reason about and interpret.
+                                <a href="#ref-branch" aria-label="Return to text">↩</a>
+                            </li>
+                            <li id="fn-precision">
+                                <strong>Precision</strong> answers: "Of all samples predicted as a class, how many were actually that class?" A high precision means fewer false positives.
+                                Formula: <code>Precision = TP / (TP + FP)</code>, where <code>TP</code> is true positives and <code>FP</code> is false positives.
+                                <a href="#ref-precision" aria-label="Return to text">↩</a>
+                            </li>
+                            <li id="fn-recall">
+                                <strong>Recall</strong> answers: "Of all real samples of a class, how many did the model correctly find?" A high recall means fewer false negatives.
+                                Formula: <code>Recall = TP / (TP + FN)</code>, where <code>TP</code> is true positives and <code>FN</code> is false negatives.
+                                <a href="#ref-recall" aria-label="Return to text">↩</a>
+                            </li>
+                            <li id="fn-chollet">
+                                <strong>Deep Learning with Python</strong> — Chollet, F. Chapter 8: Image classification. <a href="https://deeplearningwithpython.io/chapters/chapter08_image-classification/" target="_blank" rel="noopener noreferrer">deeplearningwithpython.io ↗</a>
+                                <a href="#ref-chollet" aria-label="Return to text">↩</a>
+                            </li>
+
+                        </ol>
+                    </footer>
+                </article>
+                <aside class="article-sidebar" aria-labelledby="toc-title">
+                    <nav class="article-note article-toc" aria-label="Table of contents">
+                        <h3 id="toc-title">Contents</h3>
+                        <ol>
+                            <li><a href="#problem-title">Problem framing</a></li>
+                            <li><a href="#baseline-title">Building the baseline</a></li>
+                            <li><a href="#architecture-title">Architecture and training</a></li>
+                            <li><a href="#results-title">Baseline performance</a></li>
+                            <li><a href="#conclusions-title">Conclusions</a></li>
+                            <li><a href="#comments-title">Comments</a></li>
+                            <li><a href="#top">Back to the top</a></li>
+                        </ol>
+                    </nav>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <p>&copy; 2026 Paschalis Agapitos. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const statusElement = document.getElementById('themeStatus');
+        const savedTheme = localStorage.getItem('theme');
+
+        function applyTheme(theme) {
+            body.setAttribute('data-theme', theme);
+            themeToggle.querySelector('span[aria-hidden]').textContent = theme === 'dark' ? '🌑' : '☀️';
+            statusElement.textContent = theme === 'dark' ? 'Dark mode active' : 'Light mode active';
+        }
+
+        applyTheme(savedTheme || 'dark');
+
+        themeToggle.addEventListener('click', () => {
+            const newTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Keep TOC in sync with the section currently in view.
+        const tocLinks = Array.from(document.querySelectorAll('.article-toc a[href^="#"]'));
+        const trackedLinks = tocLinks.filter((link) => link.getAttribute('href') !== '#top');
+        const sectionElements = trackedLinks
+            .map((link) => document.getElementById(link.getAttribute('href').slice(1)))
+            .filter(Boolean);
+
+        function setActiveTocLink(sectionId) {
+            trackedLinks.forEach((link) => {
+                const isActive = link.getAttribute('href') === `#${sectionId}`;
+                link.classList.toggle('active', isActive);
+                if (isActive) {
+                    link.setAttribute('aria-current', 'true');
+                } else {
+                    link.removeAttribute('aria-current');
+                }
+            });
+        }
+
+        if (sectionElements.length > 0) {
+            let currentSectionId = sectionElements[0].id;
+            setActiveTocLink(currentSectionId);
+
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            currentSectionId = entry.target.id;
+                        }
+                    });
+                    setActiveTocLink(currentSectionId);
+                },
+                {
+                    root: null,
+                    rootMargin: '-20% 0px -65% 0px',
+                    threshold: [0.1, 0.35, 0.6],
+                }
+            );
+
+            sectionElements.forEach((section) => observer.observe(section));
+        }
+    </script>
+</body>
+
+</html>
