@@ -353,6 +353,17 @@ test_data_iter = test_data_generator.flow_from_directory(
                                 not peak performance.
                             </p>
                         </p>
+                        <figure class="article-figure" id="fig-baseline-architecture">
+                            <img src="../images/blog/pneumonia-cnn/archit_baseline_viz.png"
+                                alt="Layer-by-layer visualization of the baseline CNN architecture from 1x256x256 input to 3-class dense output.">
+                            <figcaption id="cap-baseline-architecture">
+                                Figure 2. Visual summary of the baseline CNN architecture used in this experiment.
+                            </figcaption>
+                        </figure>
+                        <p>
+                            The architecture diagram in <a href="#fig-baseline-architecture" aria-describedby="cap-baseline-architecture">Figure 2</a>
+                            provides a compact view of the feature-map transitions from input to the final three-class output.
+                        </p>
                         <div class="article-snippet">
                             <h3>Selected Code Snippet: Baseline Model</h3>
                             <pre><code>import tensorflow as tf
@@ -405,11 +416,11 @@ early_stopping = EarlyStopping(
                             <img src="../images/blog/pneumonia-cnn/performance_plots.webp"
                                 alt="Three line plots showing baseline train, validation, and test loss, categorical accuracy, and AUC across training epochs.">
                             <figcaption id="cap-baseline-curves">
-                                Figure 2. Training, validation, and test curves for the baseline.
+                                Figure 3. Training, validation, and test curves for the baseline.
                             </figcaption>
                         </figure>
                         <p>
-                            By inspecting <a href="#fig-baseline-curves" aria-describedby="cap-baseline-curves">Figure 2</a>,
+                            By inspecting <a href="#fig-baseline-curves" aria-describedby="cap-baseline-curves">Figure 3</a>,
                             the model shows the hallmarks of a healthy fit. Training and validation loss both decrease together
                             from around 1.1 down to roughly 0.2 by epoch 50, with no diverging gap between them. There is some
                             expected bounciness in validation loss during the first 10–15 epochs. In my opinion, unavoidable with a small
@@ -471,11 +482,11 @@ sns.heatmap(
                             <img src="../images/blog/pneumonia-cnn/confusion_matrix_normalized.webp"
                                 alt="Confusion matrix for the baseline chest X-ray classifier showing widespread misclassification across Covid, Normal, and Pneumonia classes.">
                             <figcaption id="cap-confusion-matrix">
-                                Figure 3. The baseline confusion matrix of the test set.
+                                Figure 4. The baseline confusion matrix of the test set.
                             </figcaption>
                         </figure>
                         <p>
-                            Looking at <a href="#fig-confusion-matrix" aria-describedby="cap-confusion-matrix">Figure 3</a>
+                            Looking at <a href="#fig-confusion-matrix" aria-describedby="cap-confusion-matrix">Figure 4</a>
                             allows us to break down the performance class by class. From top to bottom:
                         </p>
 
