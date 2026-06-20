@@ -1025,7 +1025,7 @@
         });
 
         // Smooth Scrolling with Performance Optimization
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        document.querySelectorAll('a[href^="#"]:not(.skip-link)').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
@@ -1033,12 +1033,16 @@
                 if (target) {
                     const headerHeight = 90;
                     const targetPosition = target.offsetTop - headerHeight;
-                    
-                    // Use native smooth scroll for better performance
+
+                    // Native smooth scroll
                     window.scrollTo({
                         top: targetPosition,
                         behavior: 'smooth'
                     });
+
+                    // Move focus for keyboard/AT users — separate statements, AFTER scrollTo
+                    target.setAttribute('tabindex', '-1');
+                    target.focus({ preventScroll: true });
                     
                     // Update URL without triggering scroll
                     history.pushState(null, null, targetId);
