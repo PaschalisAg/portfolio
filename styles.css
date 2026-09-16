@@ -26,7 +26,7 @@
     */
     --accent-blue: #4db8ff;      /* Electric cyan — primary brand accent */
     --accent-teal: #00d4b4;      /* Teal — secondary, success, tools */
-    --accent-amber: #ffc14d;     /* Amber — tertiary, highlights, dates */
+    --accent-amber: #FFBE1B;     /* Amber — tertiary, highlights, dates */
     --accent-green: #4dda8a;     /* Green — metrics, impact, success */
     --accent-red: #ff6b8a;       /* Soft red — warnings, error states */
     --accent-purple: #b09aff;    /* Purple — citations, academic */
@@ -63,42 +63,41 @@
 }
 
 [data-theme="light"] {
-    /* COOL WHITE LAB LIGHT THEME — clinical, precise, data-room aesthetic */
-    --primary-bg: #f7f9fc;
-    --secondary-bg: #edf1f8;
-    --accent-bg: #dce6f5;
-    --card-bg: #ffffff;
+    --primary-bg: #f2efe9;
+    --secondary-bg: #e8e4dc;
+    --accent-bg: #ddd6ca;
+    --card-bg: #fbf9f4;
 
-    --text-primary: #0a1628;
-    --text-secondary: #2a3f6f;
-    --text-muted: #5a6e96;
-    --text-accent: #005fa3;
+    --text-primary: #2a2620;
+    --text-secondary: #4a443a;
+    --text-muted: #7a7264;
+    --text-accent: #8a4800;
 
-    --accent-blue: #005fa3;
-    --accent-teal: #007a6a;
+    --accent-blue: #1a5a8a;
+    --accent-teal: #0d6b5c;
     --accent-amber: #8a4800;        /* Dark amber for light-mode legibility, WCAG AA */
-    --accent-green: #1a7a45;
-    --accent-purple: #5b3faa;
+    --accent-green: #1f6f40;
+    --accent-purple: #5b4a8a;
     --accent-red: #a01830;
 
     --surface-texture: repeating-linear-gradient(
         0deg,
         transparent,
         transparent 39px,
-        rgba(0, 95, 163, 0.04) 39px,
-        rgba(0, 95, 163, 0.04) 40px
+        rgba(120, 100, 70, 0.035) 39px,
+        rgba(120, 100, 70, 0.035) 40px,
     );
 
     /* Glass / surface system — light equivalents */
-    --glass-bg: rgba(237, 241, 248, 0.92);
-    --glass-bg-light: rgba(220, 230, 245, 0.65);
-    --glass-border: rgba(0, 95, 163, 0.18);
-    --glass-border-subtle: rgba(0, 95, 163, 0.09);
+    --glass-bg: rgba(242, 239, 233, 0.92);
+    --glass-bg-light: rgba(120, 100, 70, 0.10);
+    --glass-border: rgba(120, 100, 70, 0.20);
+    --glass-border-subtle: rgba(120, 100, 70, 0.10);
 
-    --shadow-focus: 0 0 0 4px rgba(0, 95, 163, 0.3);
-    --shadow-sm: 0 1px 3px 0 rgb(10 22 40 / 0.08);
-    --shadow-md: 0 4px 12px -1px rgb(10 22 40 / 0.12);
-    --shadow-lg: 0 10px 30px -3px rgb(10 22 40 / 0.15);
+    --shadow-sm: 0 1px 3px 0 rgb(80 60 30 / 0.07);
+    --shadow-md: 0 4px 12px -1px rgb(80 60 30 / 0.10);
+    --shadow-lg: 0 10px 30px -3px rgb(80 60 30 / 0.13);
+    --shadow-focus: 0 0 0 4px rgba(138, 72, 0, 0.28);
 }
 
 
@@ -202,14 +201,14 @@ a:hover {
 button:focus-visible,
 a:focus-visible,
 [role="button"]:focus-visible {
-    outline: 3px solid var(--accent-blue);
+    outline: 3px solid var(--accent-amber);
     outline-offset: 3px;
     box-shadow: var(--shadow-focus), 0 0 0 6px rgba(77, 184, 255, 0.12);
 }
 
 /* aria-current="page" — clearly marks active nav link for AT */
 .nav-links a[aria-current="page"] {
-    color: var(--accent-blue);
+    color: var(--accent-amber);
     background: var(--glass-bg-light);
 }
 
@@ -221,7 +220,7 @@ a:focus-visible,
     transform: translateX(-50%);
     width: 30px;
     height: 3px;
-    background: var(--accent-blue);
+    background: var(--accent-amber);
     border-radius: 2px;
 }
 
@@ -265,13 +264,13 @@ a:hover::before,
 /* Layout container with fluid padding */
 
 :root {
-    --network-node-color: rgba(77, 184, 255, 0.85);
-    --network-line-color: rgba(77, 184, 255, 0.3);
+    --network-node-color: rgba(109, 67, 151, 0.75);
+    --network-line-color: rgba(158, 154, 161, 0.35);
 }
 
 [data-theme="light"] {
-    --network-node-color: rgba(0, 95, 163, 0.75);
-    --network-line-color: rgba(0, 95, 163, 0.25);
+    --network-node-color: rgba(120, 90, 40, 0.55);
+    --network-line-color: rgba(120, 90, 40, 0.18);
 }
 
 
@@ -322,12 +321,12 @@ a:hover::before,
 }
 
 [data-theme="light"] #networkCanvas {
-    opacity: 0.9;
+    opacity: 0.75;
 }
 
 @media (max-width: 768px) {
     #networkCanvas {
-        opacity: 0.5;
+        opacity: 0.65;
     }
 }
 
@@ -374,7 +373,7 @@ nav {
 }
 
 .logo:hover {
-    color: var(--accent-blue);
+    color: var(--accent-amber);
     transform: translateY(-2px);
 }
 
@@ -410,7 +409,7 @@ nav {
 
 .nav-links a:hover,
 .nav-links a.active {
-    color: var(--accent-blue);
+    color: var(--accent-amber);
     background: var(--glass-bg-light);
 }
 
@@ -422,7 +421,7 @@ nav {
     transform: translateX(-50%);
     width: 30px;
     height: 3px;
-    background: var(--accent-blue);
+    background: var(--accent-amber);
     border-radius: 2px;
 }
 
@@ -1492,15 +1491,15 @@ footer p {
 }
 
 [data-theme="light"].article-page {
-    --article-page-bg: #f4f3ef;
-    --article-surface: #fcfbf8;
-    --article-border: #d6d3cb;
-    --article-text: #232b37;
-    --article-muted: #4a5566;
-    --article-link: #2a4b8d;
-    --article-accent: #365da8;
-    --article-headline: #1d2530;
-    background: linear-gradient(180deg, #f4f3ef 0%, #f0eee9 34%, #f4f3ef 100%);
+    --article-page-bg: #f2efe9;
+    --article-surface: #fbf9f4;
+    --article-border: #d8d2c4;
+    --article-text: #2a2620;
+    --article-muted: #6a6255;
+    --article-link: #8a4800;
+    --article-accent: #a85a10;
+    --article-headline: #1a1712;
+    background: linear-gradient(180deg, #f2efe9 0%, #ece8df 34%, #f2efe9 100%);
 }
 
 .article-nav {

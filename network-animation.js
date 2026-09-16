@@ -28,8 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let nodes = [];
     let dpr = Math.min(window.devicePixelRatio || 1, 2); // cap at 2 to limit fill cost
-    let nodeColor = 'rgba(255, 193, 7, 0.2)';
-    let lineColor = 'rgba(255, 193, 7, 0.2)';
     let rafId = null;
 
     function getThemeColors() {
@@ -37,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         nodeColor = styles.getPropertyValue('--network-node-color').trim() || nodeColor;
         lineColor = styles.getPropertyValue('--network-line-color').trim() || lineColor;
     }
+
 
     function nodeCountForSize() {
         return window.innerWidth < 768 ? 40 : 80;
