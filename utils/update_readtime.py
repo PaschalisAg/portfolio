@@ -1,5 +1,6 @@
 import re
 from pathlib import Path
+from datetime import datetime
 import readtime
 
 # Set up paths relative to this script's location (assumed to be inside PORTFOLIO/utils/)
@@ -15,6 +16,8 @@ def update_all_reading_times():
     # Regex pattern to find the exact reading time span
     # Added 's?' to handle both 'minute' and 'minutes' in existing text
     pattern = re.compile(r'<span class="article-meta-pill">Reading time: \d+ minutes?</span>')
+    json_ld_date_modified_pattern = re.compile(r'("dateModified"\s*:\s*")[0-9]{4}-[0-9]{2}-[0-9]{2}("\s*,?)')
+    itemprop_date_modified_pattern = re.compile(r'(<meta\s+itemprop="dateModified"\s+content=")[0-9]{4}-[0-9]{2}-[0-9]{2}("\s*/?>)')
 
     # Loop through all .html files in the blog directory
     for file_path in blog_dir.glob('*.html'):
@@ -22,6 +25,9 @@ def update_all_reading_times():
             # 1. Read the existing HTML content
             with open(file_path, 'r', encoding='utf-8') as file:
                 html_content = file.read()
+
+            # Use today's date as YYYY-MM-DD for dateModified.
+            modified_date = datetime.now().strftime('%Y-%m-%d')
 
             # 2. Let readtime clean the HTML and calculate the minutes
             rt = readtime.of_html(html_content)
@@ -32,18 +38,39 @@ def update_all_reading_times():
 
             # 3. Create the replacement string
             replacement = f'<span class="article-meta-pill">Reading time: {minutes} {minute_text}</span>'
-            
-            # Check if the file actually contains the target span before writing
-            if pattern.search(html_content):
-                updated_html = pattern.sub(replacement, html_content)
 
-                # 4. Write the updated HTML back to the file
+            updated_html = html_content
+            readtime_updated = False
+            date_modified_updated = False
+
+            # Update reading time span when present.
+            if pattern.search(updated_html):
+                updated_html = pattern.sub(replacement, updated_html)
+                readtime_updated = True
+
+            # Update JSON-LD dateModified when present.
+            if json_ld_date_modified_pattern.search(updated_html):
+                updated_html = json_ld_date_modified_pattern.sub(rf'\g<1>{modified_date}\g<2>', updated_html)
+                date_modified_updated = True
+
+            # Update schema meta itemprop dateModified when present.
+            if itemprop_date_modified_pattern.search(updated_html):
+                updated_html = itemprop_date_modified_pattern.sub(rf'\g<1>{modified_date}\g<2>', updated_html)
+                date_modified_updated = True
+
+            # 4. Write back only when content changed.
+            if updated_html != html_content:
                 with open(file_path, 'w', encoding='utf-8') as file:
                     file.write(updated_html)
 
-                print(f"Updated {file_path.name}: {minutes} {minute_text}")
+                update_parts = []
+                if readtime_updated:
+                    update_parts.append(f"reading time {minutes} {minute_text}")
+                if date_modified_updated:
+                    update_parts.append(f"dateModified {modified_date}")
+                print(f"Updated {file_path.name}: {', '.join(update_parts)}")
             else:
-                print(f"Skipped {file_path.name}: Reading time span not found.")
+                print(f"Skipped {file_path.name}: No matching fields found or values already up to date.")
 
         except Exception as e:
             print(f"Error processing {file_path.name}: {e}")

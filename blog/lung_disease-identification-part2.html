@@ -8,24 +8,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="dark light">
-    <title>Convolutional Neural Network for Lung Disease Detection - Part 2 (Feature Engineering)</title>
-    <meta name="description"
-        content="A technical case study on building a chest X-ray classifier, diagnosing shortcut learning with Grad-CAM, and retraining after discovering border artifacts.">
+    <title>Convolutional Neural Network for Lung Disease Detection - Part 2 (Grad-CAM)</title>
+    <meta name="description" content="Applying Grad-CAM to a custom chest X-ray CNN. The heatmaps show plausible lung focus for Normal, diffuse focus for Pneumonia, and edge-of-frame focus for Covid.">
     <meta name="author" content="Paschalis Agapitos">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#14181f">
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f3ef">
-    <meta property="og:title" content="Convolutional Neural Network for Lung Disease Detection - Part 2 (Feature Engineering)">
-    <meta property="og:description"
-        content="From baseline CNN to shortcut-learning diagnosis: a medical imaging case study in model auditing.">
+    <meta property="og:title" content="Convolutional Neural Network for Lung Disease Detection - Part 2 (Grad-CAM)">
+    <meta property="og:description" content="Grad-CAM on a baseline chest X-ray CNN: what the model looks at, and where it looks at the wrong things.">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://paschalisag.github.io/portfolio/blog/lung_disease-identification-part1.html">
-    <meta property="og:image" content="../images/blog/pneumonia-cnn/confusion_matrix.png">
+    <meta property="og:url" content="https://paschalisag.github.io/portfoliop/blog/lung_disease-identification-part2.html">
+    <meta property="og:image" content="../images/blog/pneumonia-cnn/gradcam_covid_2.webp">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Convolutional Neural Network for Lung Disease Detection - Part 2 (Feature Engineering)">
-    <meta name="twitter:description"
-        content="A case study on model building, explainability, and shortcut learning in chest X-ray classification.">
-    <meta name="twitter:image" content="../images/blog/pneumonia-cnn/confusion_matrix.png">
+    <meta name="twitter:title" content="Convolutional Neural Network for Lung Disease Detection - Part 2 (Grad-CAM)">
+    <meta name="twitter:description" content="Grad-CAM on a baseline chest X-ray CNN: what the model looks at, and where it looks at the wrong things.">
+    <meta name="twitter:image" content="../images/blog/pneumonia-cnn/gradcam_covid_2.webp">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -37,9 +34,9 @@
         {
             "@context": "https://schema.org",
             "@type": "BlogPosting",
-            "headline": "Convolutional Neural Network for Pneumonia Detection - Part 2 (Feature Engineering)",
-            "description": "A technical case study on building a chest X-ray classifier, diagnosing shortcut learning with Grad-CAM, and retraining after discovering border artifacts.",
-            "image": "https://paschalisag.github.io/portfolio/images/blog/pneumonia-cnn/confusion_matrix.png",
+            "headline": "Convolutional Neural Network for Lung Disease Detection - Part 2 (Grad-CAM)",
+            "description": "Applying Grad-CAM to a baseline chest X-ray CNN to check whether its predictions rest on lung tissue or on image borders.",
+            "image": "https://paschalisag.github.io/portfolio/images/blog/pneumonia-cnn/gradcam_covid_2.webp",
             "author": {
                 "@type": "Person",
                 "name": "Paschalis Agapitos"
@@ -50,22 +47,112 @@
             },
             "mainEntityOfPage": {
                 "@type": "WebPage",
-                "@id": "https://paschalisag.github.io/portfolio/blog/blog/lung_disease-identification-part2.html"
+                "@id": "https://paschalisag.github.io/portfolio/blog/lung_disease-identification-part2.html"
             },
-            "datePublished": "2026-04-24",
-            "dateModified": "2026-03-24",
+            "datePublished": "2026-09-19",
+            "dateModified": "2026-09-19",
             "inLanguage": "en",
             "articleSection": "Medical AI",
             "keywords": [
-                "pneumonia detection",
+                "lung disease detection",
                 "chest x-ray",
                 "cnn",
+                "custom cnn",
                 "grad-cam",
+                "explainability",
                 "shortcut learning",
-                "medical ai"
+                "medical ai",
+                "class imbalance"
             ]
         }
     </script>
+
+    <style>
+      /* ── X-ray Hero Background for Article Title ── */
+      .article-hero {
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Full-bleed X-ray background on the hero section */
+      .article-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url("../images/blog/pneumonia-cnn/background.png");
+        background-size: cover;
+        background-position: center 70%;
+        background-repeat: no-repeat;
+        filter: saturate(1.) brightness(0.6);
+        z-index: 0;
+        transform: scale(1.04);   /* slight zoom-out buffer so no white edges */
+      }
+
+      /* Gradient overlay: dark-to-transparent top-to-bottom for readability */
+      .article-hero::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(10, 12, 18, 0.72) 0%,
+          rgba(10, 12, 18, 0.55) 50%,
+          rgba(10, 12, 18, 0.82) 100%
+        );
+        z-index: 1;
+      }
+
+      /* Lift all hero inner content above the overlays */
+      .article-hero-inner {
+        position: relative;
+        z-index: 2;
+        padding-top: 3.5rem;
+        padding-bottom: 3.5rem;
+      }
+
+      /* ── Title text treatment ── */
+      h1.article-title {
+        color: #ffffff;
+        text-shadow:
+          0 2px 18px rgba(0, 0, 0, 0.85),
+          0 1px  4px rgba(0, 0, 0, 0.60);
+        letter-spacing: -0.01em;
+        line-height: 1.18;
+      }
+
+      /* Kicker, dek, and meta pills: keep readable over the image */
+      .article-kicker {
+        color: rgba(255, 220, 180, 0.92);
+        text-shadow: 0 1px 6px rgba(0,0,0,0.7);
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-size: 0.78rem;
+      }
+
+      .article-dek {
+        color: rgba(235, 235, 235, 0.90);
+        text-shadow: 0 1px 8px rgba(0,0,0,0.65);
+        max-width: 68ch;
+      }
+
+      .article-breadcrumb a,
+      .article-breadcrumb span {
+        color: rgba(200, 200, 200, 0.80);
+        text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+      }
+
+      .article-meta-pill {
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.20);
+        color: rgba(230, 230, 230, 0.95);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        text-shadow: none;
+      }
+    </style>
+
+
 </head>
 
 <body data-theme="dark" class="article-page" id="top">
@@ -98,30 +185,24 @@
                     <span>Medical AI Case Study</span>
                 </div>
                 <p class="article-kicker">Medical AI · Computer Vision · Explainability</p>
-                <h1 class="article-title" id="article-title" itemprop="headline">Convolutional Neural Network for Pneumonia Detection - Part 2 (Feature Engineering)</h1>
+                <h1 class="article-title" id="article-title" itemprop="headline">Convolutional Neural Network for Lung Disease Detection - Part 2 (Grad-CAM)</h1>
                 <p class="article-dek">
-                    This is the second part of the project "Convolutional Neural Network for Pneumonia Detection".
-                    In this part I am going to present the feature engineering steps that I implemented to improve the performance
-                    and the peculiar finding I encountered along the way.
+                    In <a href="lung_disease-identification-part1.html">Part 1</a> I built a baseline Convolutional Neural Network (CNN) 
+                    that reached 84.8% test accuracy on three-class chest X-ray classification.
+                    This part opens the model up. I apply Grad-CAM to some test images to see which pixels drive each prediction,
+                    and check whether those pixels sit on lung tissue or somewhere they should not.
                     <br>
-                    TLTR: try to understand the features you are using, they will answer many questions.
+                    TL;DR: Normal predictions focus on the lungs. Covid predictions, made at 99% confidence, focus mostly on the edge of the frame.
+                    The baseline scores well, but on this evidence it cannot be trusted for Covid.
                 </p>
                 <div class="article-meta-strip" aria-label="Article metadata">
-                    <span class="article-meta-pill">Published April 2026</span>
+                    <span class="article-meta-pill">Published September 2026</span>
                     <!-- the placeholder for the reading time must always be like this: for the readtime script -->
-                    <span class="article-meta-pill">Reading time: 9 minutes</span>
-                    <span class="article-meta-pill">Stack: TensorFlow, PyTorch, Grad-CAM</span>
+                    <span class="article-meta-pill">Reading time: 13 minutes</span>
+                    <span class="article-meta-pill">Stack: TensorFlow · Custom CNN · Grad-CAM</span>
                 </div>
-                <!-- <div class="metric-strip" aria-label="Key article metrics">
-                    <div class="metric-card">
-                        <span class="metric-label">Baseline Accuracy</span>
-                        <span class="metric-value">24%</span>
-                    </div>
-                    <div class="metric-card">
-                        <span class="metric-label">Classes</span>
-                        <span class="metric-value">3-way X-ray task</span>
-                    </div>
-                </div> -->
+                <div class="metric-strip" aria-label="Key article metrics">
+                </div>
             </div>
         </section>
 
@@ -129,328 +210,440 @@
             <div class="article-grid">
                 <article class="article-prose" itemscope itemtype="https://schema.org/BlogPosting">
                     <meta itemprop="author" content="Paschalis Agapitos">
-                    <meta itemprop="datePublished" content="2026-04-24">
-                    <meta itemprop="dateModified" content="2026-04-24">
+                    <meta itemprop="datePublished" content="2026-09-19">
+                    <meta itemprop="dateModified" content="2026-09-19">
                     <meta itemprop="inLanguage" content="en">
-                    <meta itemprop="mainEntityOfPage" content="https://paschalisag.github.io/portfolio/blog/blog/lung_disease-identification-part1.html">
-                    <section aria-labelledby="problem-title">
-                        <h2 id="problem-title">Do high classification scores mean the model learned the right features?</h2>
-                        <p>
-                            Medical image classification is many times presented as hitting the perfect score.
-                            Although scoring high is very important for the use of model in a medical context,
-                            it is not always the panacea. In applied settings a neural model is useful only if
-                            its predictions are both accurate and explainable.
-                            <br>
-                            The article below is mostly a reflection and a walk-through of my work
-                            on a project. Even though, at the very beginning
-                            of this project, my aim was to make a model that will score high, very quickly I realised
-                            the importance of explaining what makes the model good.
-                        </p>
-                        <h2>Problem to solve</h2>
-                        <p>
-                            The task was to classify chest X-rays into three categories: Covid, Normal, and Pneumonia.
-                        </p>
-                        <div class="article-pullquote">
-                            <p>
-                                The most important lesson of this project was not how to build a classifier. It was how
-                                quickly a convincing metric can stop being convincing once you inspect what the model is
-                                actually using.
-                            </p>
-                        </div>
-                    </section>
+                    <meta itemprop="mainEntityOfPage" content="https://paschalisag.github.io/portfolio/blog/lung_disease-identification-part2.html">
 
-                    <section aria-labelledby="baseline-title">
-                        <h2 id="baseline-title">Building the Baseline</h2>
-                        <div class="article-callout">
-                            <h3>Show Beside This Section</h3>
-                            <p><strong>Figure:</strong> class distribution bar chart.</p>
-                        </div>
+                    <section aria-labelledby="recap-title">
+                        <h2 id="recap-title">Where Part 1 left off</h2>
                         <p>
-                            I always start by examining the dataset’s basic properties. 
-                            For neural network training, checking class imbalance is especially important. 
-                            The class counts confirmed the dataset description: 
-                            this is a multi-class classification task with grayscale chest X-rays.
+                            In <a href="lung_disease-identification-part1.html">Part 1</a> I trained a small custom CNN from scratch
+                            to classify chest X-rays as Covid, Normal, or Pneumonia. It reached 92.0% validation accuracy and
+                            84.8% test accuracy (0.975 AUC) on a 66-image test set. Most errors fell on the Normal vs. Pneumonia boundary:
+                            4 of 20 Normal images were labelled Pneumonia, and 3 of 20 Pneumonia images were labelled Normal.
+                            Covid looked well separated, with 24 of 26 images correct.
                         </p>
-                        <figure class="article-figure">
-                            <img src="../images/blog/pneumonia-cnn/class_distribution.png"
-                                alt="Bar chart showing the number of X-ray images across the Covid, Normal, and Pneumonia classes.">
-                            <figcaption>
-                                Figure 1. Dataset distribution across the three classes used in the baseline experiment.
-                                There is a small imbalance but I do not believe that will affect that much the 
-                                final result.
-                            </figcaption>
-                        </figure>
                         <p>
-                            The first pipeline was built around a small set of deliberate preprocessing decisions.
-                            Each one was chosen for a specific reason, not as a default.
-                        </p>
-                        <ul>
-                            <li><strong>Reading images directly from the folder structure using Keras image generators.</strong> I do that to keep the pipeline reproducible and at the same time tightly coupled to the dataset's original layout.</li>
-                            <li><strong>Resizing to 256 × 256 pixels.</strong> It is very important to keep a consistent spatial resolution before batching. At the same time, I need to preserce enough anatomical details while keeping memory and computation at a manageable level for a modest training setup.</li>
-                            <li><strong>Batching with a small batch size of 8.</strong> Think of it like studying for an exam by reviewing a few flashcards at a time rather than the entire stack at once. Smaller groups keep the learning process a little unpredictable, which stops the model from taking too many shortcuts and forces it to generalise rather than memorise.</li>
-                            <li><strong>Augmenting the training iterator with rotations, shifts, zoom, shear, horizontal flips, and brightness adjustments.</strong> The goal was not to manufacture realism. It was to prevent the network from overfitting to a small and visually repetitive dataset by ensuring it never sees exactly the same image twice in the same orientation or exposure.</li>
-                        </ul>
-                        <div class="article-snippet">
-                            <h3>Data Pipeline</h3>
-                            <pre><code>from tensorflow.keras.preprocessing.image import ImageDataGenerator
-
-train_data_generator = ImageDataGenerator(
-    rescale=1./255,
-    rotation_range=40,
-    width_shift_range=0.2,
-    height_shift_range=0.2,
-    shear_range=0.2,
-    zoom_range=0.2,
-    horizontal_flip=True,
-    validation_split=0.2,
-    brightness_range=[0.8, 1.2],
-)
-
-train_data_iter = train_data_generator.flow_from_directory(
-    directory="Covid19-dataset/train/",
-    class_mode="categorical",
-    color_mode="grayscale",
-    target_size=(256, 256),
-    batch_size=8,
-    subset="training",
-)
-
-validation_data_iter = train_data_generator.flow_from_directory(
-    directory="Covid19-dataset/train/",
-    class_mode="categorical",
-    color_mode="grayscale",
-    target_size=(256, 256),
-    batch_size=8,
-    subset="validation",
-)</code></pre>
-                        </div>
-                        <p>
-                            I approached the test more conservatively. In other words,
-                            no augmentation was applied there, only rescaling.
-                            The main motivation behind this idea was because I wanted to estimate
-                            how the model behaves on <strong>untouched</strong> images
-                            and not on variations produced by the preprocessing pipeline itself.
+                            However, this last result looks a bit suspicious. My assumption is that Covid and viral Pneumonia can look alike on a plain X-ray,
+                            so a model that separates Covid this well on 26 test images might be using something other than the lungs.
+                            This is the hypothesis with which I am going to continue. In other words, what if the model
+                            does not look at the patterns the lung tissues have but at something else. It might be that the model
+                            is not looking at all at the lungs themselves.
                         </p>
                     </section>
 
-                    <section aria-labelledby="architecture-title">
-                        <h2 id="architecture-title">Architecture and training of the baseline model</h2>
+                    <section aria-labelledby="gradcam-title">
+                        <h2 id="gradcam-title">How Grad-CAM works</h2>
                         <p>
-                            <p>
-                                The baseline architecture was intentionally modest: a VGG16<sup><a href="#fn-vgg16" id="ref-vgg16" aria-label="Footnote: What is VGG16?">1</a></sup>-style 
-                                convolutional backbone without pretrained weights, followed by a small dense 
-                                classification head.
-                            </p>
-                            <p>
-                                I chose VGG16 for its <strong>well-understood architecture</strong>. Its design is 
-                                deliberately simple: sequential blocks of 3×3 convolutions<sup><a href="#fn-conv3x3" id="ref-conv3x3" aria-label="Footnote: What are 3x3 convolutions?">2</a></sup> followed by 
-                                max-pooling<sup><a href="#fn-maxpool" id="ref-maxpool" aria-label="Footnote: What is max-pooling?">3</a></sup>, with no skip connections<sup><a href="#fn-skip" id="ref-skip" aria-label="Footnote: What are skip connections?">4</a></sup> or complex branching<sup><a href="#fn-branch" id="ref-branch" aria-label="Footnote: What is complex branching?">5</a></sup>.
-                            </p>
-                            <p>
-                                I did not use pretrained weights. That was a deliberate choice — I wanted the model 
-                                to learn everything from this specific dataset, so the baseline score reflects the 
-                                data and task difficulty directly, without borrowed knowledge from ImageNet.
-                            </p>
-                            <p>
-                                I also used a single-channel input. Chest X-rays are greyscale, so a three-channel 
-                                RGB model would mean either duplicating the channel artificially or wasting two input 
-                                channels on zeros. Adapting VGG16 to <code>(256, 256, 1)</code> keeps the input honest.
-                            </p>
-                            <p>
-                                Finally, the classification head is intentionally small — for the same reason as 
-                                dropping the pretrained weights. The goal was a <strong>reference point</strong>, 
-                                not peak performance.
-                            </p>
+                            Grad-CAM (Gradient-weighted Class Activation Mapping) can help me addressing my hypothesis.
+                            The answer that it can answer is the following: for a given prediction, which regions of the image pushed the model toward that class?
+                            It works in three steps:
+                        </p>
+                        <ol>
+                            <li>Run the image through the network and record the feature maps at a chosen convolutional layer.
+                                Essentially, each feature map is a small grid that shows where one learned filter fired.</li>
+                            <li>Compute the gradient of the target class score with respect to those feature maps,
+                                then average each gradient over its grid. The result is one weight per feature map.
+                                A large positive weight means that filter's activity raised the class score.</li>
+                            <li>Multiply each feature map by its weight, sum them, and keep only the positive values.
+                                Scale the result to the range 0 to 1 and stretch it to the size of the input image.</li>
+                        </ol>
+                        <br>
+                        The interactive visualisation below might help to understand the basic intuition behind Grad-CAM:
+                        <!-- Grad-CAM widget-->
+<figure class="article-figure gcw" id="gradcam-widget" aria-labelledby="gcw-cap">
+<style>
+/* All rules are scoped to .gcw so nothing leaks into the rest of the page. */
+.gcw{
+  --gcw-surface:#f4f3ef; --gcw-surface2:#ffffff; --gcw-text:#1c1c1a; --gcw-text2:#5f5e5a;
+  --gcw-border:rgba(0,0,0,.14); --gcw-border-strong:rgba(0,0,0,.3);
+  --gcw-accent-bg:#e6f1fb; --gcw-accent-text:#0c447c; --gcw-accent-border:#85b7eb;
+  --gcw-pos:#0f6e56; --gcw-neg:#993c1d;
+  margin:2rem 0; padding:0; font-family:'Inter',system-ui,sans-serif; color:var(--gcw-text);
+}
+body[data-theme="dark"] .gcw{
+  --gcw-surface:#1e2430; --gcw-surface2:#14181f; --gcw-text:#eceae4; --gcw-text2:#aeaca4;
+  --gcw-border:rgba(255,255,255,.16); --gcw-border-strong:rgba(255,255,255,.34);
+  --gcw-accent-bg:#0c447c; --gcw-accent-text:#cfe4f8; --gcw-accent-border:#378add;
+  --gcw-pos:#5dcaa5; --gcw-neg:#f0997b;
+}
+.gcw .gcw-steps{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}
+.gcw button{font:inherit;font-size:13px;padding:6px 12px;border-radius:8px;border:1px solid var(--gcw-border-strong);background:transparent;color:var(--gcw-text2);cursor:pointer}
+.gcw button:hover{background:var(--gcw-surface)}
+.gcw button:focus-visible{outline:2px solid var(--gcw-accent-border);outline-offset:2px}
+.gcw .gcw-pill.on{background:var(--gcw-accent-bg);color:var(--gcw-accent-text);border-color:var(--gcw-accent-border)}
+.gcw .gcw-msg{font-size:14px;line-height:1.6;color:var(--gcw-text2);margin:0 0 12px;min-height:66px}
+.gcw .gcw-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 12px}
+.gcw .gcw-card{background:var(--gcw-surface);border-radius:12px;padding:10px 10px 12px;text-align:center}
+.gcw .gcw-name{font-size:13px;font-weight:500;margin:0 0 6px}
+.gcw .gcw-sub{font-size:12px;color:var(--gcw-text2);margin:6px 0 0;min-height:16px}
+.gcw .gcw-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;width:100%;max-width:120px;margin:0 auto}
+.gcw .gcw-cell{aspect-ratio:1;border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--gcw-text)}
+.gcw .gcw-w{font-size:22px;font-weight:500;margin:4px 0 0}
+.gcw .gcw-bar{height:6px;border-radius:3px;background:var(--gcw-border);margin:8px auto 0;max-width:120px;position:relative}
+.gcw .gcw-bar i{position:absolute;top:0;height:6px;border-radius:3px}
+.gcw .gcw-out{display:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:center;margin:0 0 12px}
+.gcw .gcw-xray{position:relative;width:100%;max-width:190px;aspect-ratio:1;margin:0 auto;background:#1a1a1a;border-radius:8px;overflow:hidden}
+.gcw .gcw-xray svg{position:absolute;inset:0;width:100%;height:100%}
+.gcw .gcw-heat{position:absolute;inset:-6%;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);filter:blur(9px)}
+.gcw .gcw-nav{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.gcw .gcw-hide{visibility:hidden}
+.gcw figcaption{font-size:.85rem;color:var(--gcw-text2);margin-top:.75rem}
+@media (max-width:520px){.gcw .gcw-row,.gcw .gcw-out{grid-template-columns:1fr}}
+</style>
+
+<div class="gcw-steps" id="gcw-pills" role="tablist" aria-label="Grad-CAM steps"></div>
+<p class="gcw-msg" id="gcw-msg" aria-live="polite"></p>
+<div class="gcw-row" id="gcw-row"></div>
+
+<div class="gcw-out" id="gcw-final">
+  <div class="gcw-card">
+    <p class="gcw-name">Heatmap, 4 by 4</p>
+    <div class="gcw-grid" id="gcw-hm"></div>
+    <p class="gcw-sub">Scaled so the maximum is 1</p>
+  </div>
+  <div class="gcw-card">
+    <p class="gcw-name">Stretched over the image</p>
+    <div class="gcw-xray">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <ellipse cx="34" cy="50" rx="17" ry="27" fill="#555"/>
+        <ellipse cx="66" cy="50" rx="17" ry="27" fill="#555"/>
+        <rect x="47" y="14" width="6" height="72" rx="3" fill="#8a8a8a"/>
+        <rect x="6" y="6" width="6" height="88" fill="#3a3a3a"/>
+      </svg>
+      <div class="gcw-heat" id="gcw-over"></div>
+    </div>
+    <p class="gcw-sub">Smoothed, as in the real figures</p>
+  </div>
+</div>
+
+<div class="gcw-nav">
+  <button type="button" id="gcw-back">Back</button>
+  <button type="button" id="gcw-next">Next step</button>
+</div>
+
+<figcaption id="gcw-cap">
+  Interactive toy example: three filters on a 4 by 4 grid, with hand-picked weights. The numbers are illustrative and do not come from the trained model.
+</figcaption>
+
+<script>
+(function(){
+  var root=document.getElementById('gradcam-widget');
+  var A=[[1,0,0,2],[3,1,0,3],[2,2,1,2],[1,3,0,1]];
+  var B=[[0,3,3,0],[0,4,4,0],[0,3,3,0],[0,1,1,0]];
+  var C=[[2,1,1,3],[1,0,0,1],[1,0,0,1],[3,1,1,2]];
+  var maps=[A,B,C], names=['Filter A','Filter B','Filter C'];
+  var desc=['fires on the frame edge','fires in the lung centre','fires on the corners'];
+  var W=[-0.5,2,-1], hues=['239,159,39','29,158,117','83,74,183'], step=0;
+  var msgs=[
+   'Step 1. Pass the image through the network and keep the feature maps at the last convolutional block. Here there are 3 filters, each a 4 by 4 grid. A bigger number means that filter fired harder at that position.',
+   'Step 2. Take the gradient of the Covid score with respect to each feature map, then average it over the grid. The result is one weight per filter. A positive weight means more of that filter raised the Covid score. A negative weight means it lowered it.',
+   'Step 3. Multiply each filter by its weight and add the three maps together. Filter B, the lung-centre filter, has the largest weight, so it dominates. Filter A and Filter C are subtracted, because their weights are negative.',
+   'Step 4. Set negative values to zero, scale so the maximum is 1, then stretch the 4 by 4 grid to the size of the input image. This is the Grad-CAM heatmap.'
+  ];
+  function q(id){return document.getElementById(id);}
+  function fmt(n){return String(Math.round(n*10)/10);}
+  function maxOf(m){var x=0;m.forEach(function(r){r.forEach(function(v){if(v>x)x=v;});});return x;}
+  function bg(v,mx,h){return v<=0?'transparent':'rgba('+h+','+(0.15+0.75*Math.min(1,v/mx))+')';}
+  function grid(m,mx,h){
+    return '<div class="gcw-grid">'+m.map(function(r){return r.map(function(v){
+      return '<div class="gcw-cell" style="background:'+bg(v,mx,h)+'">'+fmt(v)+'</div>';}).join('');}).join('')+'</div>';
+  }
+  function bar(w){
+    var half=60,len=Math.min(half,Math.abs(w)/2*half),left=w>=0?half:half-len;
+    return '<div class="gcw-bar"><i style="left:'+left+'px;width:'+len+'px;background:'+(w>=0?'#1D9E75':'#D85A30')+'"></i></div>';
+  }
+  function heat(){
+    var h=[],mx=0,i,j,k,s;
+    for(i=0;i<4;i++){h.push([]);for(j=0;j<4;j++){s=0;for(k=0;k<3;k++)s+=W[k]*maps[k][i][j];s=Math.max(0,s);h[i].push(s);if(s>mx)mx=s;}}
+    return h.map(function(r){return r.map(function(v){return mx>0?v/mx:0;});});
+  }
+  function colour(v){
+    if(v<0.02)return 'rgba(0,114,178,.35)';
+    if(v<0.5)return 'rgba(0,158,115,'+(0.3+v*0.7)+')';
+    if(v<0.8)return 'rgba(230,159,0,'+(0.5+v*0.4)+')';
+    return 'rgba(240,228,66,.9)';
+  }
+  function render(){
+    var p='';
+    ['Feature maps','Weights','Combine','Heatmap'].forEach(function(t,i){
+      p+='<button type="button" class="gcw-pill'+(i===step?' on':'')+'" data-i="'+i+'" aria-pressed="'+(i===step)+'">'+(i+1)+'. '+t+'</button>';
+    });
+    q('gcw-pills').innerHTML=p;
+    q('gcw-msg').textContent=msgs[step];
+    var row=q('gcw-row'),fin=q('gcw-final'),html='';
+    if(step<3){
+      maps.forEach(function(m,k){
+        if(step<2){
+          html+='<div class="gcw-card"><p class="gcw-name">'+names[k]+'</p>'+grid(m,maxOf(m),hues[k])+'<p class="gcw-sub">'+desc[k]+'</p>'+
+            (step===1?'<p class="gcw-w" style="color:'+(W[k]>=0?'var(--gcw-pos)':'var(--gcw-neg)')+'">'+(W[k]>0?'+':'')+fmt(W[k])+'</p>'+bar(W[k])+'<p class="gcw-sub">weight</p>':'')+'</div>';
+        } else {
+          var wm=m.map(function(r){return r.map(function(v){return W[k]*v;});});
+          var mx=Math.max(maxOf(m)*Math.abs(W[k]),1);
+          html+='<div class="gcw-card"><p class="gcw-name">'+fmt(W[k])+' × '+names[k]+'</p><div class="gcw-grid">'+
+            wm.map(function(r){return r.map(function(v){
+              var c=v>0?'29,158,117':'216,90,48';
+              return '<div class="gcw-cell" style="background:'+(v===0?'transparent':'rgba('+c+','+(0.15+0.75*Math.min(1,Math.abs(v)/mx))+')')+'">'+fmt(v)+'</div>';}).join('');}).join('')+
+            '</div><p class="gcw-sub">'+(W[k]>=0?'adds evidence':'removes evidence')+'</p></div>';
+        }
+      });
+      row.innerHTML=html;row.style.display='grid';fin.style.display='none';
+    } else {
+      row.style.display='none';fin.style.display='grid';
+      var h=heat(),g='',o='';
+      h.forEach(function(r){r.forEach(function(v){
+        g+='<div class="gcw-cell" style="background:'+colour(v)+'">'+fmt(v)+'</div>';
+        o+='<div style="background:'+colour(v)+'"></div>';});});
+      q('gcw-hm').innerHTML=g;q('gcw-over').innerHTML=o;
+    }
+    q('gcw-back').classList.toggle('gcw-hide',step===0);
+    q('gcw-next').textContent=step===3?'Start over':'Next step';
+  }
+  q('gcw-pills').addEventListener('click',function(e){var b=e.target.closest('button');if(b){step=+b.dataset.i;render();}});
+  q('gcw-next').onclick=function(){step=(step+1)%4;render();};
+  q('gcw-back').onclick=function(){if(step>0){step--;render();}};
+  render();
+})();
+</script>
+</figure>
+                        <p>
+                            The output is a heatmap. High values mark regions that "fired up" which means thaht they supported the prediction.
+                            It should be clarified, though, that Grad-CAM shows where the evidence came from, not why that evidence indicates disease.
+                        </p>
+
+                        <h3>Setup</h3>
+                        <p>
+                            I used <code>block4_relu</code>, the last convolutional block from <a href="lung_disease-identification-part1.html">Part 1</a>,
+                            as the target layer. That layer's output is a 14×14 grid. 
+                            Even though, earlier layers have finer grids, they carry less class-specific signal.
+                            The global average pooling layer that follows keeps a direct link 
+                            between each spatial position and the class score,
+                            which is why I chose this architecture in <a href="lung_disease-identification-part1.html">Part 1</a>.
+                        </p>
+                        <p>
+                            Grad-CAM is used to evaluate a specific trained model's performance, thus any re-training, re-evaluation, or re-testing
+                            would re-initialise the weights but more importantly the activation maps will belong to a different model than the one we are studying
+                            which will break the reproducibility of the results. 
+                            For these reasons, I just loaded the saved <code>best.keras</code> checkpoint from epoch 50,
+                            passes raw [0, 255] grayscale pixels to the model (the Rescaling layer handles normalisation),
+                            and does not retrain or re-evaluate anything. The core computation is short.
                         </p>
                         <div class="article-snippet">
-                            <h3>Selected Code Snippet: Baseline Model</h3>
-                            <pre><code>import tensorflow as tf
-from tensorflow.keras.applications import VGG16
-from tensorflow.keras.callbacks import EarlyStopping
+                            <h3>Grad-CAM computation</h3>
+                            <pre><code>def compute_gradcam(grad_model, image_batch, class_index, input_name):
+    with tf.GradientTape() as tape:
+        activations, predictions = grad_model({input_name: image_batch}, training=False)
+        class_score = predictions[:, class_index]
 
-base_model = VGG16(input_shape=(256, 256, 1), include_top=False, weights=None)
-base_model.layers[0]._batch_input_shape = (None, 256, 256, 1)
+    gradients = tape.gradient(class_score, activations)
+    channel_weights = tf.reduce_mean(gradients, axis=(1, 2), keepdims=True)
 
-model = tf.keras.Sequential([
-    base_model,
-    tf.keras.layers.Flatten(),
-    tf.keras.layers.Dense(256, activation="relu"),
-    tf.keras.layers.Dropout(0.5),
-    tf.keras.layers.BatchNormalization(),
-    tf.keras.layers.Dense(3, activation="softmax"),
-])
-
-model.compile(
-    optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
-    loss=tf.keras.losses.CategoricalCrossentropy(),
-    metrics=[
-        tf.keras.metrics.CategoricalAccuracy(),
-        tf.keras.metrics.AUC(name="auc"),
-        tf.keras.metrics.Precision(),
-        tf.keras.metrics.Recall(),
-    ],
-)
-
-early_stopping = EarlyStopping(monitor="val_loss", patience=20, restore_best_weights=True)</code></pre>
+    heatmap = tf.reduce_sum(activations * channel_weights, axis=-1)
+    heatmap = tf.maximum(heatmap, 0.0)[0]          # keep positive evidence only
+    maximum = tf.reduce_max(heatmap)
+    return (heatmap / maximum).numpy() if maximum > 0 else heatmap.numpy()</code></pre>
                         </div>
                         <p>
-                            During training, I tracked more than categorical accuracy. I also monitored AUC, precision,
-                            recall, and test-set behavior across epochs. That matters in medical classification because
-                            a model can look acceptable on one aggregate metric while collapsing on one class that
-                            matters clinically.
+                            By default the script explains the class the model predicted. This matters for how you read the figures:
+                            each heatmap shows what supported the model's own answer, right or wrong.
+                            Each figure has the original image on the left and the overlay on the right,
+                            with the true label, predicted label, and confidence in the titles.
                         </p>
-                        <figure class="article-figure">
-                            <img src="../images/blog/pneumonia-cnn/performance_plots.jpeg"
-                                alt="Three line plots showing baseline train, validation, and test loss, categorical accuracy, and AUC across training epochs.">
-                            <figcaption>
-                                Figure 2. Training, validation, and test curves for the baseline.
-                            </figcaption>
-                        </figure>
                         <p>
-                            <p>
-                                By inspecting the figure I can see a few things that are not positive for the model but expected for a baseline.
-                                First of all, the fact that the training loss stays flat but the validation and test loss spikes a lot tell me that the model is not converging to anything stable.
-                            </p>
-                            <p>
-                                Moreover, when looking at the accuracy, I can see that it is poor and noisy.
-                                All three sets hover around 40-60%, and the curves jump around rather than improving steadily.
-                                Given that we have a 3-class problem, it means that the random chance is ~33%,
-                                so the model is only marginally better than randomly guessing. Needless to say that this scenario is not good for medical decisions.
-                            </p>
-                            <p>
-                                Finally, I see that the training loss is consistently lower that the other two,
-                                which can be interpreted as a sign of overfitting; in other words, the model is memorising training examples
-                                rather than learning generalisable features.
-                            </p>
+                            One caution on the colormap. I chose a colorblind-safe palette, but it does not follow the usual
+                            blue-to-red convention. Activation runs from <strong>blue (0)</strong> through <strong>orange (about 0.5)</strong>
+                            to <strong>green (1.0)</strong>. Green is the strongest signal.
                         </p>
                     </section>
 
                     <section aria-labelledby="results-title">
-                        <h2 id="results-title">How Did the Baseline Model Perform?</h2>
+                        <h2 id="results-title">What the model looks at</h2>
                         <p>
-                            The baseline was clearly underperforming on the held-out test set, with overall accuracy at
-                            about 24%. The class-wise metrics explain why. For Covid, precision was 0.32 and recall
-                            was 0.27 (F1 = 0.29), which is weak but still the most balanced of the three classes. For
-                            Normal, the model almost collapsed: recall dropped to 0.05 and F1 to 0.08, meaning it
-                            missed most Normal scans. For Pneumonia, recall was higher at 0.40, but precision was only
-                            0.20, so many Pneumonia predictions were false positives. In short, the model did not learn
-                            reliable class boundaries, which points toward the direction of extracting more reliable
-                            features.
+                            I ran Grad-CAM on nine test images, selected by index: three Covid, three Normal, and three Pneumonia.
+                            Nine images is a small sample, therefore the patterns presented below are only worth investigating and not a measured rate of the performance.
                         </p>
-                        <div class="article-table-wrap">
-                            <table class="article-table">
-                                <thead>
-                                    <tr>
-                                        <th>Class</th>
-                                        <th>Precision<sup><a href="#fn-precision" id="ref-precision" aria-label="Footnote: What is precision?">6</a></sup></th>
-                                        <th>Recall<sup><a href="#fn-recall" id="ref-recall" aria-label="Footnote: What is recall?">7</a></sup></th>
-                                        <th>F1-score</th>
-                                        <th>Support</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Covid</td>
-                                        <td>0.32</td>
-                                        <td>0.27</td>
-                                        <td>0.29</td>
-                                        <td>26</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Normal</td>
-                                        <td>0.25</td>
-                                        <td>0.05</td>
-                                        <td>0.08</td>
-                                        <td>20</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Pneumonia</td>
-                                        <td>0.20</td>
-                                        <td>0.40</td>
-                                        <td>0.27</td>
-                                        <td>20</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="article-snippet">
-                            <h3>Selected Code Snippet: Baseline Evaluation</h3>
-                            <pre><code>test_steps_per_epoch = math.ceil(test_data_iter.samples / test_data_iter.batch_size)
-predictions = model.predict(test_data_iter, steps=test_steps_per_epoch)
-predicted_classes = np.argmax(predictions, axis=1)
-true_classes = test_data_iter.classes
-class_labels = list(test_data_iter.class_indices.keys())
 
-report = classification_report(true_classes, predicted_classes, target_names=class_labels)
-print(report)
+                        <h3>Normal: plausible focus on the lungs</h3>
+                        <p>
+                            The Normal predictions look the way I hoped. Activation concentrates inside the two lung fields
+                            and along the rib and clavicle edges (<a href="#fig-normal-1">Figures 1</a> and <a href="#fig-normal-2">2</a>),
+                            which is the region a radiologist would examine.
+                        </p>
 
-cm = confusion_matrix(true_classes, predicted_classes)
-sns.heatmap(
-    cm,
-    annot=True,
-    fmt="d",
-    cmap="viridis",
-    xticklabels=class_labels,
-    yticklabels=class_labels,
-)</code></pre>
-                        </div>
-                        <figure class="article-figure">
-                            <img src="../images/blog/pneumonia-cnn/confusion_matrix.png"
-                                alt="Confusion matrix for the baseline chest X-ray classifier showing widespread misclassification across Covid, Normal, and Pneumonia classes.">
-                            <figcaption>
-                                Figure 3. The baseline confusion matrix of the test set.
+                        <figure class="article-figure" id="fig-normal-1">
+                            <img src="../images/blog/pneumonia-cnn/part2/1_cam-normal.webp" alt="Grad-CAM for a Normal image predicted Normal at 0.86, with orange and green activation inside both lung fields.">
+                            <figcaption id="cap-fig-normal-1">
+                                Figure 1. Test image 1, true Normal, predicted Normal (0.86). Activation sits inside both lung fields, 
+                                with the strongest patch on both the right and the left side of the image (the patient's lungs).
+                            </figcaption>
+                        </figure>
+
+                        <figure class="article-figure" id="fig-normal-2">
+                            <img src="../images/blog/pneumonia-cnn/part2/10_cam-normal.webp" alt="Grad-CAM for a Normal image predicted Normal at 0.78, with activation along the upper lung fields and rib edges.">
+                            <figcaption id="cap-fig-normal-2">
+                                Figure 2. Test image 10, true Normal, predicted Normal (0.78). The strongest activation runs along the upper lung fields, plus a small patch at the top of the neck.
                             </figcaption>
                         </figure>
                         <p>
-                            <p>
-                                The confusion matrix shows in a different way the same information as the table above.
-                            </p>
-                            
-                            <p>
-                                The baseline model can teach me a few things too. First of all, it is important to improve the features used.
-                                It is clear that from the training process the model is not able to learn reliable features that will have
-                                enough distinctive power for each class.
-                            </p>
-                            <p>
-                                It is also important to remember that the dataset is, literally, <strong>tiny</strong>.
-                                Therefore, I did not expect the simple baseline model to perform well.
-                            </p>
+                            There are a few things that I would like to note here. 
+                            First of all, the confidence values are moderate to strong (0.86 and 0.78),
+                            and a third Normal image (<a href="#fig-normal-3">Figure 3</a>) was predicted at only 0.52. 
+                            By closely looking at the plot we can observe that its activation mostly stays in the lungs 
+                            but it is also spread a bit across the rib edges, which fits a model that is unsure. 
+                            Small patches also appear near the shoulders and the frame edge in image 10 and image 11. 
+                            They are minor here, but they will matter in the Covid results below.
                         </p>
-                    </section>
-                    
-                    <section aria-labelledby="conclusions-title">
-                        <h2 id="conclusions-title">Conclusions</h2>
+
+                        <figure class="article-figure" id="fig-normal-3">
+                            <img src="../images/blog/pneumonia-cnn/part2/11_cam-normal.webp" alt="Grad-CAM for a Normal image predicted Normal at 0.52, with thin activation along rib edges and small patches at the shoulders.">
+                            <figcaption id="cap-fig-normal-3">
+                                Figure 3. Test image 11, true Normal, predicted Normal (0.52). Activation stays within the lungs but is thin and scattered, matching the low confidence.
+                            </figcaption>
+                        </figure>
+
+                        <h3>Pneumonia: broad and diffuse</h3>
                         <p>
-                            <p>
-                                In this article, I trained a baseline model for chest X-ray classification. 
-                                The results were poor, which was expected given the small dataset 
-                                and the model’s limited ability to learn reliable, class-specific features.
-                            </p>
-                            <p>
-                                The next step is to improve feature quality and robustness. 
-                                I will test data expansion strategies (including synthetic image generation) 
-                                and focus on learning features that are both discriminative and explainable.
-                            </p>
+                            In the Pneumonia cases we see that instead of a compact region, activation spreads almost across the
+                            the entire X-ray (<a href="#fig-pneu-1">Figures 4</a> and <a href="#fig-pneu-2">5</a>).
+                            Both images were classified right, with very different confidence: 0.54 for image 0 and 0.97 for image 12.
                         </p>
 
+                        <figure class="article-figure" id="fig-pneu-1">
+                            <img src="../images/blog/pneumonia-cnn/part2/0_cam-pneumonia.webp" alt="Grad-CAM for a Pneumonia image predicted Pneumonia at 0.54, with diffuse activation over the central chest, lower thorax, and side margins.">
+                            <figcaption id="cap-fig-pneu-1">
+                                Figure 4. Test image 0, true Pneumonia, predicted Pneumonia (0.54). 
+                                Activation covers the central chest and lower thorax, with a small green patch on the right lung to rib margin.
+                            </figcaption>
+                        </figure>
+
+                        <figure class="article-figure" id="fig-pneu-2">
+                            <img src="../images/blog/pneumonia-cnn/part2/12_cam-pneumonia.webp" alt="Grad-CAM for a Pneumonia image predicted Pneumonia at 0.97, with strong activation across the lower chest and abdomen and along the left and right frame margins.">
+                            <figcaption id="cap-fig-pneu-2">
+                                Figure 5. Test image 12, true Pneumonia, predicted Pneumonia (0.97). 
+                                The strongest activation is in the lower chest and upper abdomen, and both side margins of the frame are also lit.
+                                However, if you look closely you will also see the "R" on the upper left corner being strongly activated.
+                                This is an artifact of the X-ray.
+                            </figcaption>
+                        </figure>
+                        <p>
+                            <a href="#fig-pneu-2">Image 12</a> we see that the model is 97% confident, yet a large share of the activation
+                            sits below the lungs and on the side margins of the frame close to the ribs.
+                            Consolidation near the lung bases is a real pneumonia finding. But the activation over the abdomen and the
+                            left and right frame edges is not lung tissue, so I cannot call this focus grounded in the lungs.
+                            It might be that the diffuse pattern reflects a widespread disease but also it can point to a
+                            weak and unfocused decision of the model itself. It is quite precarious to clearly say so based on only two images.
+                        </p>
+
+                        <h3>Covid: the model looks at the edge of the frame</h3>
+                        <p>
+                            Regarding the Covid X-rays, all three were predicted Covid at 0.99 confidence,
+                            and in all three the strongest activation is a narrow vertical strip along the left edge of the image,
+                            outside the chest (<a href="#fig-covid-1">Figures 6</a>, <a href="#fig-covid-2">7</a> and <a href="#fig-covid-3">8</a>).
+                        </p>
+
+                        <figure class="article-figure" id="fig-covid-1">
+                            <img src="../images/blog/pneumonia-cnn/part2/2_cam-covid.webp" alt="Grad-CAM for a Covid image predicted Covid at 0.99, with a vertical band of orange and green activation along the far left edge of the image.">
+                            <figcaption id="cap-fig-covid-1">
+                                Figure 6. Test image 2, true Covid, predicted Covid (0.99). 
+                                The lung fields carry little activation. 
+                                The strongest signal on the map is a vertical strip along the left frame edge, at 0.4 to 0.6 on the colour scale.
+                            </figcaption>
+                        </figure>
+
+                        <figure class="article-figure" id="fig-covid-2">
+                            <img src="../images/blog/pneumonia-cnn/part2/15_cam-covid.webp" alt="Grad-CAM for a Covid image predicted Covid at 0.99, with a vertical strip of green and orange activation along the left edge.">
+                            <figcaption id="cap-fig-covid-2">
+                                Figure 7. Test image 15, true Covid, predicted Covid (0.99). 
+                                The same left-edge strip appears, with a smaller patch at the top-left corner near the marker.
+                            </figcaption>
+                        </figure>
+
+                        <figure class="article-figure" id="fig-covid-3">
+                            <img src="../images/blog/pneumonia-cnn/part2/16_cam-covid.webp" alt="Grad-CAM for a Covid image predicted Covid at 0.99, with a left-edge strip, a top-left patch near a marker, and thin bands on the right side.">
+                            <figcaption id="cap-fig-covid-3">
+                                Figure 8. Test image 16, true Covid, predicted Covid (0.99). The left-edge strip repeats, and a patch sits at the top-left on the annotation markers. 
+                                A faint band also runs along the spine but no activation is taking place on the area of the lungs.
+                            </figcaption>
+                        </figure>
+                        <p>
+                            The lung fields in these images carry little activation. For instance, the left side of <a href="#fig-covid-1">Figure 6</a>
+                            (the patient's right lung) has a large opaque region, and the heatmap places almost no activation on it.
+                            On the other hand, <a href="fig-covid-3">Figure 8</a> looks a bit different, with lung fields that appear clearer, so a low lung signal there
+                            is less surprising. Even so, the top-left patch in <a href="fig-covid-3">Figure 8</a> sits on the annotation markers, not on the anatomy.
+                            In all three cases the model reaches 99% confidence with little attention on lung tissue.
+                        </p>
+                        <p>
+                            Regarding the Covid cases, there are a few recurring patterns worth noting.
+                            First of all, the X-rays show that the highly activated areas are not lung tissues;
+                            they are areas outside of the lungs very close to the margins of the X-ray.
+                            Just by looking at the activation areas I cannot say what the model detects on these X-rays
+                            and it is able to correctly classify these images. It might be a shortcut such as a dataset specific border,
+                            a scanner or cropping difference, or an annotation mark that co-occurs with Covid images.
+                            After all neural networks are famous for learning through shortcuts sometimes.<sup><a href="#fn-degrave" id="ref-degrave" aria-label="Footnote: DeGrave et al. on COVID-19 shortcuts">1, </a></sup><sup><a href="#fn-zech" id="ref-zech" aria-label="Footnote: Zech et al. on cross-hospital generalization">2, </a></sup><sup><a href="#fn-ghosal" id="ref-ghosal" aria-label="Footnote: Ghosal, Ming, and Li on spurious correlations">3, </a></sup><sup><a href="#fn-yang" id="ref-yang" aria-label="Footnote: Yang, Chou, and Chaudhuri on rare spurious correlations">4</a></sup>
+                        </p>
                     </section>
 
-                        <div class="article-footer-cta">
-                            <div>
-                                <h3>Next step</h3>
-                                <p>
-                                    In the next article, I will evaluate whether these changes improve performance and reliability. 
-                                    I will compare the baseline against models trained with expanded data 
-                                    and more explainable feature extraction choices.
-                                </p>
-                            </div>
-                            <div class="btn-group">
-                                <a href="../index.html#blog" class="btn">Back to Blog</a>
-                                <a href="https://github.com/PaschalisAg/classification_NN" class="btn" target="_blank"
-                                    rel="noopener noreferrer">View Source</a>
-                            </div>
-                        </div>
+                    <section aria-labelledby="error-title">
+                        <h2 id="error-title">The misclassified case</h2>
+                        <p>
+                            <a href="#fig-error">Figure 9</a> is a true Pneumonia case that the model labelled Normal at 0.49 confidence. 
+                            It is one of the 3 Pneumonia-to-Normal errors from <a href="lung_disease-identification-part1.html">Part 1</a>.
+                        </p>
+
+                        <figure class="article-figure" id="fig-error">
+                            <img src="../images/blog/pneumonia-cnn/part2/14_cam-normal.webp" alt="Grad-CAM for a true Pneumonia image predicted Normal at 0.49, with scattered small patches of activation across both lung fields and a few spots near the lung margins.">
+                            <figcaption id="cap-fig-error">
+                                Figure 9. Test image 14, true Pneumonia, predicted Normal (0.49). The map explains the Normal prediction. Activation, albeit on the general lung area, is scattered in small patches with no single focus.
+                            </figcaption>
+                        </figure>
+                        <p>
+                            Activation is scattered across both lungs in small patches, with no dominant region.
+                            The image itself shows no obvious opacity to my untrained eye, and I am far from qualified to read chest X-rays.
+                            However, there are two assumptions I can make that follow the evidence I have.
+                            The pneumonia may be subtle enough that the model found nothing to hold onto.
+                            Or the model has learned Normal as a default when no strong signal appears.
+                            Confidence just under 0.5 supports the second reading, but one image is not enough to separate them.
+                        </p>
+                        <p>
+                            This connects to <a href="lung_disease-identification-part1.html">Part 1</a>. The Normal vs. Pneumonia boundary was where the model made most of its errors,
+                            and the Grad-CAM maps for both classes are diffuse. A model with no sharp evidence for either class
+                            will guess near the boundary, which is what the confusion matrix showed.
+                        </p>
                     </section>
+
+                    <section aria-labelledby="conclusions-title">
+                        <h2 id="conclusions-title">What I take from this</h2>
+                        <p>
+                            <a href="lung_disease-identification-part1.html">Part 1</a> showed a baseline with solid aggregate numbers and a clean Covid result.
+                            Grad-CAM shows that the clean result is the least trustworthy one.
+                            The class with the highest recall and the highest confidence is the class where the model looks at the wrong place.
+                            The accuracy table from <a href="lung_disease-identification-part1.html">Part 1</a> could not have shown that.
+                        </p>
+                        <p>
+                            The Normal maps show that the model can attend to lung tissue, so the architecture is not the obstacle.
+                            The Pneumonia maps show weak, unfocused evidence. The Covid maps show a probable shortcut.
+                            For now the model is far from being deployable. First and foremost, I want to understand
+                            the shortcut —if any— and see how I work around that to improve the performance.
+                        </p>
+                    </section>
+
+                    <div class="article-footer-cta">
+                        <div>
+                            <h3>Next step</h3>
+                            <p>
+                                The next step is to test the shortcut hypothesis. I will crop or mask the outer edges of the images,
+                                re-run the model, and check whether the Covid heatmaps move into the lungs and whether Covid recall holds.
+                                If recall collapses, the border was carrying the prediction. If it holds and the focus shifts inward,
+                                the model has real signal underneath.
+                            </p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="../index.html#blog" class="btn">Back to Blog</a>
+                            <a href="https://github.com/PaschalisAg/classification_NN" class="btn" target="_blank"
+                                rel="noopener noreferrer">View Source</a>
+                        </div>
+                    </div>
 
                     <section aria-labelledby="comments-title" class="article-comments">
                         <h2 id="comments-title">Comments</h2>
@@ -464,37 +657,22 @@ sns.heatmap(
                     </section>
                     <footer class="article-footnotes" aria-label="Footnotes">
                         <ol>
-                            <li id="fn-vgg16">
-                                <strong>VGG16</strong> is a 16-layer deep convolutional neural network developed by the Visual Geometry Group at the University of Oxford. It follows a simple and uniform architecture: repeated blocks of 3×3 convolutional filters stacked in increasing depth, followed by max-pooling layers and a fully connected classification head. Despite its age, it remains a common baseline and backbone for image classification tasks. <a href="https://keras.io/api/applications/vgg/vgg_models/#vgg16-function" target="_blank" rel="noopener noreferrer">Keras VGG16 documentation ↗</a>
-                                <a href="#ref-vgg16" aria-label="Return to text">↩</a>
+                            <li id="fn-degrave">
+                                <strong>DeGrave et al. (2021)</strong> show that COVID-19 chest X-ray classifiers can rely on shortcuts rather than pathology signal, including dataset-specific artifacts. Reference: DeGrave, A. J., Janizek, J. D., and Lee, S.-I., "AI for radiographic COVID-19 detection selects shortcuts over signal," <em>Nature Machine Intelligence</em>, 3, 610-619 (2021). <a href="https://www.nature.com/articles/s42256-021-00338-7" target="_blank" rel="noopener noreferrer">Nature Machine Intelligence ↗</a>
+                                <a href="#ref-degrave" aria-label="Return to text">↩</a>
                             </li>
-                            <li id="fn-conv3x3">
-                                <strong>3×3 convolutions</strong> are the core operation in most modern CNNs. A small 3×3 filter slides across the image and computes a weighted sum of each 3×3 neighbourhood of pixels, producing a new feature map that captures local patterns such as edges or textures. Using many small filters stacked in depth is more expressive and parameter-efficient than using a single large filter.
-                                <a href="#ref-conv3x3" aria-label="Return to text">↩</a>
+                            <li id="fn-zech">
+                                <strong>Zech et al. (2018)</strong> report large site-to-site generalization differences for pneumonia detection, consistent with source and acquisition confounding. Reference: Zech, J. R. et al., "Variable generalization performance of a deep learning model to detect pneumonia in chest radiographs: A cross-sectional study," <em>PLOS Medicine</em>, 15(11):e1002683 (2018). <a href="https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1002683" target="_blank" rel="noopener noreferrer">PLOS Medicine ↗</a>
+                                <a href="#ref-zech" aria-label="Return to text">↩</a>
                             </li>
-                            <li id="fn-maxpool">
-                                <strong>Max-pooling</strong> is a downsampling operation that divides the feature map into small regions (typically 2×2) and keeps only the maximum value from each region. Think of it like summarising a paragraph by keeping only the most important word from each sentence. It reduces the spatial size of the representation, which lowers computation and introduces a degree of translation invariance — small shifts in the input produce the same output.
-                                <a href="#ref-maxpool" aria-label="Return to text">↩</a>
+                            <li id="fn-ghosal">
+                                <strong>Ghosal, Ming, and Li (2024)</strong> study whether vision transformers remain robust when spurious correlations are present. Reference: Ghosal, S., Ming, Y., and Li, Y., "Are Vision Transformers Robust to Spurious Correlations?" <em>International Journal of Computer Vision</em>, online 2023, volume 2024. <a href="https://arxiv.org/abs/2203.09125" target="_blank" rel="noopener noreferrer">arXiv ↗</a>
+                                <a href="#ref-ghosal" aria-label="Return to text">↩</a>
                             </li>
-                            <li id="fn-skip">
-                                <strong>Skip connections</strong> (used in architectures like ResNet) are shortcut paths that feed the output of an earlier layer directly into a later layer, bypassing one or more intermediate layers. They help gradients flow during training and allow the network to learn residual corrections rather than full transformations. VGG16 has none — each layer must process the signal in sequence without shortcuts.
-                                <a href="#ref-skip" aria-label="Return to text">↩</a>
+                            <li id="fn-yang">
+                                <strong>Yang, Chou, and Chaudhuri (2022)</strong> examine how neural networks learn rare spurious correlations. Reference: Yang, Y., Chou, L., and Chaudhuri, K., "Understanding Rare Spurious Correlations in Neural Networks," 2022 preprint; ICML SCIS Workshop (2022). <a href="https://arxiv.org/abs/2202.05189" target="_blank" rel="noopener noreferrer">arXiv ↗</a>
+                                <a href="#ref-yang" aria-label="Return to text">↩</a>
                             </li>
-                            <li id="fn-branch">
-                                <strong>Complex branching</strong> refers to architectures where the network splits into multiple parallel paths that process the input differently and then merge — as seen in Inception or EfficientNet. Each branch can capture features at different scales or with different operations simultaneously. VGG16 is a single linear stack with no such parallel paths, which is why it is easy to reason about and interpret.
-                                <a href="#ref-branch" aria-label="Return to text">↩</a>
-                            </li>
-                            <li id="fn-precision">
-                                <strong>Precision</strong> answers: "Of all samples predicted as a class, how many were actually that class?" A high precision means fewer false positives.
-                                Formula: <code>Precision = TP / (TP + FP)</code>, where <code>TP</code> is true positives and <code>FP</code> is false positives.
-                                <a href="#ref-precision" aria-label="Return to text">↩</a>
-                            </li>
-                            <li id="fn-recall">
-                                <strong>Recall</strong> answers: "Of all real samples of a class, how many did the model correctly find?" A high recall means fewer false negatives.
-                                Formula: <code>Recall = TP / (TP + FN)</code>, where <code>TP</code> is true positives and <code>FN</code> is false negatives.
-                                <a href="#ref-recall" aria-label="Return to text">↩</a>
-                            </li>
-
                         </ol>
                     </footer>
                 </article>
@@ -502,11 +680,11 @@ sns.heatmap(
                     <nav class="article-note article-toc" aria-label="Table of contents">
                         <h3 id="toc-title">Contents</h3>
                         <ol>
-                            <li><a href="#problem-title">Problem framing</a></li>
-                            <li><a href="#baseline-title">Building the baseline</a></li>
-                            <li><a href="#architecture-title">Architecture and training</a></li>
-                            <li><a href="#results-title">Baseline performance</a></li>
-                            <li><a href="#conclusions-title">Conclusions</a></li>
+                            <li><a href="#recap-title">Where <a href="lung_disease-identification-part1.html">Part 1</a> left off</a></li>
+                            <li><a href="#gradcam-title">How Grad-CAM works</a></li>
+                            <li><a href="#results-title">What the model looks at</a></li>
+                            <li><a href="#error-title">A misclassified case</a></li>
+                            <li><a href="#conclusions-title">What I take from this</a></li>
                             <li><a href="#comments-title">Comments</a></li>
                             <li><a href="#top">Back to the top</a></li>
                         </ol>
@@ -515,7 +693,6 @@ sns.heatmap(
             </div>
         </div>
     </main>
-
     <footer role="contentinfo">
         <div class="footer-content">
             <p>&copy; 2026 Paschalis Agapitos. All rights reserved.</p>
@@ -584,6 +761,7 @@ sns.heatmap(
             sectionElements.forEach((section) => observer.observe(section));
         }
     </script>
+    <script src="../image-zoom.js"></script>
 </body>
 
 </html>
