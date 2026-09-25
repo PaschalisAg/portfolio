@@ -64,8 +64,8 @@
     <!-- IBM Plex fonts — clean, technical, loved by data practitioners -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Serif:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Serif:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
     
     <!-- Icons - Load asynchronously for better performance -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
@@ -198,7 +198,7 @@
                             <span class="status-dot" aria-hidden="true"></span>
                             Open to DS Roles
                         </div>
-                        <p class="hero-text h2" style="font-family:var(--font-mono);font-size:clamp(0.8rem,1.5vw,0.95rem);font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;">PhD Candidate · Computational Humanities</p>
+                        <p class="hero-eyebrow">PhD Candidate · Computational Humanities · DIPC</p>
                         <h1 id="hero-name">Paschalis Agapitos</h1>
                         <p class="subtitle">NLP &amp; Network Data Scientist</p>
                         <p class="description">
@@ -599,125 +599,121 @@
                 <p class="section-subtitle">
                     Long-form project writing focused on technical decisions, experimental design, and the lessons hidden behind the headline metric.
                 </p>
-                <div class="cards-grid">
-                    <article class="card blog-card">
-                        <p class="article-kicker">Medical AI · Computer Vision · Model Auditing</p>
-                        <h3>When High Accuracy Lies: Building and Auditing a CNN for Pneumonia Detection</h3>
-                        <p class="card-meta">
-                            <i class="fas fa-feather-pointed" aria-hidden="true"></i>
-                            <span>Case study article • baseline modeling, Grad-CAM inspection, and shortcut-learning diagnosis</span>
-                        </p>
-                        <p>
-                            This article follows the project from the first baseline CNN to the moment explainability exposed a more important result than accuracy itself: the model was learning to trust image borders rather than lung pathology.
-                        </p>
-                        <div class="tags" role="list" aria-label="Article topics">
-                            <span class="tag" role="listitem">TensorFlow</span>
-                            <span class="tag" role="listitem">PyTorch</span>
-                            <span class="tag" role="listitem">Explainable AI</span>
-                            <span class="tag" role="listitem">Grad-CAM</span>
-                            <span class="tag" role="listitem">Medical Imaging</span>
-                        </div>
-                        <div class="btn-group">
-                            <a href="blog/lung_disease-identification-part1.html" class="btn" aria-label="Open the pneumonia CNN blog article">
-                                <i class="fas fa-book-open" aria-hidden="true"></i>
-                                <span>Open Article</span>
-                            </a>
-                            <a href="https://github.com/PaschalisAg/classification_NN" class="btn" target="_blank" rel="noopener noreferrer" aria-label="Open the source repository for the pneumonia CNN project">
-                                <i class="fab fa-github" aria-hidden="true"></i>
-                                <span>Repository</span>
-                            </a>
-                        </div>
-                    </article>
-                </div>
+                <details class="blog-series" id="cnn-lung-disease">
+                    <div class="blog-series-progress" aria-label="Series complete"><span></span></div>
+                    <summary class="blog-series-summary">
+                        <span>
+                            <span class="blog-series-labels">
+                                <span class="blog-series-label">Medical AI series</span>
+                                <span class="blog-series-count">2 parts · complete</span>
+                            </span>
+                            <span class="blog-series-title" role="heading" aria-level="3">When High Accuracy Lies: Building and Auditing a CNN for Pneumonia Detection</span>
+                            <span class="blog-series-description">A two-part case study, from a baseline chest X-ray classifier to the Grad-CAM evidence that exposed a likely border shortcut.</span>
+                            <span class="blog-series-meta">
+                                <span><i class="fas fa-clock" aria-hidden="true"></i> 27 min total</span>
+                                <span><i class="fas fa-layer-group" aria-hidden="true"></i> TensorFlow · CNN · Grad-CAM</span>
+                            </span>
+                        </span>
+                        <i class="fas fa-chevron-down blog-series-chevron" aria-hidden="true"></i>
+                    </summary>
+                    <div class="blog-series-parts">
+                        <article class="blog-series-part">
+                            <p class="blog-series-part-number">Part 1 · Baseline</p>
+                            <h4>Convolutional Neural Network for Lung Disease Detection</h4>
+                            <p>Build a custom CNN from scratch, handle class imbalance, and examine the limits behind its headline metrics.</p>
+                            <div class="blog-series-actions">
+                                <a href="blog/lung_disease-identification-part1.html" class="btn" aria-label="Read part 1: CNN baseline">
+                                    <i class="fas fa-book-open" aria-hidden="true"></i>
+                                    <span>Read Part 1</span>
+                                </a>
+                            </div>
+                        </article>
+                        <article class="blog-series-part">
+                            <p class="blog-series-part-number">Part 2 · Grad-CAM</p>
+                            <h4>What the Model Looks at</h4>
+                            <p>Inspect class activation maps and find why the baseline's confident Covid predictions cannot be trusted.</p>
+                            <div class="blog-series-actions">
+                                <a href="blog/lung_disease-identification-part2.html" class="btn" aria-label="Read part 2: Grad-CAM audit">
+                                    <i class="fas fa-book-open" aria-hidden="true"></i>
+                                    <span>Read Part 2</span>
+                                </a>
+                                <a href="https://github.com/PaschalisAg/classification_NN" class="btn" target="_blank" rel="noopener noreferrer" aria-label="View the CNN project repository">
+                                    <i class="fab fa-github" aria-hidden="true"></i>
+                                    <span>Repository</span>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                </details>
             </div>
         </section>
 
-        <!-- Enhanced Skills Section -->
+        <!-- Skills Section -->
         <section class="section fade-in" id="skills" aria-labelledby="skills-title">
             <div class="container">
-                <h2 class="section-title" id="skills-title">Technical Skills & Expertise</h2>
+                <h2 class="section-title" id="skills-title">Skills &amp; Tools</h2>
                 <p class="section-subtitle">
-                    Comprehensive expertise across programming languages, machine learning, and computational research methodologies.
+                    Languages, frameworks, and methodologies I use in research and applied data science.
                 </p>
-                <div class="skills-grid">
-                    <div class="skill-item" data-skill="python">
-                        <div class="skill-icon" aria-hidden="true"><i class="fab fa-python"></i></div>
-                        <div class="skill-name">Python</div>
-                        <div class="skill-tier expert" aria-label="Expert level">★★★ Expert</div>
-                        <div class="skill-bar" aria-hidden="true">
-                            <div class="skill-progress-bar" data-progress="85" style="width:0%"
-                                role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"
-                                aria-label="Python proficiency: 85 out of 100"></div>
+                <div class="skills-layout">
+                    <div class="skill-group">
+                        <div class="skill-group-title"><i class="fab fa-python" aria-hidden="true"></i> Languages</div>
+                        <div class="skill-list">
+                            <span class="skill-tag primary">Python</span>
+                            <span class="skill-tag">C++</span>
+                            <span class="skill-tag">SQL</span>
+                            <span class="skill-tag">R</span>
+                            <span class="skill-tag">HTML / CSS / JS</span>
                         </div>
                     </div>
-                    <div class="skill-item" data-skill="ml">
-                        <div class="skill-icon" aria-hidden="true"><i class="fas fa-brain"></i></div>
-                        <div class="skill-name">Machine Learning</div>
-                        <div class="skill-tier advanced" aria-label="Advanced level">★★☆ Advanced</div>
-                        <div class="skill-bar" aria-hidden="true">
-                            <div class="skill-progress-bar" data-progress="65" style="width:0%"
-                                role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"
-                                aria-label="Machine Learning proficiency: 65 out of 100"></div>
+                    <div class="skill-group">
+                        <div class="skill-group-title"><i class="fas fa-brain" aria-hidden="true"></i> Machine Learning</div>
+                        <div class="skill-list">
+                            <span class="skill-tag primary">NLP</span>
+                            <span class="skill-tag primary">Computational Stylometry</span>
+                            <span class="skill-tag">Deep Learning</span>
+                            <span class="skill-tag">TensorFlow</span>
+                            <span class="skill-tag">scikit-learn</span>
+                            <span class="skill-tag">Transformers</span>
                         </div>
                     </div>
-                    <div class="skill-item" data-skill="nlp">
-                        <div class="skill-icon" aria-hidden="true"><i class="fas fa-language"></i></div>
-                        <div class="skill-name"><abbr title="Natural Language Processing">NLP</abbr></div>
-                        <div class="skill-tier expert" aria-label="Expert level">★★★ Expert</div>
-                        <div class="skill-bar" aria-hidden="true">
-                            <div class="skill-progress-bar" data-progress="85" style="width:0%"
-                                role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"
-                                aria-label="Natural Language Processing proficiency: 85 out of 100"></div>
+                    <div class="skill-group">
+                        <div class="skill-group-title"><i class="fas fa-project-diagram" aria-hidden="true"></i> Network Science</div>
+                        <div class="skill-list">
+                            <span class="skill-tag primary">NetworkX</span>
+                            <span class="skill-tag">Graph Theory</span>
+                            <span class="skill-tag">igraph</span>
+                            <span class="skill-tag">Community Detection</span>
                         </div>
                     </div>
-                    <div class="skill-item" data-skill="networks">
-                        <div class="skill-icon" aria-hidden="true"><i class="fas fa-project-diagram"></i></div>
-                        <div class="skill-name">Network Data Science</div>
-                        <div class="skill-tier advanced" aria-label="Advanced level">★★☆ Advanced</div>
-                        <div class="skill-bar" aria-hidden="true">
-                            <div class="skill-progress-bar" data-progress="65" style="width:0%"
-                                role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"
-                                aria-label="Network Data Science proficiency: 65 out of 100"></div>
+                    <div class="skill-group">
+                        <div class="skill-group-title"><i class="fas fa-chart-bar" aria-hidden="true"></i> Data Science</div>
+                        <div class="skill-list">
+                            <span class="skill-tag primary">pandas</span>
+                            <span class="skill-tag">NumPy</span>
+                            <span class="skill-tag">matplotlib</span>
+                            <span class="skill-tag">seaborn</span>
+                            <span class="skill-tag">Jupyter</span>
+                            <span class="skill-tag">Statistical Modelling</span>
                         </div>
                     </div>
-                    <div class="skill-item" data-skill="datavis">
-                        <div class="skill-icon" aria-hidden="true"><i class="fas fa-chart-bar"></i></div>
-                        <div class="skill-name">Data Science &amp; Visualization</div>
-                        <div class="skill-tier expert" aria-label="Expert level">★★★ Expert</div>
-                        <div class="skill-bar" aria-hidden="true">
-                            <div class="skill-progress-bar" data-progress="85" style="width:0%"
-                                role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"
-                                aria-label="Data Science and Visualization proficiency: 85 out of 100"></div>
+                    <div class="skill-group">
+                        <div class="skill-group-title"><i class="fas fa-flask" aria-hidden="true"></i> Research Methods</div>
+                        <div class="skill-list">
+                            <span class="skill-tag primary">Cultural Analytics</span>
+                            <span class="skill-tag">Authorship Attribution</span>
+                            <span class="skill-tag">Wikipedia Data Mining</span>
+                            <span class="skill-tag">Open Science</span>
                         </div>
                     </div>
-                    <div class="skill-item" data-skill="statistics">
-                        <div class="skill-icon" aria-hidden="true"><i class="fas fa-calculator"></i></div>
-                        <div class="skill-name">Statistical Analysis</div>
-                        <div class="skill-tier expert" aria-label="Expert level">★★★ Expert</div>
-                        <div class="skill-bar" aria-hidden="true">
-                            <div class="skill-progress-bar" data-progress="85" style="width:0%"
-                                role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"
-                                aria-label="Statistical Analysis proficiency: 85 out of 100"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item" data-skill="web">
-                        <div class="skill-icon" aria-hidden="true"><i class="fas fa-code"></i></div>
-                        <div class="skill-name">Web Development</div>
-                        <div class="skill-tier intermediate" aria-label="Intermediate level">★☆☆ Intermediate</div>
-                        <div class="skill-bar" aria-hidden="true">
-                            <div class="skill-progress-bar" data-progress="35" style="width:0%"
-                                role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"
-                                aria-label="Web Development proficiency: 35 out of 100"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item" data-skill="cpp">
-                        <div class="skill-icon" aria-hidden="true"><i class="fas fa-cog"></i></div>
-                        <div class="skill-name">C++ Programming</div>
-                        <div class="skill-tier intermediate" aria-label="Intermediate level">★☆☆ Intermediate</div>
-                        <div class="skill-bar" aria-hidden="true">
-                            <div class="skill-progress-bar" data-progress="35" style="width:0%"
-                                role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"
-                                aria-label="C++ Programming proficiency: 35 out of 100"></div>
+                    <div class="skill-group">
+                        <div class="skill-group-title"><i class="fas fa-tools" aria-hidden="true"></i> Tools</div>
+                        <div class="skill-list">
+                            <span class="skill-tag">Git / GitHub</span>
+                            <span class="skill-tag">Linux</span>
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">LaTeX</span>
+                            <span class="skill-tag">Zenodo</span>
                         </div>
                     </div>
                 </div>
