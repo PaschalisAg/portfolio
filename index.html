@@ -38,14 +38,14 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <link rel="preload" href="pictures/profile_pic.webp" as="image" fetchpriority="high">
+    <link rel="preload" href="./images/profile_pic.webp" as="image" fetchpriority="high">
 
     <title>Paschalis Agapitos - PhD Candidate in Computational Humanities</title>
     <meta name="description" content="PhD candidate in Computational Humanities at DIPC. Experience in NLP, network science, and cultural analytics. Specializing in computational stylometry and digital humanities research.">
     <meta name="keywords" content="Paschalis Agapitos, Computational Humanities, NLP, Network Science, Digital Humanities, Research, Machine Learning, Cultural Analytics, Stylometry">
     <meta name="author" content="Paschalis Agapitos">
     <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#0f1419">
+    <meta name="theme-color" content="#09090b">
     <meta name="color-scheme" content="dark light">
     
     
@@ -56,16 +56,16 @@
     <meta property="og:url" content="https://paschalisag.github.io/portfolio/">
     <meta property="og:image" content="./images/profile_pic.webp">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Paschalis Agapitos - Computational Humanities Predoctoral Researcher">
+    <meta name="twitter:title" content="Paschalis Agapitos - PhD Candidate in Computational Humanities">
     <meta name="twitter:description" content="PhD candidate at DIPC working with NLP and network data science">
-    <meta name="twitter:image" content="./pictures/profile_pic.webp">
+    <meta name="twitter:image" content="./images/profile_pic.webp">
 
     <!-- Fonts & Icons - Optimized loading -->
-    <!-- IBM Plex fonts — clean, technical, loved by data practitioners -->
+    <!-- Readable body text, expressive display type, and compact code labels -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
     
     <!-- Icons - Load asynchronously for better performance -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
@@ -102,7 +102,15 @@
                     <li><a href="#skills" class="nav-link">Skills</a></li>
                 </ul>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme. Currently dark mode. Press to switch to light mode" title="Toggle theme" type="button">
-                    <span aria-hidden="true">🌑</span>
+                    <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <g class="theme-icon-moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7">
+                            <path d="M20.2 15.3A8.8 8.8 0 0 1 8.7 3.8 8.8 8.8 0 1 0 20.2 15.3Z"></path>
+                        </g>
+                        <g class="theme-icon-sun" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7">
+                            <circle cx="12" cy="12" r="4"></circle>
+                            <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path>
+                        </g>
+                    </svg>
                     <span class="sr-only" id="themeStatus">Dark mode active</span>
                 </button>
             </div>
@@ -189,8 +197,6 @@
     <main id="main-content" role="main">
         <!-- Enhanced Hero Section -->
         <section class="hero" id="about" aria-labelledby="hero-name">
-            <!-- Animated Network Background - scoped to hero section -->
-            <canvas id="networkCanvas" aria-hidden="true" role="presentation"></canvas>
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-text">
@@ -198,9 +204,9 @@
                             <span class="status-dot" aria-hidden="true"></span>
                             Open to DS Roles
                         </div>
-                        <p class="hero-eyebrow">PhD Candidate · Computational Humanities · DIPC</p>
                         <h1 id="hero-name">Paschalis Agapitos</h1>
                         <p class="subtitle">NLP &amp; Network Data Scientist</p>
+                        <p class="hero-affiliation">PhD Candidate · Computational Humanities · DIPC</p>
                         <p class="description">
                             I build <abbr title="Natural Language Processing">NLP</abbr> and network science pipelines for large-scale cultural and textual data at the <abbr title="Donostia International Physics Center">DIPC</abbr> and the University of the Basque Country.
                             With a background in Linguistics and deep expertise in machine learning, deep learning, and <abbr title="Natural Language Processing">NLP</abbr>, I have published peer-reviewed research and developed open-source tools — including <code>WikiTextGraph</code> for multilingual Wikipedia graph extraction.
@@ -208,27 +214,9 @@
                             I am seeking data science roles in NLP and network analytics where research-grade models translate into production-level impact.
                         </p>
 
-                        <!-- DS impact stats — quick signal for recruiters scanning the page -->
-                        <div class="ds-stats-bar" role="region" aria-label="Key professional metrics">
-                            <div class="ds-stat">
-                                <span class="ds-stat-value">3</span>
-                                <span class="ds-stat-label">Publications</span>
-                            </div>
-                            <div class="ds-stat">
-                                <span class="ds-stat-value">4+</span>
-                                <span class="ds-stat-label">Years Python</span>
-                            </div>
-                            <!-- <div class="ds-stat">
-                                <span class="ds-stat-value">2</span>
-                                <span class="ds-stat-label">DS Projects</span>
-                            </div> -->
-                            <div class="ds-stat">
-                                <span class="ds-stat-value">OSS</span>
-                                <span class="ds-stat-label">Open Source</span>
-                            </div>
-                        </div>
+                        <p class="hero-proof">3 peer-reviewed publications · 4+ years with Python · Open-source tools</p>
                         <div class="contact-links" role="list" aria-label="Contact and social media links">
-                            <a href="/cdn-cgi/l/email-protection#f4849587979c95989d87da959395849d809b87b4909d8497da9b8693" class="contact-link" role="listitem">
+                            <a href="mailto:paschalis.agapitos@dipc.org" class="contact-link" role="listitem">
                                 <i class="fas fa-envelope" aria-hidden="true"></i>
                                 <span>Email</span>
                             </a>
@@ -263,9 +251,9 @@
                                         <span class="sr-only">Show CV preview</span>
                                     </button>
                                 </div>
-                                <div class="profile-back" id="profileBack" aria-hidden="true">
+                                <div class="profile-back" id="profileBack" aria-hidden="true" inert>
                                     <div class="cv-preview">
-                                        <h3>Quick CV Access</h3>
+                                        <h2>Quick CV Access</h2>
                                         <div class="cv-preview-content">
                                             <strong>PhD Candidate</strong><br>
                                             Computational Humanities @ DIPC<br><br>
@@ -513,36 +501,42 @@
                 <p class="section-subtitle">
                     Showcasing innovative applications of computational methods in healthcare, education, and cultural analysis.
                 </p>
-                <div class="cards-grid">
-                    <article class="card project-card">
-                        <h3>CNN for Pneumonia Detection</h3>
-                        <p class="card-meta">
-                            <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-                            <span>2024 • 3 months</span>
-                        </p>
-                        <p>A sophisticated Convolutional Neural Network application designed to assist healthcare professionals in detecting pneumonia and COVID-19 type pneumonia from patient X-rays. Built using TensorFlow and advanced computer vision techniques.</p>
-                        
-                        <div class="tags" role="list" aria-label="Technology stack">
-                            <span class="tag" role="listitem">Python</span>
-                            <span class="tag" role="listitem">TensorFlow</span>
-                            <span class="tag" role="listitem">Computer Vision</span>
-                            <span class="tag" role="listitem">Deep Learning</span>
-                            <span class="tag" role="listitem">Medical AI</span>
+                <div class="projects-list">
+                    <article class="project-feature">
+                        <div class="project-feature-copy">
+                            <h3>CNN for Pneumonia Detection</h3>
+                            <p class="card-meta">
+                                <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                                <span>2024 • 3 months</span>
+                            </p>
+                            <p>A sophisticated Convolutional Neural Network application designed to assist healthcare professionals in detecting pneumonia and COVID-19 type pneumonia from patient X-rays. Built using TensorFlow and advanced computer vision techniques.</p>
+
+                            <div class="tags" role="list" aria-label="Technology stack">
+                                <span class="tag" role="listitem">Python</span>
+                                <span class="tag" role="listitem">TensorFlow</span>
+                                <span class="tag" role="listitem">Computer Vision</span>
+                                <span class="tag" role="listitem">Deep Learning</span>
+                                <span class="tag" role="listitem">Medical AI</span>
+                            </div>
+
+                            <div class="btn-group">
+                                <a href="blog/lung_disease-identification-part1.html" class="btn" aria-label="Read the pneumonia CNN case study article">
+                                    <i class="fas fa-book-open" aria-hidden="true"></i>
+                                    <span>Read Article</span>
+                                </a>
+                                <a href="https://github.com/PaschalisAg/classification_NN" class="btn" target="_blank" rel="noopener noreferrer" aria-label="View project source code">
+                                    <i class="fab fa-github" aria-hidden="true"></i>
+                                    <span>Source Code</span>
+                                </a>
+                            </div>
                         </div>
-                        
-                        <div class="btn-group">
-                            <a href="blog/lung_disease-identification-part1.html" class="btn" aria-label="Read the pneumonia CNN case study article">
-                                <i class="fas fa-book-open" aria-hidden="true"></i>
-                                <span>Read Article</span>
-                            </a>
-                            <a href="https://github.com/PaschalisAg/classification_NN" class="btn" target="_blank" rel="noopener noreferrer" aria-label="View project source code">
-                                <i class="fab fa-github" aria-hidden="true"></i>
-                                <span>Source Code</span>
-                            </a>
-                        </div>
+                        <figure class="project-figure">
+                            <img src="images/blog/pneumonia-cnn/confusion_matrix_test.webp" alt="Confusion matrix on the test set showing 24 correct Covid predictions, 16 correct Normal, 16 correct Pneumonia, with most errors occurring between Normal and Pneumonia." width="3277" height="2601" loading="lazy">
+                            <figcaption>Confusion matrix · held-out test set, 66 images</figcaption>
+                        </figure>
                     </article>
-                    
-                    <article class="card project-card">
+
+                    <article class="project-entry">
                         <h3>Cultural Analytics Guide</h3>
                         <p class="card-meta">
                             <i class="fas fa-calendar-alt" aria-hidden="true"></i>
@@ -566,7 +560,7 @@
                         </div>
                     </article>
                     
-                    <article class="card project-card">
+                    <article class="project-entry">
                         <h3>British Political Speeches Analysis</h3>
                         <p class="card-meta">
                             <i class="fas fa-calendar-alt" aria-hidden="true"></i>
@@ -600,7 +594,6 @@
                     Long-form project writing focused on technical decisions, experimental design, and the lessons hidden behind the headline metric.
                 </p>
                 <details class="blog-series" id="cnn-lung-disease">
-                    <div class="blog-series-progress" aria-label="Series complete"><span></span></div>
                     <summary class="blog-series-summary">
                         <span>
                             <span class="blog-series-labels">
@@ -619,7 +612,7 @@
                     <div class="blog-series-parts">
                         <article class="blog-series-part">
                             <p class="blog-series-part-number">Part 1 · Baseline</p>
-                            <h4>Convolutional Neural Network for Lung Disease Detection</h4>
+                            <h3>Convolutional Neural Network for Lung Disease Detection</h3>
                             <p>Build a custom CNN from scratch, handle class imbalance, and examine the limits behind its headline metrics.</p>
                             <div class="blog-series-actions">
                                 <a href="blog/lung_disease-identification-part1.html" class="btn" aria-label="Read part 1: CNN baseline">
@@ -630,7 +623,7 @@
                         </article>
                         <article class="blog-series-part">
                             <p class="blog-series-part-number">Part 2 · Grad-CAM</p>
-                            <h4>What the Model Looks at</h4>
+                            <h3>What the Model Looks at</h3>
                             <p>Inspect class activation maps and find why the baseline's confident Covid predictions cannot be trusted.</p>
                             <div class="blog-series-actions">
                                 <a href="blog/lung_disease-identification-part2.html" class="btn" aria-label="Read part 2: Grad-CAM audit">
@@ -734,7 +727,7 @@
                 <a href="https://scholar.google.com/citations?user=hcYwIDcAAAAJ&hl=en" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Visit Google Scholar profile" title="Google Scholar">
                     <i class="fas fa-graduation-cap" aria-hidden="true"></i>
                 </a>
-                <a href="/cdn-cgi/l/email-protection#1868796b7b707974716b36797f7968716c776b587c71687b36776a7f" class="social-link" aria-label="Send email" title="Email">
+                <a href="mailto:paschalis.agapitos@dipc.org" class="social-link" aria-label="Send email" title="Email">
                     <i class="fas fa-envelope" aria-hidden="true"></i>
                 </a>
             </div>
@@ -743,8 +736,6 @@
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" defer></script>
-    <script src="./network-animation.js" defer></script>
     <script>
         
         // Citation Management
@@ -798,21 +789,6 @@
             notification.setAttribute('role', 'status');
             notification.setAttribute('aria-live', 'polite');
             notification.setAttribute('aria-atomic', 'true');
-            notification.style.cssText = `
-                position: fixed;
-                top: 100px;
-                right: 20px;
-                background: var(--card-bg);
-                color: var(--text-primary);
-                padding: 1.2rem 1.8rem;
-                border-radius: 12px;
-                border: 2px solid ${type === 'success' ? 'var(--accent-teal)' : 'var(--accent-red)'};
-                z-index: 10000;
-                transform: translateX(120%);
-                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                box-shadow: var(--shadow-lg);
-                font-weight: 600;
-            `;
             notification.textContent = message;
             
             document.body.appendChild(notification);
@@ -900,9 +876,6 @@
             });
         }
 
-        // Network animation is handled by network-animation.js
-        // It uses the #networkCanvas element inside the hero section
-
         // Mobile Menu Management
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const navLinks = document.getElementById('navLinks');
@@ -935,23 +908,19 @@
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
 
+        function applyTheme(theme) {
+            body.setAttribute('data-theme', theme);
+            themeToggle.setAttribute(
+                'aria-label',
+                `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode (currently ${theme} mode)`
+            );
+            document.getElementById('themeStatus').textContent = `${theme === 'dark' ? 'Dark' : 'Light'} mode active`;
+        }
+
         themeToggle.addEventListener('click', () => {
             const currentTheme = body.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            body.setAttribute('data-theme', newTheme);
-            themeToggle.querySelector('span[aria-hidden]').textContent = newTheme === 'dark' ? '🌑' : '☀️';
-            
-            // Update accessible label
-            const statusText = newTheme === 'dark' ? 'Dark mode active. Press to switch to light mode' : 'Light mode active. Press to switch to dark mode';
-            themeToggle.setAttribute('aria-label', `Toggle theme. Currently ${newTheme} mode. ${statusText.split('.')[1]}`);
-            
-            // Update status text for screen readers
-            const statusElement = document.getElementById('themeStatus');
-            if (statusElement) {
-                statusElement.textContent = statusText.split('.')[0];
-            }
-            
+            applyTheme(newTheme);
             localStorage.setItem('theme', newTheme);
             
             // Announce theme change to screen readers
@@ -960,16 +929,8 @@
 
         // Load saved theme
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            body.setAttribute('data-theme', savedTheme);
-            themeToggle.querySelector('span[aria-hidden]').textContent = savedTheme === 'dark' ? '🌑' : '☀️';
-            
-            // Update accessible label
-            const statusText = savedTheme === 'dark' ? 'Dark mode active' : 'Light mode active';
-            const statusElement = document.getElementById('themeStatus');
-            if (statusElement) {
-                statusElement.textContent = statusText;
-            }
+        if (savedTheme === 'dark' || savedTheme === 'light') {
+            applyTheme(savedTheme);
         }
 
         // Profile Flip Functionality
@@ -989,10 +950,13 @@
             if (profileFlipBtn) {
                 profileFlipBtn.setAttribute('aria-expanded', willFlip ? 'true' : 'false');
                 profileFlipBtn.setAttribute('aria-label', willFlip ? 'Flip card back to profile photo' : 'Flip card to view CV preview');
+                profileFlipBtn.disabled = willFlip;
             }
             if (profileBack) {
                 profileBack.setAttribute('aria-hidden', willFlip ? 'false' : 'true');
+                profileBack.inert = !willFlip;
             }
+            (willFlip ? profileFlipBackBtn : profileFlipBtn)?.focus({ preventScroll: true });
         }
 
         if (profileFlipBtn) profileFlipBtn.addEventListener('click', () => flipProfile());
@@ -1059,7 +1023,7 @@
             const scrollPercent = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
             const clampedPercent = Math.min(Math.max(scrollPercent, 0), 100);
             
-            scrollProgress.style.width = clampedPercent + '%';
+            scrollProgress.style.transform = `scaleX(${clampedPercent / 100})`;
             scrollProgress.parentElement.setAttribute('aria-valuenow', Math.round(clampedPercent));
         }
 
@@ -1166,8 +1130,6 @@
         window.copyCitation = copyCitation;
         window.sharePublication = sharePublication;
 
-        // Initialization
-        console.log('Enhanced accessible portfolio initialized successfully');
     </script>
 </body>
 </html>
