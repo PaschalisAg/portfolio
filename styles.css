@@ -968,8 +968,7 @@ main { margin-top: 60px; }
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   color: var(--text-3);
 }
 
@@ -1293,8 +1292,7 @@ main { margin-top: 60px; }
 .blog-series-meta {
   display: flex;
   gap: 1rem;
-  font-size: 0.78rem;
-  font-family: var(--font-mono);
+  font-size: 0.82rem;
   color: var(--text-3);
 }
 .blog-series-meta span { display: flex; align-items: center; gap: 0.35rem; }
@@ -1406,7 +1404,6 @@ details[open] .blog-series-chevron { transform: rotate(180deg); }
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--text-3);
-  font-family: var(--font-mono);
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--border);
@@ -1468,7 +1465,6 @@ footer {
 footer p {
   font-size: 0.82rem;
   color: var(--text-3);
-  font-family: var(--font-mono);
   max-width: none;
 }
 
