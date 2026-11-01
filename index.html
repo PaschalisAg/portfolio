@@ -76,13 +76,8 @@
 <body data-theme="dark">
     <!-- Skip to main content for keyboard users -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
-
-    <!-- Scroll Progress Indicator -->
-    <div class="scroll-progress" role="progressbar" aria-label="Page scroll progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-        <div class="scroll-progress-bar" id="scrollProgressBar"></div>
-    </div>
     
-    <!-- Enhanced Header -->
+    <!-- Header -->
     <header role="banner">
         <nav role="navigation" aria-label="Main navigation">
             <a href="#about" class="logo" aria-label="Paschalis Agapitos - Return to top">Paschalis Agapitos</a>
@@ -117,7 +112,7 @@
         </nav>
     </header>
 
-    <!-- Enhanced CV Modal -->
+    <!-- CV Modal -->
     <div class="cv-modal" id="cvModal" role="dialog" aria-labelledby="cvTitle" aria-modal="true" aria-hidden="true">
         <div class="cv-content" role="document">
             <div class="cv-header">
@@ -195,23 +190,20 @@
 
     <!-- Main Content -->
     <main id="main-content" role="main">
-        <!-- Enhanced Hero Section -->
+        <!-- Hero Section -->
         <section class="hero" id="about" aria-labelledby="hero-name">
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-text">
-                        <div class="status-badge" role="status" aria-label="Currently open to data science roles">
-                            <span class="status-dot" aria-hidden="true"></span>
-                            Open to DS Roles
-                        </div>
+                        <p class="availability">Open to data science roles</p>
                         <h1 id="hero-name">Paschalis Agapitos</h1>
                         <p class="subtitle">NLP &amp; Network Data Scientist</p>
                         <p class="hero-affiliation">PhD Candidate · Computational Humanities · DIPC</p>
                         <p class="description">
-                            I build <abbr title="Natural Language Processing">NLP</abbr> and network science pipelines for large-scale cultural and textual data at the <abbr title="Donostia International Physics Center">DIPC</abbr> and the University of the Basque Country.
-                            With a background in Linguistics and deep expertise in machine learning, deep learning, and <abbr title="Natural Language Processing">NLP</abbr>, I have published peer-reviewed research and developed open-source tools — including <code>WikiTextGraph</code> for multilingual Wikipedia graph extraction.
-                            Beyond academia, I have delivered end-to-end data science projects in overstock risk prediction and medical image classification.
-                            I am seeking data science roles in NLP and network analytics where research-grade models translate into production-level impact.
+                            I work on NLP and network analysis for cultural and textual data at the Donostia International Physics Center (DIPC) and the University of the Basque Country.
+                            My background is in linguistics, and my current work includes computational stylometry, multilingual Wikipedia graph extraction, and open-source research software.
+                            I have also worked on applied data-science projects in overstock-risk prediction and medical-image classification.
+                            I am looking for data-science roles in NLP and network analytics.
                         </p>
 
                         <div class="contact-links" role="list" aria-label="Contact and social media links">
@@ -238,48 +230,15 @@
                         </div>
                     </div>
                     <div class="hero-image">
-                        <!-- profile-container is a plain div; the flip trigger is a real <button> -->
-                        <div class="profile-container" id="profileContainer">
-                            <div class="profile-flip">
-                                <div class="profile-front">
-                                    <img src="./images/profile_pic.webp" alt="Portrait photo of Paschalis Agapitos" class="profile-photo" width="500" height="500" decoding="async" fetchpriority="high">
-                                    <!-- Overlay button that handles the flip -->
-                                    <button class="profile-flip-btn" id="profileFlipBtn" type="button"
-                                        aria-expanded="false"
-                                        aria-label="Flip card to view CV preview">
-                                        <span class="sr-only">Show CV preview</span>
-                                    </button>
-                                </div>
-                                <div class="profile-back" id="profileBack" aria-hidden="true" inert>
-                                    <div class="cv-preview">
-                                        <h2>Quick CV Access</h2>
-                                        <div class="cv-preview-content">
-                                            <strong>PhD Candidate</strong><br>
-                                            Computational Humanities @ DIPC<br><br>
-                                            <strong>Research Interests:</strong><br>
-                                            • NLP & Network Science<br>
-                                            • Cultural Data Analytics<br>
-                                            • Computational Stylometry<br>
-                                            • Computational Humanities<br><br>
-                                        </div>
-                                        <button class="cv-download-btn" type="button" onclick="openCVModal()" aria-label="Open full curriculum vitae modal">
-                                            <i class="fas fa-eye" aria-hidden="true"></i> View Full CV
-                                        </button>
-                                        <button class="profile-flip-back-btn" type="button"
-                                            aria-label="Flip card back to profile photo">
-                                            <span class="sr-only">Show profile photo</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <img src="./images/profile_pic.webp" alt="Portrait photo of Paschalis Agapitos" class="profile-photo" width="500" height="500" decoding="async" fetchpriority="high">
+                    </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Enhanced Research Focus Section -->
-        <section class="section fade-in" id="research" aria-labelledby="research-title">
+        <!-- Research Focus Section -->
+        <section class="section" id="research" aria-labelledby="research-title">
             <div class="container">
                 <h2 class="section-title" id="research-title">Research Focus</h2>
                 <p class="section-subtitle">
@@ -288,7 +247,7 @@
                 <div class="cards-grid">
                     <article class="card research-card">
                         <h3>Computational Humanities</h3>
-                        <p>Using and developing computational approaches to cultural phenomena, bridging computational methods and humanistic inquiry to uncover new patterns in human expression and cultural transmission.</p>
+                        <p>I study cultural and historical materials with computational methods, including network analysis of Wikipedia data and quantitative approaches to cultural transmission.</p>
                         <div class="tags" role="list" aria-label="Research tags">
                             <span class="tag" role="listitem">Cultural Analytics</span>
                             <span class="tag" role="listitem">Computational Humanities</span>
@@ -297,7 +256,7 @@
                     </article>
                     <article class="card research-card">
                         <h3>Computational Stylometry</h3>
-                        <p>Using and developing algorithms for authorship attribution, text analysis, and literary pattern recognition using advanced machine learning and statistical techniques.</p>
+                        <p>I apply statistical and machine-learning methods to authorship attribution, text classification, and literary-historical research questions.</p>
                         <div class="tags" role="list" aria-label="Research tags">
                             <span class="tag" role="listitem">Authorship Attribution</span>
                             <span class="tag" role="listitem">Literary Analysis</span>
@@ -306,7 +265,7 @@
                     </article>
                     <article class="card research-card">
                         <h3>Network Data Science</h3>
-                        <p>Exploring complex network structures in cultural and linguistic contexts, revealing hidden patterns in social dynamics, cultural evolution, and information networks.</p>
+                        <p>I build and analyse graph datasets from textual and cultural sources, with work on multilingual Wikipedia networks and graph-processing tools.</p>
                         <div class="tags" role="list" aria-label="Research tags">
                             <span class="tag" role="listitem">Complex Networks</span>
                             <span class="tag" role="listitem">Social Dynamics</span>
@@ -317,8 +276,8 @@
             </div>
         </section>
 
-        <!-- Enhanced Publications Section -->
-        <section class="section fade-in" id="publications" aria-labelledby="publications-title">
+        <!-- Publications Section -->
+        <section class="section" id="publications" aria-labelledby="publications-title">
             <div class="container">
                 <h2 class="section-title" id="publications-title">Publications</h2>
                 <div class="academic-services" style="display: block; width: 100%; text-align: center;">
@@ -433,8 +392,8 @@
             </div>
         </section>
 
-        <!-- Enhanced Projects Section -->
-        <section class="section fade-in" id="projects" aria-labelledby="projects-title">
+        <!-- Projects Section -->
+        <section class="section" id="projects" aria-labelledby="projects-title">
             <div class="container">
                 <h2 class="section-title" id="projects-title">Featured Projects</h2>
                 <p class="section-subtitle">
@@ -467,8 +426,8 @@
                             </div>
                         </div>
                         <figure class="project-figure">
-                            <img src="images/blog/pneumonia-cnn/confusion_matrix_test.webp" alt="Confusion matrix on the test set showing 24 correct Covid predictions, 16 correct Normal, 16 correct Pneumonia, with most errors occurring between Normal and Pneumonia." width="3277" height="2601" loading="lazy">
-                            <figcaption>Confusion matrix · held-out test set, 66 images</figcaption>
+                            <img src="./images/blog/pneumonia-cnn/part1/class_lung-xrays.webp" alt="Confusion matrix on the test set showing 24 correct Covid predictions, 16 correct Normal, 16 correct Pneumonia, with most errors occurring between Normal and Pneumonia." width="3277" height="2601" loading="lazy">
+                            <figcaption>Examples of X-rays used in the analysis</figcaption>
                         </figure>
                     </article>
 
@@ -517,7 +476,7 @@
             </div>
         </section>
 
-        <section class="section fade-in" id="blog" aria-labelledby="blog-title">
+        <section class="section" id="blog" aria-labelledby="blog-title">
             <div class="container">
                 <h2 class="section-title" id="blog-title">Blog</h2>
                 <p class="section-subtitle">
@@ -572,7 +531,7 @@
         </section>
 
         <!-- Skills Section -->
-        <section class="section fade-in" id="skills" aria-labelledby="skills-title">
+        <section class="section" id="skills" aria-labelledby="skills-title">
             <div class="container">
                 <h2 class="section-title" id="skills-title">Skills &amp; Tools</h2>
                 <p class="section-subtitle">
@@ -644,7 +603,7 @@
         </section>
     </main>
 
-    <!-- Enhanced Footer -->
+    <!-- Footer -->
     <footer role="contentinfo">
         <div class="footer-content">
             <div class="social-links">
@@ -863,35 +822,6 @@
             applyTheme(savedTheme);
         }
 
-        // Profile Flip Functionality
-        const profileContainer = document.getElementById('profileContainer');
-        const profileFlipBtn = document.getElementById('profileFlipBtn');
-        const profileBack = document.getElementById('profileBack');
-        // "flip back" button lives inside the back face
-        const profileFlipBackBtn = profileContainer.querySelector('.profile-flip-back-btn');
-
-        function flipProfile(show) {
-            const isFlipped = profileContainer.classList.contains('flipped');
-            const willFlip = (show !== undefined) ? show : !isFlipped;
-
-            profileContainer.classList.toggle('flipped', willFlip);
-
-            // Update ARIA state
-            if (profileFlipBtn) {
-                profileFlipBtn.setAttribute('aria-expanded', willFlip ? 'true' : 'false');
-                profileFlipBtn.setAttribute('aria-label', willFlip ? 'Flip card back to profile photo' : 'Flip card to view CV preview');
-                profileFlipBtn.disabled = willFlip;
-            }
-            if (profileBack) {
-                profileBack.setAttribute('aria-hidden', willFlip ? 'false' : 'true');
-                profileBack.inert = !willFlip;
-            }
-            (willFlip ? profileFlipBackBtn : profileFlipBtn)?.focus({ preventScroll: true });
-        }
-
-        if (profileFlipBtn) profileFlipBtn.addEventListener('click', () => flipProfile());
-        if (profileFlipBackBtn) profileFlipBackBtn.addEventListener('click', () => flipProfile(false));
-
         // CV Modal Event Listeners
         const cvModal = document.getElementById('cvModal');
         const cvClose = document.getElementById('cvClose');
@@ -946,33 +876,6 @@
             });
         });
 
-        // Scroll Progress Indicator - Throttled
-        function updateScrollProgress() {
-            const scrollProgress = document.getElementById('scrollProgressBar');
-            const totalHeight = document.body.scrollHeight - window.innerHeight;
-            const scrollPercent = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
-            const clampedPercent = Math.min(Math.max(scrollPercent, 0), 100);
-            
-            scrollProgress.style.transform = `scaleX(${clampedPercent / 100})`;
-            scrollProgress.parentElement.setAttribute('aria-valuenow', Math.round(clampedPercent));
-        }
-
-        let ticking = false;
-        function requestScrollUpdate() {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    updateScrollProgress();
-                    updateActiveNavLink();
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }
-
-        window.addEventListener('scroll', requestScrollUpdate, { passive: true });
-        // Initial update
-        requestScrollUpdate();
-
         // Active Navigation Link
         const navLinksList = document.querySelectorAll('.nav-link');
         const sectionAnchors = Array.from(document.querySelectorAll('section[id]'));
@@ -995,62 +898,6 @@
                         }
                     });
                 }
-            });
-        }
-
-        // Intersection Observer for Animations - Performance Optimized
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    
-                    // Trigger skill animation when skills section is visible
-                    if (entry.target.id === 'skills') {
-                        setTimeout(() => animateSkillBars(), 500);
-                    }
-                    
-                    // Stop observing once animated
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        // Observe all fade-in elements
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Also observe images for lazy loading analytics
-        const imageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    // Image is now visible, good for analytics
-                    imageObserver.unobserve(img);
-                }
-            });
-        }, { threshold: 0.01 });
-
-        // Observe all images
-        document.querySelectorAll('img').forEach(img => {
-            imageObserver.observe(img);
-        });
-
-        // Skill Animation
-        function animateSkillBars() {
-            const skillItems = document.querySelectorAll('.skill-item');
-            
-            skillItems.forEach((item, index) => {
-                setTimeout(() => {
-                    const progressBar = item.querySelector('.skill-progress-bar');
-                    const progress = progressBar.dataset.progress;
-                    progressBar.style.width = progress + '%';
-                }, index * 150);
             });
         }
 

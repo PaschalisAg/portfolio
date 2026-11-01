@@ -5,31 +5,45 @@
     <script>
         document.documentElement.classList.remove('no-js');
     </script>
+    <script>
+        MathJax = {
+            tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']]
+            },
+            svg: {
+            fontCache: 'global'
+            }
+        };
+    </script>
+    <script defer
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="dark light">
-    <title>Convolutional Neural Network for Lung Disease Detection - Part 1 (Baseline)</title>
+    <title>Computer Vision for Lung Disease Detection - Part 1 (Baseline)</title>
     <meta name="description"
         content="A technical case study on building a chest X-ray classifier with a custom CNN trained from scratch, class-imbalance handling, and per-class performance analysis.">
     <meta name="author" content="Paschalis Agapitos">
     <meta name="robots" content="index, follow">
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#14181f">
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f3ef">
-    <meta property="og:title" content="Convolutional Neural Network for Lung Disease Detection - Part 1 (Baseline)">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#09090b">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafafa">
+    <meta property="og:title" content="Computer Vision for Lung Disease Detection - Part 1 (Baseline)">
     <meta property="og:description"
         content="Building a chest X-ray classifier with a custom CNN trained from scratch, class-imbalance handling, and per-class performance analysis.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://paschalisag.github.io/portfoliop/blog/lung_disease-identification-part1.html">
     <meta property="og:image" content="../images/blog/pneumonia-cnn/confusion_matrix_test.webp">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Convolutional Neural Network for Lung Disease Detection - Part 1 (Baseline)">
+    <meta name="twitter:title" content="Computer Vision for Lung Disease Detection - Part 1 (Baseline)">
         <meta name="twitter:description"
                 content="Building the baseline: a custom CNN from scratch, class-imbalance handling, and per-class performance analysis for chest X-ray classification.">
         <meta name="twitter:image" content="../images/blog/pneumonia-cnn/confusion_matrix_test.webp">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link
-                href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=JetBrains+Mono:wght@400;500&display=swap"
+                href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&family=IBM+Plex+Mono:wght@400;500&display=swap"
                 rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link rel="stylesheet" href="../styles.css">
@@ -37,7 +51,7 @@
                 {
                         "@context": "https://schema.org",
                         "@type": "BlogPosting",
-                        "headline": "Convolutional Neural Network for Lung Disease Detection - Part 1 (Baseline)",
+                        "headline": "Computer Vision for Lung Disease Detection - Part 1 (Baseline)",
                         "description": "A technical case study on building a chest X-ray classifier with a custom CNN, diagnosing shortcut learning with Grad-CAM, and retraining after discovering border artifacts.",
                         "image": "https://paschalisag.github.io/portfolio/images/blog/pneumonia-cnn/confusion_matrix_test.webp",
                         "author": {
@@ -70,7 +84,7 @@
         </script>
 </head>
 
-<body data-theme="dark" class="article-page" id="top">
+<body data-theme="light" class="article-page" id="top">
     <header role="banner">
         <nav role="navigation" aria-label="Article navigation">
             <a href="../index.html" class="logo" aria-label="Return to portfolio homepage">Paschalis Agapitos</a>
@@ -81,7 +95,15 @@
                 <li>
                     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme"
                         type="button">
-                        <span aria-hidden="true">🌑</span>
+                        <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <g class="theme-icon-moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7">
+                                <path d="M20.2 15.3A8.8 8.8 0 0 1 8.7 3.8 8.8 8.8 0 1 0 20.2 15.3Z"></path>
+                            </g>
+                            <g class="theme-icon-sun" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7">
+                                <circle cx="12" cy="12" r="4"></circle>
+                                <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path>
+                            </g>
+                        </svg>
                         <span class="sr-only" id="themeStatus">Dark mode active</span>
                     </button>
                 </li>
@@ -99,21 +121,25 @@
                     <span>/</span>
                     <span>Medical AI Case Study</span>
                 </div>
-                <p class="article-kicker">Medical AI · Computer Vision · Deep Learning</p>
-                <h1 class="article-title" id="article-title" itemprop="headline">Convolutional Neural Network for Lung Disease Detection - Part 1 (Baseline)</h1>
+                <h1 class="article-title" id="article-title" itemprop="headline">Computer Vision for Lung Disease Detection - Part 1 (Baseline)</h1>
                 <p class="article-dek">
-                    This project is part of a series on training a neural network for chest X-ray classification.
-                    Part 1 covers the full story of building the baseline: a custom CNN trained from scratch,
-                    the decisions that shaped the architecture, and what the numbers reveal when you look beyond aggregate accuracy.
-                    The throughline is the same throughout: high scores alone don't tell you whether a model is learning the right things.
+                    This project is part of a series on training a neural network for chest X-ray classification of lung diseases.
+                    It consists of 4 major parts.
+                    Part 1 (current) focuses on the exploration of the dataset that is used to train the model and the training and evaluation of the baseline model.
+                    Part 2 presents the comparison of multiple model architectures with different ideas behind them.
+                    For instance, data augmentatation to transfer learning and Vision Tranformers (ViT).
+                    Part 3 adds the explainability part where the model that was chosen in the previous step
+                    is being questioned on what it actually uses to make the prediction. Here is where I detect the shortcut learning.
+                    Part 4 presents some techniques implements some ideas to deal with the shortcut learning identified in the previous step.
                     <br>
-                    TL;DR: a lightweight custom CNN, careful preprocessing, and class-weight correction produce a solid baseline on this dataset, but the per-class breakdown reveals where the real difficulty lies.
+                    TL;DR: I show why is it important to question what the model uses to predict something because a high score does not necessarily means "correct" use of the data.
                 </p>
                 <div class="article-meta-strip" aria-label="Article metadata">
-                    <span class="article-meta-pill">Published March 2026</span>
+                    <span class="article-meta-pill">Published October 2026</span>
                     <!-- the placeholder for the reading time must always be like this: for the readtime script -->
                     <span class="article-meta-pill">Reading time: 14 minutes</span>
                     <span class="article-meta-pill">Stack: TensorFlow · Custom CNN · Grad-CAM</span>
+                    <span class="article-categories">Medical AI · Computer Vision · Deep Learning</span>
                 </div>
                 <div class="metric-strip" aria-label="Key article metrics">
                     <!-- <div class="metric-card">
@@ -137,424 +163,822 @@
                     <meta itemprop="inLanguage" content="en">
                     <meta itemprop="mainEntityOfPage" content="https://paschalisag.github.io/portfolio/blog/lung_disease-identification-part1.html">
                     <section aria-labelledby="problem-title">
-                        <h2 id="problem-title">The task and why it is harder than it looks</h2>
+                        <h2 id="problem-title">Introduction & The Task</h2>
                         <p>
-                            The goal is to classify chest X-rays into three categories: Covid, Normal, and Pneumonia.
-                            Three classes sounds manageable until you look at what distinguishes them. 
-                            Covid and viral Pneumonia can produce nearly identical opacities on an X-ray. 
-                            Normal lungs vary considerably depending on the patient's size, age, and imaging conditions. 
-                            A model that scores well can still be picking up the wrong signal: 
-                            a scanner border, an annotation mark, or a systematic difference 
-                            in how each class of image was captured rather than anything in the lung tissue itself.
-                            Therefore, a baseline should always aim to perform well to establish a good starting point.
-                            However, it is equally important to also examine the features on which the model based
-                            its performance.
-                        </p>
-                        <p>
-                            A neural model is useful in a medical context only if its predictions are both <b>accurate</b> and <b>explainable</b>. 
+                            Detecting pulmonary pathology from chest X-rays is a classic computer vision challenge
+                            where high model accuracy is needed but if not explained can be insufficient. I think that when
+                            we talk about clinical deployment of a model, <b>interpretability</b>, <b>trustworthiness</b>, 
+                            and <b>systematic error analysis</b> are as important as the raw performance of the model. In other words, 
+                            a neural model is useful in a medical context only if its predictions are both <b>accurate</b> and <b>explainable</b>. 
                             Accurate means low error rates across all three classes, not just on average. 
                             Explainable means you can inspect which regions of the image drove each decision. 
                             Without that second layer, a good aggregate score can hide a model that uses shortcuts.
                         </p>
-                        <div class="article-pullquote">
-                            <p>
-                                The most important lesson of this project was not how to build a classifier. It was how
-                                a convincing metric might stop being convincing once you inspect what the model is
-                                actually using.
-                            </p>
-                        </div>
                         <p>
-                            This article covers the full arc of Part 1: the decisions that shaped the baseline CNN,
-                            the training process, and what the numbers reveal when you look beyond aggregate accuracy.
-                            Part 2 covers the explainability part.
+                            In this project, I built an end-to-end medical image classification pipeline using a dataset
+                            of <b>294 chest X-rays</b> categorised into three distinct classes: <b>Covid, Normal, Pneumonia</b>.
+                        </p>
+                        <p>
+                            This part covers the exploratory data analysis; in other words, what type of data do I have,
+                            what are their properties and what classes I aim to predict with my model. Moreover, 
+                            I will show and explain the steps followed behind the construction of the baseline which
+                            is used as a comparison point later.
                         </p>
                     </section>
-
                     <section aria-labelledby="dataset-title">
                         <h2 id="dataset-title">The dataset</h2>
                         <p>
-                            Before writing any model code, I looked at the dataset. 
-                            For classification tasks, the first thing to check is class imbalance (see <a href="#bar-chart-classes" aria-describedby="cap-chart-classes">Figure 1</a>). 
-                            If one class has five times more samples than another, the model will learn to favour it,
-                            because predicting the majority class more often produces a lower loss even when the model is wrong on the minority classes.
-                        </p>
-                        <figure class="article-figure" id="bar-chart-classes">
-                            <img src="../images/blog/pneumonia-cnn/class_distribution.webp"
-                                alt="Bar chart showing the number of X-ray images across the Covid, Normal, and Pneumonia classes.">
-                            <figcaption id="cap-chart-classes">
-                                Figure 1. Dataset distribution across the three classes. The imbalance is moderate but real, and enough to skew a model trained without correction.
-                            </figcaption>
-                        </figure>
-                        <p>
-                            The dataset is not badly skewed, and some imbalance exists albeit moderate. 
-                            Rather than resampling or generating synthetic images, 
-                            I addressed it through class weights during training.
-                            More on that a bit later. First I would like to explain the approach I followed.
-                        </p>
-                    </section>
+                            I started by exploring a bit my dataset and some of its properties.
+                            As mentioned earlier, I have 294 chest X-rays: 125 labelled Covid, 84 labelled Normal, and 85 labelled Pneumonia
+                            (see <a href="#bar-chart-classes" aria-describedby="cap-chart-classes">Figure 1</a>).
+                            Each X-ray can belong only to one class, thus I am dealing with a <b>single-label classification problem</b>.
 
+                            <figure class="article-figure" id="bar-chart-classes">
+                                <img src="../images/blog/pneumonia-cnn/part1/class_distribution.webp"
+                                    alt="Bar chart showing the number of X-ray images across the Covid, Normal, and Pneumonia classes.">
+                                <figcaption id="cap-chart-classes">
+                                    <b>Figure 1</b>. Dataset distribution across the three classes. There is some moderate imbalance which might actually affect the training process later.
+                                </figcaption>
+                            </figure>
+                        </p>
+                        <p>
+                            The class distribution shows that Covid is the largest class, accounting for about 42%
+                            of both the training and test set. On the other hand, Normal and Pneumonia, account for
+                            approximately 29%.
+                        </p>
+                        <p>
+                            These proportions are useful for the evaluation of the performance of the models later.
+                            If we think about it, a model that always predicts Covid will be around 42% accurate.
+                            For this reason, a useful model should perform substantially better than this.
+                            At the same time, we should keep in mind that it should perform well also on the other classes.
+                            This will give the model a more balanced performance.
+                        </p>
+                        <p> 
+                            All images are 256 x 256 pixels and my format check confirmed that their three colour channels
+                            contain identical values. To put it simply, the images contain grayscale information
+                            (see <a href="#class-lung-xrays" aria-describedby="cap-chart-classes">Figure 2</a>).
+
+                            <figure class="article-figure" id="class-lung-xrays">
+                                <img src="../images/blog/pneumonia-cnn/part1/class_lung-xrays.webp"
+                                    alt="Bar chart showing the number of X-ray images across the Covid, Normal, and Pneumonia classes.">
+                                <figcaption id="cap-chart-classes">
+                                    <b>Figure 2</b>. Five randomly chosen examples of X-rays from each of three classes (Covid, Normal, Pneumonia).
+                                </figcaption>
+                            </figure>
+                            
+                            I started by <b>randomly</b> splitting the supplied directory into 235 trainining images and 59 test images.
+                            From the training folder, I held out 20% of each class images randomly chosen for validation.
+                        </p>
+                        <div>
+                            <table class="dataset-table">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">Dataset label</th>
+                                    <th scope="col">Training</th>
+                                    <th scope="col">Validation</th>
+                                    <th scope="col">Test</th>
+                                    <th scope="col">Total</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr class="row-covid">
+                                        <th scope="row">Covid</th>
+                                        <td>80</td>
+                                        <td>20</td>
+                                        <td>25</td>
+                                        <td>125</td>
+                                    </tr>
+                                    <tr class="row-normal">
+                                        <th scope="row">Normal</th>
+                                        <td>54</td>
+                                        <td>13</td>
+                                        <td>17</td>
+                                        <td>84</td>
+                                    </tr>
+                                    <tr class="row-pneumonia">
+                                        <th scope="row">Pneumonia</th>
+                                        <td>54</td>
+                                        <td>14</td>
+                                        <td>17</td>
+                                        <td>85</td>
+                                    </tr>
+                                </tbody>
+
+                                <tfoot>
+                                    <tr>
+                                    <th scope="row">Total</th>
+                                    <td>188</td>
+                                    <td>47</td>
+                                    <td>59</td>
+                                    <td>294</td>
+                                    </tr>
+                                </tfoot>
+                                </table>
+                        </div>                        
+                    </section>
+                    <p>
+                        This splitting allows the model to learn from the 188 training images.
+                        Then I use the 47 validation images to monitor its performance on examples
+                        it does not train on and then choose when to stop training. For reproducibility
+                        reasons I use a fixed random seed.
+                    </p>
+
+                    <p>
+                        I keep the 59 test images separate from the training and evaluation of the models.
+                        I use it only as the final assessment of the best performing model after the comparison
+                        (see Part 2)
+                    </p>
+
+                    <p>
+                        Before proceeding to the construction of the baseline I performed a quick exploratory analysis.
+                        By doing so, I aimed to understand better the properties of the images in my dataset.
+                        First thing I did, for example, after counting the number of images for each class,
+                        was to calculate some simple image statistics that cannot be fully visible just by looking
+                        at the X-rays.
+                    </p>
+                    <p>
+                        What I see are differences in framing, brightness (see <a href="#image-brightness-classes" aria-describedby="cap-chart-classes">Figure 3</a>), 
+                        annotations and apparent image quality (see also table below). More specifically, in the training folder,
+                        Covid images have a mean brightness of approximately 132 on the 0-255 scale, compared with 123 for
+                        Normal and 120 for Pneumonia. Their average within-image pixel standard deviation is also lower:
+                        approximately 61, compared with 76-78 for the other classes. Here, pixel standard deviation describes
+                        how much brightness values vary within an image.
+
+                        <figure class="article-figure" id="image-brightness-classes">
+                                <img src="../images/blog/pneumonia-cnn/part1/image_brightness.webp"
+                                    alt="Boxplot showing the variance of mean grayscale pixel value for each class split by train and test.">
+                                <figcaption id="cap-chart-classes">
+                                    <b>Figure 3</b>. Box plots that plots the variance of the mean grayscale pixel value for each class. We can see that the brightness
+                                    varies for the Covid train cases, whereas it is stable for both the Normal and Pneumonia class.
+                        </figure>
+
+                        <div>
+                            <table border="1" class="dataset-table">
+                                <thead>
+                                    <tr style="text-align: right;">
+                                        <th></th>
+                                        <th></th>
+                                        <th>sampled_images</th>
+                                        <th>median_width</th>
+                                        <th>median_height</th>
+                                        <th>mean_brightness</th>
+                                        <th>mean_pixel_std</th>
+                                    </tr>
+                                    <tr>
+                                        <th>split</th>
+                                        <th>class</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th rowspan="3" valign="top">test</th>
+                                    <th class="row-covid">Covid</th>
+                                    <td>25</td>
+                                    <td>256.0</td>
+                                    <td>256.0</td>
+                                    <td>127.3</td>
+                                    <td>61.2</td>
+                                </tr>
+                                <tr>
+                                    <th class="row-normal">Normal</th>
+                                    <td>17</td>
+                                    <td>256.0</td>
+                                    <td>256.0</td>
+                                    <td>123.2</td>
+                                    <td>76.0</td>
+                                </tr>
+                                <tr>
+                                    <th class="row-pneumonia">Pneumonia</th>
+                                    <td>17</td>
+                                    <td>256.0</td>
+                                    <td>256.0</td>
+                                    <td>123.6</td>
+                                    <td>76.0</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="3" valign="top">train</th>
+                                    <th class="row-covid">Covid</th>
+                                    <td>100</td>
+                                    <td>256.0</td>
+                                    <td>256.0</td>
+                                    <td>132.0</td>
+                                    <td>61.3</td>
+                                </tr>
+                                <tr>
+                                    <th class="row-normal">Normal</th>
+                                    <td>67</td>
+                                    <td>256.0</td>
+                                    <td>256.0</td>
+                                    <td>122.6</td>
+                                    <td>76.4</td>
+                                </tr>
+                                <tr>
+                                    <th class="row-pneumonia">Pneumonia</th>
+                                    <td>68</td>
+                                    <td>256.0</td>
+                                    <td>256.0</td>
+                                    <td>120.0</td>
+                                    <td>77.6</td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </div>
+                    </p>
+                    <p>
+                        Moreover, the Covid images also contain a smaller proportion of near-black pixels:
+                        approximately 3%, compared with 6-8% for the other training classes (see table below).
+                        Having these stylistic differences between images, there is one question worth
+                        keeping in mind and at the same time examining. The question is whether
+                        a model can take advantage of these differences in the overall image appearance
+                        to distinguish the labels instead of actually looking at disease-relevant
+                        features inside the lung area.
+                        <div>
+                            <table border="1" class="dataset-table">
+                                <thead>
+                                    <tr style="text-align: right;">
+                                        <th></th>
+                                        <th></th>
+                                        <th>mean_pixel</th>
+                                        <th>pixel_std</th>
+                                        <th>black_pixels_%</th>
+                                    </tr>
+                                    <tr>
+                                        <th>split</th>
+                                        <th>class</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th rowspan="3" valign="top">test</th>
+                                        <th class="row-covid">Covid</th>
+                                        <td>127.3</td>
+                                        <td>61.2</td>
+                                        <td>2.0</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="row-normal">Normal</th>
+                                        <td>123.2</td>
+                                        <td>76.0</td>
+                                        <td>5.4</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="row-pneumonia">Pneumonia</th>
+                                        <td>123.6</td>
+                                        <td>76.0</td>
+                                        <td>5.1</td>
+                                    </tr>
+                                    <tr>
+                                        <th rowspan="3" valign="top">train</th>
+                                        <th class="row-covid">Covid</th>
+                                        <td>132.0</td>
+                                        <td>61.3</td>
+                                        <td>2.8</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="row-normal">Normal</th>
+                                        <td>122.6</td>
+                                        <td>76.4</td>
+                                        <td>5.8</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="row-pneumonia">Pneumonia</th>
+                                        <td>120.0</td>
+                                        <td>77.6</td>
+                                        <td>7.9</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </p>
+                    <p>
+                        Up to this point, my analysis can only detect these stylistic differences between the images
+                        of X-rays of each class. However, it would be wrong to claim that they will be actually used
+                        by the model at the inference level. Part 3 of this project will deal with this question.
+                    </p>
                     <section aria-labelledby="baseline-title">
-                        <h2 id="baseline-title">Building the baseline with a custom CNN</h2>
+                        <h2 id="baseline-title">Baseline model</h2>
                         <p>
-                            The first question in a classification project is:
-                            what is a reasonable starting point?
-                            A common approach is transfer learning, where you start with a network pretrained on millions of images
-                            and fine-tune it for your task. However, for this project I deliberately chose a different path:
-                            a small custom CNN trained from scratch. The reason is downstream interpretability.
-                        </p>
-                        <p>
-                            Later in this series, I will use Grad-CAM to visualise which regions of each X-ray the model focuses on
-                            when making its decisions. Pretrained backbones like EfficientNet use aggressive downsampling and compound scaling
-                            that produce blurry, low-resolution localisation maps at the final convolutional layer. A shallower, simpler architecture
-                            preserves a cleaner spatial correspondence between its learned feature maps and the input image,
-                            which makes the Grad-CAM analysis in Part 2 more interpretable.
-                            The trade-off is that without pretrained weights, the model has to learn everything from this small dataset alone,
-                            and will likely achieve lower raw accuracy than a transfer-learning approach would. That is an expected and accepted cost.
-                        </p>
+                            I start by building from scratch a baseline model which in this case it will be a convolutional neural network.
+                            The baseline will serve the reference point for later comparisons.
+                            The intuition behind the architecture of the baseline model I used is to let it first search for patterns
+                            in small regions and the combine those patterns as information passes through successive layers.
+                            The network has four convolution-and-pooling blocks:
+                            <div class="article-snippet">
+                                <pre><code>
+baseline_model = models.Sequential([
+    layers.Input(shape=(*image_size, 1)),
+    # normalize pixel values to the range [0, 1]
+    layers.Rescaling(1.0 / 255),
 
-                        <h3>Data pipeline</h3>
-                        <h4>Training pipeline</h4>
-                        <code>ImageDataGenerator</code> loads images from disk and applies augmentation on the fly.
-                        The augmentations are small because an X-ray in most of the cases does not have very diverse outputs.
-                        For instance, I applied rotations up to 4.5 degrees, width and height shifts up to 10%, and zoom up to
-                        10%. When a shift pushes pixels outside the frame, the gap fills with black
-                        (<code>fill_mode = "constant", cval = 0</code>), which matches the dark background of X-rays.
-                        The generator, reserves 20% of the training directory for validation via <code>validation_split = 0.2</code>,
-                        so the remaining 80% feeds training.
-
-                        <h4>Validation and test pipeline</h4>
-                        The validation generator draws from the same directory 
-                        but it is important to note that it does not apply any augmenation.
-                        The intuition is that if you configured a single generator for both subsets, 
-                        training and validation, the augmentation parametres would apply to validation too,
-                        which will make the validation metric unreliable.
-                        The test generator is independent of the split entirely to avoid any potential data leakage.
-
-                        <h4>X-rays channels</h4>
-                        X-rays are single-channel images which means that they should be loaded as greyscale.
-                        By doing so, we avoid the overhead of three identical colour channels
-                        and keep the input shape consistent with what the model expects.
-                        <div class="article-snippet">
-                            <pre><code>from tensorflow.keras.preprocessing.image import ImageDataGenerator
-
-BATCH_SIZE = 8
-SEED = 42
-
-# No rescale here — a Rescaling layer inside the model handles normalisation
-
-train_datagen = ImageDataGenerator(
-    validation_split=0.2,
-    rotation_range=4.5,
-    width_shift_range=0.1,
-    height_shift_range=0.1,
-    zoom_range=0.1,
-    fill_mode="constant",
-    cval=0,
-)
-
-train_data_iter = train_datagen.flow_from_directory(
-    directory="./Covid19-dataset/train/",
-    class_mode="categorical",
-    color_mode="grayscale",
-    target_size=(224, 224),
-    batch_size=BATCH_SIZE,
-    seed=SEED,
-    shuffle=True,
-    subset="training",
-)
-
-val_datagen = ImageDataGenerator(validation_split=0.2)
-
-validation_data_iter = val_datagen.flow_from_directory(
-    directory="./Covid19-dataset/train/",
-    class_mode="categorical",
-    color_mode="grayscale",
-    target_size=(224, 224),
-    batch_size=BATCH_SIZE,
-    seed=SEED,
-    shuffle=False,
-    subset="validation",
-)
-
-test_datagen = ImageDataGenerator()
-
-test_data_iter = test_datagen.flow_from_directory(
-    directory="Covid19-dataset/test/",
-    class_mode="categorical",
-    color_mode="grayscale",
-    target_size=(224, 224),
-    batch_size=BATCH_SIZE,
-    seed=SEED,
-    shuffle=False,
-)
-
-# Sanity check: pixel values must be in [0, 255], NOT [0, 1]
-train_data_iter.reset()
-batch_x, batch_y = next(iter(train_data_iter))
-print(f"Pixel min: {batch_x.min():.2f}  max: {batch_x.max():.2f}")
-# Expected: min ~0.0, max ~255.0
-train_data_iter.reset()</code></pre>
+    layers.Conv2D(32, (3, 3), activation="relu"),
+    layers.MaxPooling2D((2, 2)),
+    layers.Conv2D(64, (3, 3), activation="relu"),
+    layers.MaxPooling2D((2, 2)),
+    layers.Conv2D(128, (3, 3), activation="relu"),
+    layers.MaxPooling2D((2, 2)),
+    layers.Conv2D(128, (3, 3), activation="relu"),
+    layers.MaxPooling2D((2, 2)),
+    layers.Flatten(),
+    layers.Dense(512, activation="relu"),
+    layers.Dense(len(classes), activation="softmax"),
+])</code></pre>
                         </div>
-                        <h3>Handling class imbalance with class weights</h3>
-                        <p>
-                            As we saw earlier, albeit moderate the dataset has unequal class counts. 
-                            A model trained without correction will implicitly favour 
-                            whichever class appears most often, 
-                            because predicting the majority class more often 
-                            reduces the loss even when the model is wrong on minority classes.
+                        </p>
+                    <p>
+                        The network processes each X-ray in two stages. First, the convolutional layers build representations
+                        of patterns in different parts of the image. Then, the dense layers combine those representations
+                        to choose one of the three dataset labels.
+                    </p>
+                    <p>
+                        A convolutional layer can be understood as a small, learned pattern detector. It moves across the
+                        image and produces a response at each location. The resulting grid of responses is called a <b>feature map</b>.
+                        The feature map records where and how strongly the filter responds to the input. Each filter produces its own
+                        map, so a convolutional layer with 32 filters produces 32 feature maps. For instance, a filter might respond strongly to a particular cange in brightness or a texture.
+                        Later layers operate on the maps produced by earlier layers, allowing the network to build 
+                        increasingly complex representations.
+                    </p>
+                    <p>
+                        After each convolutional layer, I apply <code>MaxPooling2D((2, 2))</code>. To undestand that, imagine dividing
+                        each feature map into small, non overlapping squares, Within each 2 x 2 square, max pooling keeps only the
+                        largest value. Look at the visual example below to understand visually how it works.
+                        The intuition is to retain the strongest evidence that a pattern appeared somewhere in that small region.
+                    </p>
+                    <p>
+                        <div class="pooling-demo">
+                            <style>
+                            .pooling-demo {
+                                --ink: #263548;
+                                --blue: #0072B2;
+                                --orange: #E69F00;
+                                --green: #009E73;
+                                --purple: #9B4F96;
+                                font-family: system-ui, sans-serif;
+                                color: var(--ink);
+                                max-width: 850px;
+                                margin: 20px auto;
+                                padding: 24px;
+                                background: #f7f9fc;
+                                border-radius: 16px;
+                                box-sizing: border-box;
+                            }
+                            .pooling-demo * { box-sizing: border-box; }
+                            
+                            .pooling-demo h2 {
+                                text-align: center;
+                                margin: 0 0 8px;
+                                font-size: 25px;
+                            }
+                            
+                            .pooling-demo .diagram {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 22px;
+                                flex-wrap: wrap;
+                            }
+
+                            .pooling-demo .matrix-section {
+                                text-align: center;
+                            }
+
+                            .pooling-demo .matrix-section h3 {
+                                font-size: 16px;
+                                margin: 0 0 5px;
+                            }
+
+                            .pooling-demo .dimension {
+                                font-size: 12px;
+                                color: #65758a;
+                                margin-bottom: 12px;
+                            }
+
+                            .pooling-demo table {
+                                border-collapse: separate;
+                                border-spacing: 4px;
+                                margin: auto;
+                            }
+
+                            .pooling-demo td {
+                                width: 57px;
+                                height: 57px;
+                                text-align: center;
+                                vertical-align: middle;
+                                font-size: 16px;
+                                font-weight: 600;
+                                border-radius: 7px;
+                                color: #263548;
+                                position: relative;
+                            }
+
+                            .pooling-demo .max {
+                                outline: 3px solid #263548;
+                                outline-offset: -3px;
+                                font-weight: 800;
+                            }
+
+                            .pooling-demo .max::after {
+                                content: "MAX";
+                                display: block;
+                                font-size: 8px;
+                                line-height: 10px;
+                                color: #263548;
+                                letter-spacing: .4px;
+                            }
+
+                            .pooling-demo .arrow {
+                                font-size: 34px;
+                                color: #0a1b2e;
+                                font-weight: 700;
+                            }
+
+                            .pooling-demo .output td {
+                                width: 70px;
+                                height: 70px;
+                                font-size: 21px;
+                            }
+
+                            .pooling-demo .explanation {
+                                margin-top: 28px;
+                                padding: 17px;
+                                background: white;
+                                border: 1px solid #dce3eb;
+                                border-radius: 12px;
+                            }
+
+                            .pooling-demo .explanation h3 {
+                                font-size: 16px;
+                                margin: 0 0 12px;
+                            }
+
+                            .pooling-demo .steps {
+                                display: grid;
+                                grid-template-columns: repeat(2, 1fr);
+                                gap: 10px;
+                            }
+
+                            .pooling-demo .step {
+                                display: flex;
+                                align-items: center;
+                                gap: 10px;
+                                font-size: 13px;
+                                color: #183358;
+                            }
+
+                            .pooling-demo .number {
+                                min-width: 27px;
+                                height: 27px;
+                                display: grid;
+                                place-items: center;
+                                border-radius: 50%;
+                                background: #263548;
+                                color: white;
+                                font-weight: 700;
+                            }
+
+                            .pooling-demo .result {
+                                margin-top: 18px;
+                                padding: 14px;
+                                background: #e6f1f7;
+                                border-radius: 10px;
+                                text-align: center;
+                                font-size: 14px;
+                            }
+
+                            .pooling-demo .result strong {
+                                font-size: 17px;
+                            }
+
+                            .pooling-demo .intuition {
+                                margin-top: 15px;
+                                font-size: 13px;
+                                line-height: 1.6;
+                                color: #526174;
+                                text-align: center;
+                            }
+
+                            @media (max-width: 520px) {
+                                .pooling-demo { padding: 14px; }
+                                .pooling-demo .diagram { gap: 12px; }
+                                .pooling-demo td {
+                                    width: 43px;
+                                    height: 43px;
+                                    font-size: 14px;
+                                }
+                                .pooling-demo .output td {
+                                    width: 53px;
+                                    height: 53px;
+                                }
+                                .pooling-demo .arrow { font-size: 25px; }
+                                .pooling-demo .steps { grid-template-columns: 1fr; }
+                                }
+                                </style>
+                                
+                                <h2>Max Pooling</h2>
+                                <div class="diagram">
+                                    <div class="matrix-section">
+                                        <h3>Input feature map</h3>
+                                        <div class="dimension">4 × 4 matrix</div>
+                                        <table aria-label="Input feature map with four 2 by 2 pooling regions">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="a">0.1</td>
+                                                    <td class="a max">0.8</td>
+                                                    <td class="b">0.4</td>
+                                                    <td class="b">0.2</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="a">0.3</td>
+                                                    <td class="a">0.2</td>
+                                                    <td class="b max">0.9</td>
+                                                    <td class="b">0.5</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="c max">0.6</td>
+                                                    <td class="c">0.4</td>
+                                                    <td class="d">0.2</td>
+                                                    <td class="d max">0.7</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="c">0.1</td>
+                                                    <td class="c">0.5</td>
+                                                    <td class="d">0.3</td>
+                                                    <td class="d">0.4</td>
+                                                </tr>
+                                                </tbody>
+                                        </table>
+                                        <div class="dimension" style="margin-top:12px">
+                                            <strong>Bold outlined cells</strong> = maximum values
+                                        </div>
+                                    </div>
+                                    <div class="arrow" aria-hidden="true">→</div>
+                                    <div class="matrix-section">
+                                        <h3>Output feature map</h3>
+                                        <div class="dimension">2 × 2 matrix</div>
+                                        <table class="output" aria-label="Max pooling output matrix">
+                                            <tbody>
+                                                <tr>
+                                                <td class="a">0.8</td>
+                                                <td class="b">0.9</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="c">0.6</td>
+                                                <td class="d">0.7</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="dimension" style="margin-top:12px">
+                                            Only the maximum values remain
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </p>
                         <p>
-                            Class weights fix this by penalising minority-class errors 
-                            more than majority-class errors. During training, 
-                            each sample's contribution to the loss is scaled by its class weight, 
-                            so a misclassified sample from an underrepresented class hurts more. 
-                            Scikit-learn's <code>compute_class_weight</code> with <code>class_weight="balanced"</code> 
-                            computes the weights from the class counts automatically.
-                        </p>
-                        <div class="article-snippet">
-                            <h3>Computing class weights</h3>
-                            <pre><code>from sklearn.utils.class_weight import compute_class_weight
-import numpy as np
-
-train_labels = train_data_iter.classes  # integer labels, shape (N,)
-class_weights_array = compute_class_weight(
-    class_weight="balanced",
-    classes=np.unique(train_labels),
-    y=train_labels
-)
-class_weight_dict = dict(enumerate(class_weights_array))
-print("Class weights:", class_weight_dict)</code></pre>
-                        </div>
-
-                        <h3>Building the model</h3>
-                        <p>
-                            The architecture is four convolutional blocks, each consisting of a Conv2D layer, Batch Normalisation<sup><a href="#fn-batchnorm" id="ref-batchnorm" aria-label="Footnote: What is Batch Normalisation?">1</a></sup>,
-                            a ReLU activation, and max-pooling. The filter counts double at each block: 32, 64, 128, 256.
-                            After the final convolutional block, a GlobalAveragePooling2D layer compresses each feature map into a single number.
-                            This is a deliberate choice: it preserves a clean, direct spatial correspondence between the last convolutional
-                            feature map and the class output, which is exactly what Grad-CAM relies on in Part 2.
-                            The alternative, flattening the feature maps into one long vector, would lose that spatial structure.
+                            With this configuration, each pooling operation approximately halves both spatial dimensions,
+                            leaving roughly one-quarter as many value per map. Even though, this makes the representation
+                            more compact, at the same time it discards information about the exact locations and strengths
+                            of the other responses. Responses that, to be honest, might be useful.
                         </p>
                         <p>
-                            On top of the pooling layer sits a classification head: a Dense layer with 128 units,
-                            Batch Normalisation, and Dropout<sup><a href="#fn-dropout" id="ref-dropout" aria-label="Footnote: What is Dropout?">2</a></sup> at 50%, finishing with a 3-class Softmax output.
-                            Since there are no pretrained weights to protect, all convolutional layers include L2 weight decay
-                            to slow down overfitting. Pixel values enter the model as raw [0, 255] integers and a Rescaling layer
-                            inside the model normalises them to [0, 1]. By placing the normalisation inside the model rather than
-                            in the data generator, the preprocessing contract is explicit and cannot be accidentally skipped or
-                            applied twice.
-                        </p>
-                        <div class="article-snippet">
-                            <h3>Model architecture</h3>
-                            <pre><code>import tensorflow as tf
-from tensorflow.keras import layers, models, regularizers
-
-num_classes = len(train_data_iter.class_indices)
-WEIGHT_DECAY = 1e-4
-
-def conv_block(x, filters, name_prefix):
-    x = layers.Conv2D(
-        filters, (3, 3), padding="same",
-        kernel_regularizer=regularizers.l2(WEIGHT_DECAY),
-        name=f"{name_prefix}_conv",
-    )(x)
-    x = layers.BatchNormalization(name=f"{name_prefix}_bn")(x)
-    x = layers.Activation("relu", name=f"{name_prefix}_relu")(x)
-    x = layers.MaxPooling2D((2, 2), name=f"{name_prefix}_pool")(x)
-    return x
-
-inputs = layers.Input(shape=(224, 224, 1), name="input_gray")
-
-# Normalise [0, 255] → [0, 1] inside the model
-x = layers.Rescaling(1.0 / 255.0, name="rescale_0_1")(inputs)
-
-x = conv_block(x, 32, "block1")
-x = conv_block(x, 64, "block2")
-x = conv_block(x, 128, "block3")
-x = conv_block(x, 256, "block4")  # Grad-CAM target layer
-
-x = layers.GlobalAveragePooling2D(name="gap")(x)
-x = layers.Dense(128, activation="relu",
-                  kernel_regularizer=regularizers.l2(WEIGHT_DECAY),
-                  name="dense_1")(x)
-x = layers.BatchNormalization(name="bn_head")(x)
-x = layers.Dropout(0.5, name="dropout_head")(x)
-
-outputs = layers.Dense(num_classes, activation="softmax", name="predictions")(x)
-
-model = models.Model(inputs=inputs, outputs=outputs, name="CustomCNN_XRay_baseline_v2")</code></pre>
-                        </div>
-
-                        <h3>Training</h3>
-                        <p>
-                            Because this CNN is trained from scratch, there are no pretrained weights to protect.
-                            This means the training process is a single run rather than the two-phase freeze-then-unfreeze
-                            approach typically used in transfer learning. All layers update from epoch one.
+                            The final dense layer produces one raw score for each label: Covid, Normal, Pneumonia.
+                            These raw scores are called logits and they can be either positive or negative and
+                            they do not necessarily sum to one. For this reason, softmax layer converts them into positive
+                            values that sum to one, allowing the output to be interpreted as the model's predicted probability
+                            distribution over the three labels.
                         </p>
                         <p>
-                            The loss uses <strong>label smoothing</strong> at 0.1. Rather than hard targets of 0 or 1,
-                            the model trains against soft targets (roughly 0.033 and 0.933 for a three-class problem).
-                            The model is penalised for overconfidence: it cannot reach zero loss by pushing one class probability to 1.0.
-                            This produces better-calibrated predictions and reduces overfitting on small datasets.
+                            To undestand the mathematical intuition on how this is happening in the softmax layer,
+                            we can have a look at the formula:
+                            <div class="equation-container">
+                                <p>For class <em>k</em>, the Softmax formula is:</p>
+                                <div class="equation">
+                                    \[
+                                    p_k = \frac{\exp(z_k)}
+                                    {\sum_{j=1}^{3}\exp(z_j)}
+                                    \]
+                                </div>
+                            </div>
+                            <div class="equation-explanation">
+                                <p>Where:</p>
+                                <ul>
+                                    <li><strong>z<sub>k</sub></strong> is the raw score (logit) for class k.</li>
+                                    <li><strong>exp(z<sub>k</sub>)</strong> transforms the score into a positive number.</li>
+                                    <li>The denominator sums the exponentials of all three scores,
+                                        normalising the outputs so that they sum to one.</li>
+                                </ul>
+                            </div>
+                        </p>
+
+                        <h3>How does the model learn?</h3>
+                        <p>
+                            In this section I will try to briefly but concisely explain how the model learns.
+                            This is happening with the help of the loss function and that of the optimiser.
+                            The loss function measures how poorly the predictions match the labels. The optimiser
+                            uses information from that loss to adjust the model's weights.
                         </p>
                         <p>
-                            Three callbacks govern the training loop. Early stopping monitors validation loss with a patience of 15 epochs
-                            and restores the weights from the best epoch once patience runs out. ReduceLROnPlateau halves the learning rate
-                            if validation loss stalls for 6 epochs, down to a floor of 1e-7.
-                            ModelCheckpoint saves the best model to disk after each improvement.
-                        </p>
-                        <div class="article-snippet">
-                            <h3>Training</h3>
-                            <pre><code>from tensorflow.keras import optimizers
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
-
-model.compile(
-    loss=tf.keras.losses.CategoricalCrossentropy(label_smoothing=0.1),
-    optimizer=optimizers.Adam(learning_rate=1e-3),
-    metrics=[
-        "accuracy",
-        tf.keras.metrics.AUC(name="auc", curve="ROC"),
-    ],
-)
-
-callbacks = [
-    EarlyStopping(
-        monitor="val_loss",
-        patience=15,
-        restore_best_weights=True,
-        verbose=1,
-    ),
-    ReduceLROnPlateau(
-        monitor="val_loss",
-        factor=0.5,
-        patience=6,
-        min_lr=1e-7,
-        verbose=1,
-    ),
-    ModelCheckpoint(
-        "models/baseline_custom_cnn/best.keras",
-        monitor="val_loss",
-        save_best_only=True,
-        verbose=1,
-    ),
-]
-
-history = model.fit(
-    train_data_iter,
-    validation_data=validation_data_iter,
-    epochs=150,
-    callbacks=callbacks,
-    class_weight=class_weight_dict,
-    verbose=1,
-)</code></pre>
-                        </div>
-                    </section>
-
-                    <section aria-labelledby="results-title">
-                        <h2 id="results-title">Results</h2>
-                        <p>
-                            Early stopping triggered at epoch 65 and restored the weights from epoch 50, where validation loss was lowest. The final metrics:
+                            In my case, I use sparse categorical cross-entropy which penalises low probability
+                            for the correct label. In other words, with that I want to check how much probability
+                            the model assigns to the correct label which adds one additional point of view other than
+                            just measuring whether the model correctly predicted the class.
                         </p>
                         <p>
-                            <strong>Validation set:</strong> 92.0% accuracy, 0.985 AUC, 0.555 loss.<br>
-                            <strong>Test set:</strong> 84.8% accuracy, 0.975 AUC, 0.598 loss.
-                        </p>
+                            The loss is calculated mathematically as follows for one image with true class <em>y</em>:
+                            <div class="equation">
+                                \[
+                                L = -\log(p_y)
+                                \]
+                            </div>
+                            <p>
+                                Here, <em>p<sub>y</sub></em> is the softmax probability assigned to the true class,
+                                and <em>log</em> is the natural logarithm.
+                            </p>
 
-                        <h3>Does the model overfit?</h3>
-                        <figure class="article-figure" id="training-curves">
-                            <img src="../images/blog/pneumonia-cnn/training_curves.webp"
-                                alt="Training vs validation curves for loss, accuracy, and AUC across 65 epochs, with a vertical dashed line marking the best epoch at 50.">
-                            <figcaption id="cap-training-curves">
-                                Figure 2. Training vs validation curves. The vertical dashed line marks epoch 50, where validation loss was lowest and the saved weights come from.
-                            </figcaption>
+                            <p>For a batch of <em>N</em> images, the loss is averaged:</p>
+
+                            <div class="equation">
+                                \[
+                                L_{\text{batch}} =
+                                -\frac{1}{N}
+                                \sum_{i=1}^{N}
+                                \log(p_{i,y_i})
+                                \]
+                            </div>
+
+                            <div class="equation-explanation">
+                                <strong>Where:</strong>
+                                <ul>
+                                    <li><strong>p<sub>y</sub></strong> is the softmax probability assigned to the true class.</li>
+                                    <li><strong>log</strong> is the natural logarithm.</li>
+                                    <li><strong>N</strong> is the number of images in the batch.</li>
+                                    <li><strong>p<sub>i,y<sub>i</sub></sub></strong> is the probability assigned to the correct class for image i.</li>
+                                </ul>
+                            </div>
+                        </p>
+                        <p>
+                            The intuition behind is that the loss becomes small when the correct class receives high probability,
+                            and large when it receives very little probability. In other words, the penalisation is harder
+                            if the model is confident but wrong.
+                        </p>
+                        <p>
+                            Moreover, this loss fits the task because each image has exactly one of three labels. 
+                            The word “sparse” refers to how those labels are stored: the code uses integers
+                            —<code>0</code> for Covid, <code>1</code> for Normal and <code>2</code> for Pneumonia—
+                            instead of one-hot vectors such as <code>[0, 1, 0]</code>. 
+                            Keras’s sparse categorical cross-entropy accepts those integer labels directly.
+                            It is preferred here for compatibility and simplicity, not because it is a fundamentally 
+                            better loss than ordinary categorical cross-entropy. 
+                            With equivalent labels and predictions, the two express the same objective; they expect different label formats.
+                        </p>
+                        <p>
+                            Finally, it should also be clarified that since the final layer applied softmax,
+                            the loss receives probabilities and not raw logits.
+                        </p>
+                        <p>
+                            As an optimizer I use Adam and early stopping to avoid overfitting.
+                            To stop the training process, I monitor validation loss. The early-stopping callback
+                            waits for five epochs without sufficient improvement and then restores the weights 
+                            from the epoch with the best validation loss. This is important in this case, because
+                            a model can continue training without actually improving, therefore my approach fetches only the best version of the model.
+                        </p>
+                        <h3>Training and Evaluation of the baseline</h3>
+                        <figure class="article-figure" id="lineplot-accuracy-baseline">
+                                <img src="../images/blog/pneumonia-cnn/part1/baseline_accuracy.webp"
+                                    alt="Lineplot showing the accuracy achieved on the training set (blue dots) and on the validation set (red line).">
+                                <figcaption id="cap-lineplot-accuracy-baseline">
+                                    <b>Figure 4</b>. Lineplot that shows the accuracy achieved by the baseline model for the training set (blue dots) and the validation set (red line).
+                                    Training and validation performance improve together initially. After epoch 8 there is a drop in the validation accuracy,
+                                    while the training accuracy rises steadily.
                         </figure>
                         <p>
-                            At the restored best epoch, training accuracy (88.6%) is actually slightly <em>lower</em> than validation accuracy (92.0%),
-                            and training loss (0.582) is slightly <em>higher</em> than validation loss (0.555).
-                            This is the opposite of the typical overfitting pattern.
-                            The explanation is straightforward: during training, dropout and batch normalisation introduce noise
-                            that suppresses the training-time metrics. During validation, those layers are turned off, so the model
-                            performs at its full capacity. This asymmetry is a well-documented Keras behavior and is not a cause for concern.
+                            <a href="#lineplot-accuracy-baseline" aria-describedby="cap-lineplot-accuracy-baseline">Figure 4</a> shows the
+                            performance of the baseline model on the training and validation set as measured by accuracy.
+                            The figure shows that the training and validation performacne improve together. Validation accuracy rises from
+                            roughly 43% to approximately 90% by epoch four, while validation loss falls. However, the general pattern suggests
+                            that over this early period (up to epoch 4) the model get better at both the training and validation set.
                         </p>
                         <p>
-                            The training curves do show noisy validation metrics in the early epochs, roughly epochs 1 through 40.
-                            This is expected for a small CNN learning from scratch on a few hundred images:
-                            the randomly initialised filters need time to find useful patterns, and the small validation set (only 50 images)
-                            amplifies the noise further. What matters is that both curves converge and stabilise
-                            by the time the best checkpoint is reached.
+                            Roughly after epoch seven, the training and validation accuracy began to separate. Training accuracy continues
+                            rising, reaching roughly 98% by epoch eleven, and training loss falls below 0.1 
+                            (see <a href="#lineplot-loss-baseline" aria-describedby="cap-lineplot-loss-baseline">Figure 5</a>)
+                            Validation accuracy, however, fluctuates around 85-89%, while validation loss does not improve
+                            on its minimum of approximately 0.34 at epoch six.
+                            <figure class="article-figure" id="lineplot-loss-baseline">
+                                <img src="../images/blog/pneumonia-cnn/part1/baseline_loss.webp"
+                                    alt="Lineplot showing the loss achieved on the training set (blue dots) and on the validation set (red line).">
+                                <figcaption id="cap-lineplot-loss-baseline">
+                                    <b>Figure 5</b>. Lineplot that shows the loss achieved by the baseline model for the training set (blue dots) and the validation set (red line).
+                                    Training and validation performance improve together initially.
+                            </figure>
                         </p>
+                        <p>
+                            This shows that there is some overfitting because we see that training improves the fit to the training examples
+                            but it is not enough for the model to generalise on the validation set.
+                        </p>
+                        <p>
+                            The per-class performance will give us a more detailed view about the performance of the baseline.
+                            By looking at <a href="#confusion-matrix-baseline" aria-describedby="cap-conf-matrix-baseline">Figure 6</a>
+                            and the table below we can see that when the model is validation it correctly identifies
+                            43 out of the 47 chest X-rays.
+                            
+                            <figure class="article-figure" id="confusion-matrix-baseline">
+                                <img src="../images/blog/pneumonia-cnn/part1/baseline_confusion_matrix.webp"
+                                alt="Confusion matrix that shows the per-class performance of the baseline model.">
+                                <figcaption id="cap-conf-matrix-baseline">
+                                    <b>Figure 6</b>. Confusion matrix that shows the per-class performance of the baseline model
+                                    on the validations set.
+                                    The model seems to perform well overall with 2 mistakes made in the Normal class.
+                                </figcaption>
+                            </figure>
+                            <div>
+                                <table class="dataset-table">
+                                    <thead>
+                                        <tr>
+                                        <th scope="col">Dataset label</th>
+                                        <th scope="col">Accuracy (Correct/Total)</th>
+                                        <th scope="col">Precision</th>
+                                        <th scope="col">Recall</th>
+                                        <th scope="col">F1-score</th>
+                                        </tr>
+                                    </thead>
 
-                        <h3>Per-class breakdown</h3>
-                        <p>
-                            Aggregate accuracy can be misleading when classes are imbalanced.
-                            A model that predicts the most common class more often than it should can still achieve a respectable
-                            overall score while quietly failing on the classes that matter most.
-                            The confusion matrix and per-class metrics below tell the real story.
-                        </p>
-                        <figure class="article-figure" id="confusion-matrix">
-                            <img src="../images/blog/pneumonia-cnn/confusion_matrix_test.webp"
-                                alt="Confusion matrix on the test set showing 24 correct Covid predictions, 16 correct Normal, 16 correct Pneumonia, with most errors occurring between Normal and Pneumonia.">
-                            <figcaption id="cap-confusion-matrix">
-                                Figure 3. Confusion matrix on the held-out test set (66 images). The diagonal shows correct predictions; off-diagonal cells show where the model gets confused.
-                            </figcaption>
-                        </figure>
-                        <p>
-                            <strong>Covid</strong> is the best-separated class: 24 out of 26 correctly identified (92.3% recall),
-                            with a precision of 96.0%. Only 2 Covid images were misclassified, both as Normal, and only
-                            1 non-Covid image was incorrectly labelled as Covid. The model rarely misses Covid and rarely
-                            raises false alarms for it.
-                        </p>
-                        <p>
-                            <strong>Normal and Pneumonia</strong> are where the difficulty lies. Of 20 true Normal images,
-                            4 were predicted as Pneumonia. In the other direction, 3 of 20 true Pneumonia images were predicted as Normal.
-                            Both classes sit at 80.0% recall, with Normal precision at 76.2% and Pneumonia precision at 80.0%.
-                        </p>
-                        <p>
-                            The pattern is clear: nearly all of the model's errors occur on the Normal–Pneumonia boundary,
-                            while Covid is cleanly separated from both other classes.
-                            This is consistent with the clinical reality. On a plain chest X-ray, distinguishing mild pneumonia opacities
-                            from a normal lung is a genuinely hard task, one where even trained radiologists show meaningful disagreement.
-                            A model reproducing this specific difficulty, rather than making random errors across all three classes,
-                            is at least learning something plausible.
+                                    <tbody>
+                                        <tr class="row-covid">
+                                            <th scope="row">Covid</th>
+                                            <td>18/20</td>
+                                            <td>100%</td>
+                                            <td>90%</td>
+                                            <td>94.7%</td>
+                                        </tr>
+                                        <tr class="row-normal">
+                                            <th scope="row">Normal</th>
+                                            <td>12/13</td>
+                                            <td>80%</td>
+                                            <td>92.3%</td>
+                                            <td>85.7%</td>
+                                        </tr>
+                                        <tr class="row-pneumonia">
+                                            <th scope="row">Pneumonia</th>
+                                            <td>13/14</td>
+                                            <td>92.8%</td>
+                                            <td>92.8%</td>
+                                            <td>92.8%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>  
+                            
                         </p>
                         <p>
-                            One important caveat: the test set contains only 66 images, with 20 in two of the three classes.
-                            At that size, a single misclassified image shifts recall by 5 percentage points.
-                            The precise numbers (76.2% vs 80.0%) should not be treated as meaningfully different.
-                            What is robust, because it reflects a structural pattern rather than a decimal-point difference,
-                            is the finding that the model's confusion is localised to Normal vs. Pneumonia.
-                        </p>
-                    </section>
-
-                    <section aria-labelledby="conclusions-title">
-                        <h2 id="conclusions-title">Why these decisions matter</h2>
-                        <p>
-                            Every decision in this baseline was made with two goals in mind:
-                            get the best performance a small, from-scratch CNN can deliver on this dataset,
-                            and keep the architecture compatible with the interpretability analysis that follows in Part 2.
+                            However, there are some mistakes that are worth noting because later they can act as the focus point
+                            to improve. More specifically, two Covid images are classified as Normal, one Normal X-ray as Covid,
+                            and one Pneumonia as Normal. Consequently, Normal has the lowest precision (80% - see the table above).
+                            This is the worst performance class across all validation metrics.
                         </p>
                         <p>
-                            Three decisions shaped the setup beyond the architecture itself.
+                            Even though there is a bit of overfitting, the results of the baseline model are overall encouraging.
+                            It is really important though to keep in mind that they come from 47 validation images.
+                            That means that a single different prediction given the small number of X-rays used for the validation,
+                            can actually affect a lot the performance.
                         </p>
-                        <ul>
-                            <li><strong>Rescaling inside the model.</strong> A Rescaling layer normalises pixel values from [0, 255] to [0, 1] as the first operation in the model graph. This makes the preprocessing contract explicit and auditable. It cannot be accidentally skipped in the data generator or applied twice.</li>
-                            <li><strong>Class weights.</strong> The dataset has unequal class counts. Training with <code>class_weight_dict</code> scales each sample's loss contribution by its class weight, so minority-class errors are penalised more heavily. Without this, the model could improve its aggregate score by biasing toward the majority class.</li>
-                            <li><strong>Label smoothing.</strong> Hard targets allow the model to drive output probabilities toward 1.0 and still reduce loss. Label smoothing at 0.1 prevents that. The model is penalised for overconfidence, which improves calibration and reduces overfitting on small datasets.</li>
-                        </ul>
                         <p>
-                            Good scores on a held-out test set are a necessary condition, not a sufficient one.
-                            The per-class breakdown already reveals that the model's difficulty is concentrated on the Normal–Pneumonia boundary.
-                            The next question is whether the model looks at the right parts of the image when it makes its decisions,
-                            or whether it is picking up on hospital artifacts, scanner borders, or other shortcuts.
-                            That is what <a href="lung_disease-identification-part2.html">Part 2</a> covers.
+                            The next steps will try to address what I detected here during the training of the baseline model.
+                            Namely, to address overfitting, I will introduce data augmentation, hoping that if the model see
+                            slightly varied versions of the available images will generalise better on unseen data (see Part 2).
                         </p>
-                    </section>
-
+                        <section aria-labelledby="part-one-summary-title">
+                            <h2 id="part-one-summary-title">Summary</h2>
+                            <p>
+                                I explored 294 chest X-rays labelled Covid, Normal, or Pneumonia, then trained a baseline
+                                convolutional neural network from scratch. I kept separate training, validation, and test
+                                sets, using the validation set to monitor training and select the best checkpoint.
+                            </p>
+                            <p>
+                                The baseline correctly classified 43 of 47 validation images. Its class-level scores were
+                                encouraging, but the small validation set means a single prediction can noticeably change
+                                the metrics. Training and validation performance also began to diverge after about epoch
+                                seven, suggesting overfitting. Normal was the weakest class by precision, while the image
+                                analysis revealed differences in brightness and framing between classes. These observations
+                                motivate the next steps: compare models, investigate what image regions drive predictions,
+                                and test whether the model relies on shortcuts rather than disease-relevant features.
+                            </p>
+                        </section>
                         <div class="article-footer-cta">
                             <div>
                                 <h3>Next step</h3>
                                 <p>
-                                    In <a href="lung_disease-identification-part2.html">Part 2</a> using Grad-CAM I will visualise the regions of each X-ray that drive the model's decisions. The goal: check whether the baseline's numbers reflect genuine anatomical reasoning or a different kind of shortcut.
+                                    In <a href="lung_disease-identification-part2.html">Part 2</a> I will try to address overfitting by introducing data augmentation.
+                                    Moreover, I will test multiple different versions and I will evaluate them based on their overall and per-class performance.
+                                    The best architecture will be used as the final model.
                                 </p>
                             </div>
                             <div class="btn-group">
@@ -578,13 +1002,17 @@ history = model.fit(
                     </section>
                     <footer class="article-footnotes" aria-label="Footnotes">
                         <ol>
-                            <li id="fn-batchnorm">
-                                <strong>Batch Normalisation</strong> standardises the output of each layer to have zero mean and unit variance, computed across the samples in each mini-batch. This stabilises training by keeping activations in a healthy range throughout the network, which allows higher learning rates and faster convergence. It also acts as a mild regulariser. During inference, the running statistics accumulated during training are used instead of the batch statistics.
-                                <a href="#ref-batchnorm" aria-label="Return to text">↩</a>
+                            <li id="fn-precision">
+                                <strong>Precision</strong>: when the model predicts a class, how often is it right? For example, Covid precision is the share of X-rays predicted as Covid that are actually Covid.
+                                <a href="#ref-precision" aria-label="Return to text">↩</a>
                             </li>
-                            <li id="fn-dropout">
-                                <strong>Dropout</strong> is a regularisation technique that randomly sets a fraction of activations to zero during each training step. The fraction is the dropout rate: 0.5 means 50% of activations are dropped. This forces the network to learn redundant representations, because no single neuron can be relied upon. During inference, dropout is disabled and all activations are used, scaled by the dropout rate. It is one of the most effective tools for preventing overfitting on small datasets.
-                                <a href="#ref-dropout" aria-label="Return to text">↩</a>
+                            <li id="fn-recall">
+                                <strong>Recall</strong>: of all X-rays that truly belong to a class, how many did the model find? For example, Covid recall is the share of actual Covid X-rays correctly identified.
+                                <a href="#ref-recall" aria-label="Return to text">↩</a>
+                            </li>
+                            <li id="fn-f1">
+                                <strong>F1-score</strong> combines precision and recall into one score. It is higher when both are high, and lower when one lags behind the other. Here, each metric evaluates one label—Covid, Normal, or Pneumonia—against the other two.
+                                <a href="#ref-f1" aria-label="Return to text">↩</a>
                             </li>
                         </ol>
                     </footer>
@@ -592,15 +1020,9 @@ history = model.fit(
                 <aside class="article-sidebar" aria-labelledby="toc-title">
                     <nav class="article-note article-toc" aria-label="Table of contents">
                         <h3 id="toc-title">Contents</h3>
-                        <ol>
-                            <li><a href="#problem-title">The task</a></li>
-                            <li><a href="#dataset-title">The dataset</a></li>
-                            <li><a href="#baseline-title">Building the baseline</a></li>
-                            <li><a href="#results-title">Results</a></li>
-                            <li><a href="#conclusions-title">Why these decisions matter</a></li>
-                            <li><a href="#comments-title">Comments</a></li>
-                            <li><a href="#top">Back to the top</a></li>
-                        </ol>
+                        <!-- Generated from the h2/h3 headings by the script at the end of the page. -->
+                        <ol class="toc-tree" id="tocTree"></ol>
+                        <a class="toc-top" href="#top">Back to the top</a>
                     </nav>
                 </aside>
             </div>
@@ -621,11 +1043,14 @@ history = model.fit(
 
         function applyTheme(theme) {
             body.setAttribute('data-theme', theme);
-            themeToggle.querySelector('span[aria-hidden]').textContent = theme === 'dark' ? '🌑' : '☀️';
+            themeToggle.setAttribute(
+                'aria-label',
+                `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode (currently ${theme} mode)`
+            );
             statusElement.textContent = theme === 'dark' ? 'Dark mode active' : 'Light mode active';
         }
 
-        applyTheme(savedTheme || 'dark');
+        applyTheme(savedTheme || 'light');
 
         themeToggle.addEventListener('click', () => {
             const newTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
@@ -634,6 +1059,45 @@ history = model.fit(
         });
 
         // Keep TOC in sync with the section currently in view.
+        // Build a nested TOC from the article headings (h2 = top level, h3 = children).
+        (function buildToc() {
+            const tocRoot = document.getElementById('tocTree');
+            const headings = document.querySelectorAll('.article-prose h2, .article-prose h3');
+            const slugify = (text) => text.toLowerCase().trim()
+                .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'section';
+            let parentItem = null;
+            let childList = null;
+
+            headings.forEach((heading) => {
+                if (heading.closest('.pooling-demo, .article-footer-cta, .article-comments')) return;
+
+                if (!heading.id) {
+                    const base = slugify(heading.textContent);
+                    let id = base;
+                    for (let n = 2; document.getElementById(id); n++) id = `${base}-${n}`;
+                    heading.id = id;
+                }
+
+                const link = document.createElement('a');
+                link.href = `#${heading.id}`;
+                link.textContent = heading.textContent.trim();
+                const item = document.createElement('li');
+                item.appendChild(link);
+
+                if (heading.tagName === 'H2' || !parentItem) {
+                    tocRoot.appendChild(item);
+                    parentItem = heading.tagName === 'H2' ? item : null;
+                    childList = null;
+                } else {
+                    if (!childList) {
+                        childList = document.createElement('ol');
+                        parentItem.appendChild(childList);
+                    }
+                    childList.appendChild(item);
+                }
+            });
+        })();
+
         const tocLinks = Array.from(document.querySelectorAll('.article-toc a[href^="#"]'));
         const trackedLinks = tocLinks.filter((link) => link.getAttribute('href') !== '#top');
         const sectionElements = trackedLinks
